@@ -1,0 +1,294 @@
+{
+  "n": 32,
+  "items": [
+    {
+      "file": "test_wave_sine_0.json",
+      "true_label": "sine",
+      "dec": 20,
+      "freq_hz": 852.33,
+      "vpp_v": 0.8286,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_sine_1.json",
+      "true_label": "sine",
+      "dec": 10,
+      "freq_hz": 1894.72,
+      "vpp_v": 7.6677,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_square_0.json",
+      "true_label": "square",
+      "dec": 5,
+      "freq_hz": 4038.82,
+      "vpp_v": 4.7323,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_square_1.json",
+      "true_label": "square",
+      "dec": 1,
+      "freq_hz": 12486.11,
+      "vpp_v": 7.7097,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_triangle_0.json",
+      "true_label": "triangle",
+      "dec": 5,
+      "freq_hz": 5648.6,
+      "vpp_v": 3.38,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_triangle_1.json",
+      "true_label": "triangle",
+      "dec": 5,
+      "freq_hz": 6590.62,
+      "vpp_v": 8.909,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_sawtooth_0.json",
+      "true_label": "sawtooth",
+      "dec": 20,
+      "freq_hz": 739.33,
+      "vpp_v": 1.3509,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_sawtooth_1.json",
+      "true_label": "sawtooth",
+      "dec": 10,
+      "freq_hz": 8743.88,
+      "vpp_v": 5.2048,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_noise_0.json",
+      "true_label": "noise",
+      "dec": 10,
+      "freq_hz": null,
+      "vpp_v": 4.1255,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_noise_1.json",
+      "true_label": "noise",
+      "dec": 1,
+      "freq_hz": null,
+      "vpp_v": 7.3351,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_clipping_0.json",
+      "true_label": "clipping",
+      "dec": 5,
+      "freq_hz": 2262.59,
+      "vpp_v": 7.2388,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_clipping_1.json",
+      "true_label": "clipping",
+      "dec": 1,
+      "freq_hz": 13611.78,
+      "vpp_v": 6.5151,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_signal_loss_0.json",
+      "true_label": "signal_loss",
+      "dec": 10,
+      "freq_hz": 2916.02,
+      "vpp_v": 8.1549,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_signal_loss_1.json",
+      "true_label": "signal_loss",
+      "dec": 10,
+      "freq_hz": 3646.28,
+      "vpp_v": 6.9669,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_duty_abnormal_0.json",
+      "true_label": "duty_abnormal",
+      "dec": 5,
+      "freq_hz": 4574.34,
+      "vpp_v": 5.6323,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_duty_abnormal_1.json",
+      "true_label": "duty_abnormal",
+      "dec": 20,
+      "freq_hz": 839.52,
+      "vpp_v": 2.0065,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_pulse_0.json",
+      "true_label": "pulse",
+      "dec": 10,
+      "freq_hz": null,
+      "vpp_v": 5.0902,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_pulse_1.json",
+      "true_label": "pulse",
+      "dec": 20,
+      "freq_hz": null,
+      "vpp_v": 6.6204,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_step_0.json",
+      "true_label": "step",
+      "dec": 10,
+      "freq_hz": null,
+      "vpp_v": 8.5495,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_step_1.json",
+      "true_label": "step",
+      "dec": 10,
+      "freq_hz": null,
+      "vpp_v": 3.8263,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_am_0.json",
+      "true_label": "am",
+      "dec": 10,
+      "freq_hz": 3906.25,
+      "vpp_v": 7.1339,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_am_1.json",
+      "true_label": "am",
+      "dec": 10,
+      "freq_hz": 3906.25,
+      "vpp_v": 5.6847,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_fm_0.json",
+      "true_label": "fm",
+      "dec": 10,
+      "freq_hz": 3906.25,
+      "vpp_v": 1.1517,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_fm_1.json",
+      "true_label": "fm",
+      "dec": 20,
+      "freq_hz": 1953.12,
+      "vpp_v": 6.3176,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_ringing_0.json",
+      "true_label": "ringing",
+      "dec": 20,
+      "freq_hz": 929.2,
+      "vpp_v": 7.2221,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_ringing_1.json",
+      "true_label": "ringing",
+      "dec": 10,
+      "freq_hz": 1565.16,
+      "vpp_v": 6.4473,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_double_freq_0.json",
+      "true_label": "double_freq",
+      "dec": 5,
+      "freq_hz": 2778.03,
+      "vpp_v": 5.5193,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_double_freq_1.json",
+      "true_label": "double_freq",
+      "dec": 5,
+      "freq_hz": 6825.89,
+      "vpp_v": 0.8396,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_hum_0.json",
+      "true_label": "hum",
+      "dec": 10,
+      "freq_hz": 3459.99,
+      "vpp_v": 8.1966,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_hum_1.json",
+      "true_label": "hum",
+      "dec": 10,
+      "freq_hz": 3856.55,
+      "vpp_v": 7.5354,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_glitch_0.json",
+      "true_label": "glitch",
+      "dec": 5,
+      "freq_hz": 2900.2,
+      "vpp_v": 8.1678,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    },
+    {
+      "file": "test_wave_glitch_1.json",
+      "true_label": "glitch",
+      "dec": 10,
+      "freq_hz": 2058.31,
+      "vpp_v": 4.8044,
+      "source": "sim_hw_10bit",
+      "purpose": "契约结构 + 准确率"
+    }
+  ],
+  "note": "source=sim_hw_10bit，板端实测数据请按同格式替换"
+}

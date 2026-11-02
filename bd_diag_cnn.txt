@@ -1,0 +1,32 @@
+==================== BD AXI topology ====================
+BD opened
+
+--- hp3_merge ---
+  CONFIG.NUM_SI = 2
+  CONFIG.NUM_MI = 1
+  CONFIG.NUM_SI = 2
+  * = 
+  intf pins:
+     /hp3_merge/M00_AXI
+     /hp3_merge/S00_AXI
+     /hp3_merge/S01_AXI
+
+--- ps7_0_axi_periph ---
+  NUM_MI = 18
+  NUM_SI = 1
+
+--- S_AXI_HP* çš„è¿žæŽ? ---
+  S_AXI_HP0  <- 
+  S_AXI_HP1  <- 
+  S_AXI_HP2  <- 
+  S_AXI_HP3  <- 
+
+--- gpu_0/m_axi åŽ»å“ªäº? ---
+  gpu_0/m_axi net = 
+
+--- å½“å‰ IP repo è·?å¾? ---
+  D:/ubuntu_iso/atk2026/Navigator_7020/ip_repo D:/ubuntu_iso/gpu_ip D:/ubuntu_iso/gpu_ip D:/ubuntu_iso/scope_ip
+
+--- çŽ°æœ‰ HLS/è‡?ç ? IP å®šä¹‰ ---
+  scope: dsh:user:scope_cap_axi:1.0
+  gpu: dsh:user:gpu2d_axi:1.0

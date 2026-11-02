@@ -1,0 +1,16 @@
+# /etc/systemd/system/zynq-gpu-loader.service
+[Unit]
+Description=Zynq FPGA GPU bitstream loader
+# 必须在桌面之前跑完, 这样桌面启动时标记已经就绪
+Before=zynq-desktop.service
+After=local-fs.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/gpu-load.sh
+StandardOutput=append:/var/log/zynq-gpu-load.log
+StandardError=append:/var/log/zynq-gpu-load.log
+
+[Install]
+WantedBy=multi-user.target

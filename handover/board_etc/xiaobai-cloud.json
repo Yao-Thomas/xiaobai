@@ -1,0 +1,7 @@
+# 云协同入口的 token —— 换成你自己的
+{
+  "token": "<你自己的token>",
+  "port": 8768,
+  "enable_write": true,
+  "discover_port": 8769
+}

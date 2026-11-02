@@ -1,0 +1,8 @@
+=== 强制重建 gpu IP ===
+>>> reset_target all
+>>> generate_target all -force
+>>> 再�?? generate_target all
+ �? BD 校验+保存
+  system_gpu_0_0 : 4 �?
+ gpu IP �?录数: 1
+ 源文件数 = 615

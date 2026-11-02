@@ -1,0 +1,48 @@
+======================================================
+ ç»? CNN m_axi ä¸»æ§åˆ†é… DDR åœ°å€æ®? (v3)
+======================================================
+BD opened
+
+>>> 1. ä¿?æ”¹å‰
+   /cnn_conv_pool_0/Data_m_axi_gmem_img  ->  0 ä¸?æ®?
+   /cnn_conv_pool_0/Data_m_axi_gmem_w  ->  0 ä¸?æ®?
+   /cnn_conv_pool_0/Data_m_axi_gmem_out  ->  0 ä¸?æ®?
+   /cnn_fc_0/Data_m_axi_gmem_x  ->  0 ä¸?æ®?
+   /cnn_fc_0/Data_m_axi_gmem_w  ->  0 ä¸?æ®?
+   /cnn_fc_0/Data_m_axi_gmem_out  ->  0 ä¸?æ®?
+
+>>> 2. æ‰? DDR åœ°å€æ®?
+   é€‰ç”¨: /processing_system7_0/S_AXI_HP3/HP3_DDR_LOWOCM
+
+>>> 3. é€ä¸ªåˆ†é…
+   /cnn_conv_pool_0/Data_m_axi_gmem_img  -> å·²åˆ†é…?
+   /cnn_conv_pool_0/Data_m_axi_gmem_w  -> å·²åˆ†é…?
+   /cnn_conv_pool_0/Data_m_axi_gmem_out  -> å·²åˆ†é…?
+   /cnn_fc_0/Data_m_axi_gmem_x  -> å·²åˆ†é…?
+   /cnn_fc_0/Data_m_axi_gmem_w  -> å·²åˆ†é…?
+   /cnn_fc_0/Data_m_axi_gmem_out  -> å·²åˆ†é…?
+
+>>> 4. ä¿?æ”¹å
+   /cnn_conv_pool_0/Data_m_axi_gmem_img  ->  1 ä¸?æ®?
+        /cnn_conv_pool_0/Data_m_axi_gmem_img/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x0000000000000000 / 0x0000000040000000
+   /cnn_conv_pool_0/Data_m_axi_gmem_w  ->  1 ä¸?æ®?
+        /cnn_conv_pool_0/Data_m_axi_gmem_w/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x0000000000000000 / 0x0000000040000000
+   /cnn_conv_pool_0/Data_m_axi_gmem_out  ->  1 ä¸?æ®?
+        /cnn_conv_pool_0/Data_m_axi_gmem_out/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x0000000000000000 / 0x0000000040000000
+   /cnn_fc_0/Data_m_axi_gmem_x  ->  1 ä¸?æ®?
+        /cnn_fc_0/Data_m_axi_gmem_x/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x0000000000000000 / 0x0000000040000000
+   /cnn_fc_0/Data_m_axi_gmem_w  ->  1 ä¸?æ®?
+        /cnn_fc_0/Data_m_axi_gmem_w/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x0000000000000000 / 0x0000000040000000
+   /cnn_fc_0/Data_m_axi_gmem_out  ->  1 ä¸?æ®?
+        /cnn_fc_0/Data_m_axi_gmem_out/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x0000000000000000 / 0x0000000040000000
+
+   åˆè??: 6 / 6
+
+>>> 5. validate
+   BD validated OK
+   BD saved
+   targets generated
+
+======================================================
+ å®Œæˆ â€”â€? éœ€è¦é‡æ–°å‡º bitstream
+======================================================

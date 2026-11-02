@@ -1,0 +1,7 @@
+ERROR:  authentication failed: Running the agent with an http/s proxy is a Pay-as-you-go feature. If this is unexpected, verify that there is no proxy_url value in your ngrok configuration file and that the http_proxy environment variable is not set.
+ERROR:  
+ERROR:  If you need this capability, upgrade to a Pay-as-you-go plan at: https://dashboard.ngrok.com/billing/choose-a-plan
+ERROR:  
+ERROR:  ERR_NGROK_9009
+ERROR:  https://ngrok.com/docs/errors/err_ngrok_9009
+ERROR:  

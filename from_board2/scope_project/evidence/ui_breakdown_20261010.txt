@@ -1,0 +1,31 @@
+fb: 1024x600 (virt 1200) 24bpp stride=3072 快速路径 phys=0x3F100000
+色彩补偿: 蓝 增益1.000 偏置+0  红偏置+0  绿偏置+0
+touch: /dev/input/event1
+双通道采集器已启用: libscopedual 1.0 (magic 0x53435033 caps 0x020A1000 @0x43CC0000)
+  CAPS=0x020A1000  通道=0  位宽=32  深度=4096  采样率=20.00 MHz
+=== 各绘制函数单独耗时（离屏）===
+  函数                           ms/次
+  ----------------------------------
+  step（采集+统计）                  0.63
+  draw_wave                   12.94
+  draw_stat（两行参数）              6.33
+  draw_top（顶栏）                 0.50
+  draw_scales（刻度）              4.86
+  draw_cards（五张卡）             17.14
+  draw_ctl（控制行）               20.76
+
+=== 拆 draw_stat 内部 ===
+  scr.img.crop(box)                      0.35
+  scr.to_raw(crop)                       1.46
+  scr.blit_raw(全宽36行)                    0.45
+  scr.img.paste(bg.crop(box))            0.88
+
+=== 文字渲染本身 ===
+  text 数字(cn=True)                       0.55
+  text 数字(cn=False)                      0.56
+  text 中文标签(cn=True)                     0.39
+
+=== 颜色变换是否拖慢（Screen 有色彩补偿）===
+  色彩补偿: n/a
+
+BKD_DONE

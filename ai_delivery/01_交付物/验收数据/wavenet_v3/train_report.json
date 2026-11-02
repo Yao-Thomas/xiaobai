@@ -1,0 +1,212 @@
+{
+  "args": {
+    "data": "/data/pengyc_fzu/fpga2026_ai/data/scope_ds_v3",
+    "out": "/data/pengyc_fzu/fpga2026_ai/runs/wavenet_v3",
+    "seed": 20261001,
+    "epochs_float": 70,
+    "epochs_qat": 55,
+    "bs": 256,
+    "lr_float": 0.003,
+    "lr_qat": 0.0003,
+    "lr_scale": 0.003,
+    "wd": 0.0001,
+    "gamma": 2.0,
+    "calib_pct": 99.9,
+    "fix_mfq": 0,
+    "gpu": 0,
+    "limit_train": 0,
+    "no_reference_eval": false
+  },
+  "input_type": "wdens",
+  "classes": [
+    "sine",
+    "square",
+    "triangle",
+    "sawtooth",
+    "noise",
+    "clipping",
+    "signal_loss",
+    "duty_abnormal"
+  ],
+  "stages": {
+    "p1_float": {
+      "train_acc": 0.9482,
+      "seconds": 39.73342704772949,
+      "val_acc": 0.963,
+      "test_acc": 0.9635
+    },
+    "p3_qat": {
+      "best_val_acc": 0.957,
+      "seconds": 43.788264989852905
+    }
+  },
+  "final": {
+    "test_acc_torch": 0.959,
+    "test_acc_reference": 0.959,
+    "reference_matches_torch": true,
+    "test_acc_float": 0.9635,
+    "test_acc_float_qat_weights": 0.947,
+    "quantization_loss": 0.0045000000000000595,
+    "train_acc": 0.962,
+    "train_acc_float": 0.9482,
+    "mfq": [
+      201,
+      371,
+      1390
+    ],
+    "calib_percentile": 99.9,
+    "diagnose": {
+      "mfq": [
+        201,
+        371,
+        1390
+      ],
+      "acc_absmax": [
+        54518.0,
+        33563.0,
+        13437.0
+      ],
+      "acc_times_mfq": [
+        10958118.0,
+        12451873.0,
+        18677430.0
+      ],
+      "int32_headroom": [
+        195.97194034596086,
+        172.46270075192703,
+        114.97746997311728
+      ],
+      "overflow_risk": [
+        false,
+        false,
+        false
+      ],
+      "saturation_frac": {
+        "f1": {
+          "low": 0.5070316833857249,
+          "high": 6.500785872781065e-06
+        },
+        "f2": {
+          "low": 0.83980712890625,
+          "high": 0.0
+        },
+        "logits": {
+          "low": 0.0291748046875,
+          "high": 0.0159912109375
+        }
+      },
+      "s_w": [
+        0.002832686062902212,
+        0.004381893202662468,
+        0.0027603507041931152
+      ],
+      "s_y": [
+        0.9222964644432068,
+        0.7143767476081848,
+        0.09294264018535614
+      ],
+      "w_int_max": {
+        "conv1.weight": 126,
+        "conv2.weight": 124,
+        "fc.weight": 105
+      },
+      "w_int_used_levels": {
+        "conv1.weight": 59,
+        "conv2.weight": 107,
+        "fc.weight": 115
+      }
+    },
+    "confusion": [
+      [
+        249,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        222,
+        0,
+        0,
+        0,
+        0,
+        0,
+        28
+      ],
+      [
+        2,
+        0,
+        247,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        249,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        250,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        250,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        250,
+        0
+      ],
+      [
+        0,
+        49,
+        0,
+        0,
+        0,
+        0,
+        0,
+        201
+      ]
+    ],
+    "classes": [
+      "sine",
+      "square",
+      "triangle",
+      "sawtooth",
+      "noise",
+      "clipping",
+      "signal_loss",
+      "duty_abnormal"
+    ]
+  }
+}

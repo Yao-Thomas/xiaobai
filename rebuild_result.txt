@@ -1,0 +1,16 @@
+======================================================
+ 应用补丁后重�?  Sat Sep 19 15:53:29 +0800 2026
+======================================================
+ 删除缓存: system_v_frmbuf_rd_0_0
+ 删除缓存: system_v_frmbuf_rd_0_0_7
+ 删除缓存: system_v_frmbuf_rd_0_1
+ 删除缓存: system_v_frmbuf_rd_0_1_7
+
+>>> generate_target all  Sat Sep 19 15:53:37 +0800 2026
+ �? 生成完成  Sat Sep 19 15:54:17 +0800 2026
+ 源文件数 = 515
+
+>>> 综合 synth_1  Sat Sep 19 15:54:19 +0800 2026
+ synth_1: 0%  synth_design ERROR  Sat Sep 19 15:54:32 +0800 2026
+ �? 综合失败:
+   ERROR: [Common 17-55] 'set_property' expects at least one object.

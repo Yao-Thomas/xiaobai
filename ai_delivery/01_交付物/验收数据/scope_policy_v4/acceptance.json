@@ -1,0 +1,45 @@
+{
+  "results": [
+    {
+      "wave": "sine",
+      "wave_idx": 0,
+      "success_rate": 0.91,
+      "mean_reward": 188.83378316507486,
+      "mean_steps": 2.56,
+      "n": 100
+    },
+    {
+      "wave": "square",
+      "wave_idx": 1,
+      "success_rate": 0.85,
+      "mean_reward": 177.876579404209,
+      "mean_steps": 3.11,
+      "n": 100
+    },
+    {
+      "wave": "triangle",
+      "wave_idx": 2,
+      "success_rate": 0.97,
+      "mean_reward": 199.09085661333486,
+      "mean_steps": 1.93,
+      "n": 100
+    },
+    {
+      "wave": "sawtooth",
+      "wave_idx": 3,
+      "success_rate": 0.94,
+      "mean_reward": 194.10138255041096,
+      "mean_steps": 2.35,
+      "n": 100
+    },
+    {
+      "wave": "noise",
+      "wave_idx": 4,
+      "success_rate": 0.94,
+      "mean_reward": 193.46076193395405,
+      "mean_steps": 2.01,
+      "n": 100
+    }
+  ],
+  "overall_success_rate": 0.9219999999999999
+}

@@ -1,0 +1,12 @@
+[Unit]
+Description=Run desktop stall watchdog every 20s
+
+[Timer]
+# 开机 90 秒后才开始看（给桌面生成玻璃材质的时间）
+OnBootSec=90s
+OnUnitActiveSec=20s
+AccuracySec=2s
+Unit=desktop-watchdog.service
+
+[Install]
+WantedBy=timers.target

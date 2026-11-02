@@ -1,0 +1,11 @@
+=== 1. GPU 主机口连到哪 ===
+  gpu_0/M_AXI net: /gpu_0_m_axi
+    -> /gpu_0/m_axi  (mode=Master)
+    -> /hp3_merge/S01_AXI  (mode=Slave)
+
+=== 2. hp3_merge 的连�? ===
+  /hp3_merge/M00_AXI (mode=Master) -> /hp3_merge_M00_AXI
+  /hp3_merge/S00_AXI (mode=Slave) -> /audio_M00_AXI
+  /hp3_merge/S01_AXI (mode=Slave) -> /gpu_0_m_axi
+
+=== 3. 所有主机的地址�? (关键!) ===

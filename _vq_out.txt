@@ -1,0 +1,11 @@
+
+****** Vivado v2018.3 (64-bit)
+  **** SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+  **** IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source D:/ubuntu_iso/_query_pins.tcl
+# set outfile "D:/ubuntu_iso/_pkg_pins.txt"
+# set fh [open $outfile w]
+# create_project -in_memory -part xc7z020clg400-2
+INFO: [Common 17-206] Exiting Vivado at Wed Oct 21 23:58:40 2026...

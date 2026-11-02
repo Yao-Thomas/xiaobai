@@ -1,0 +1,89 @@
+======================================================
+ BD CNN integration
+ time: Wed Sep 30 13:35:23 +0800 2026
+======================================================
+project opened
+
+>>> 0. pre-checks
+  OK ipdef: xilinx.com:hls:cnn_conv_pool_q:1.0
+  OK ipdef: xilinx.com:hls:cnn_fc_q:1.0
+  BD opened
+  before: ps7_0_axi_periph NUM_MI=18 , hp3_merge NUM_SI=2
+
+>>> 1. cleanup old instances
+
+>>> 2. create CNN cells
+  cnn_conv_pool_0 created
+  cnn_fc_0 created
+  --- cnn_conv_pool_0 pins ---
+      iface /cnn_conv_pool_0/m_axi_gmem_img
+      iface /cnn_conv_pool_0/m_axi_gmem_out
+      iface /cnn_conv_pool_0/m_axi_gmem_w
+      iface /cnn_conv_pool_0/s_axi_control
+      pin   /cnn_conv_pool_0/ap_clk
+      pin   /cnn_conv_pool_0/ap_rst_n
+      pin   /cnn_conv_pool_0/interrupt
+  --- cnn_fc_0 pins ---
+      iface /cnn_fc_0/m_axi_gmem_out
+      iface /cnn_fc_0/m_axi_gmem_w
+      iface /cnn_fc_0/m_axi_gmem_x
+      iface /cnn_fc_0/s_axi_control
+      pin   /cnn_fc_0/ap_clk
+      pin   /cnn_fc_0/ap_rst_n
+      pin   /cnn_fc_0/interrupt
+
+>>> 3. create cnn_mem_ic (NUM_SI=6, NUM_MI=1)
+  cnn_mem_ic created
+
+>>> 4. connect m_axi bundles
+  cnn_conv_pool_0/m_axi_gmem_img  <->  cnn_mem_ic/S00_AXI
+  cnn_conv_pool_0/m_axi_gmem_w  <->  cnn_mem_ic/S01_AXI
+  cnn_conv_pool_0/m_axi_gmem_out  <->  cnn_mem_ic/S02_AXI
+  cnn_fc_0/m_axi_gmem_x  <->  cnn_mem_ic/S03_AXI
+  cnn_fc_0/m_axi_gmem_w  <->  cnn_mem_ic/S04_AXI
+  cnn_fc_0/m_axi_gmem_out  <->  cnn_mem_ic/S05_AXI
+
+>>> 5. hp3_merge NUM_SI 2 -> 3; connect cnn_mem_ic/M00
+  hp3_merge NUM_SI = 3
+  hp3_merge pins now:
+     /hp3_merge/M00_AXI
+     /hp3_merge/S00_AXI
+     /hp3_merge/S01_AXI
+     /hp3_merge/S02_AXI
+  cnn_mem_ic/M00_AXI <-> hp3_merge/S02_AXI
+
+>>> 6. AXI-Lite control: NUM_MI 18 -> 20
+  NUM_MI = 20
+  ps7_0_axi_periph/M18_AXI  <->  cnn_conv_pool_0/s_axi_control
+  ps7_0_axi_periph/M19_AXI  <->  cnn_fc_0/s_axi_control
+
+>>> 7. clocks and resets
+  CLK = /processing_system7_0/FCLK_CLK0
+  RST = /rst_ps7_0_100M/peripheral_aresetn
+  cnn ap_clk/ap_rst_n connected
+  cnn_mem_ic clocks/resets connected
+  ps7_0_axi_periph M18/M19 clk/rst connected
+  hp3_merge S02 clk/rst connected
+
+>>> 8. interrupts
+  xlconcat_0 NUM_PORTS = 10
+  xlconcat_0 NUM_PORTS -> 12
+  interrupts -> xlconcat_0/In10 , In11
+
+>>> 9. assign addresses
+  /cnn_conv_pool_0/s_axi_control/Reg -> 0x43CD0000 / 64K
+  /cnn_fc_0/s_axi_control/Reg -> 0x43CE0000 / 64K
+
+>>> 10. validate
+  BD validated OK
+  BD saved
+  targets generated
+
+>>> 11. summary
+  ps7_0_axi_periph NUM_MI = 20
+  hp3_merge        NUM_SI = 3
+  cnn_mem_ic       NUM_SI = 6
+
+  new address segments:
+    /processing_system7_0/Data/SEG_cnn_conv_pool_0_Reg = 0x43CD0000 / 0x00010000
+    /processing_system7_0/Data/SEG_cnn_fc_0_Reg = 0x43CE0000 / 0x00010000

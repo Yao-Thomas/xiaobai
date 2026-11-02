@@ -1,0 +1,20 @@
+HP3 DDR segment: /processing_system7_0/S_AXI_HP3/HP3_DDR_LOWOCM
+  OK /audio/audio_formatter/m_axi_mm2s -> 0x00000000 / 1G
+  OK /audio/audio_formatter/m_axi_s2mm -> 0x00000000 / 1G
+   /audio/audio_formatter/m_axi_mm2s :: SEG_processing_system7_0_HP3_DDR_LOWOCM excluded=
+   /audio/audio_formatter/m_axi_s2mm :: SEG_processing_system7_0_HP3_DDR_LOWOCM excluded=
+
+>>> validate
+ validated
+ regenerated
+
+=== final segments (audio + gpu) ===
+  /audio/audio_formatter/m_axi_mm2s/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x00000000 / 0x40000000
+  /audio/audio_formatter/m_axi_s2mm/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x00000000 / 0x40000000
+  /audio/audio_formatter/s_axi_lite/reg0 =  / 0x00001000
+  /audio/i2s_receiver/s_axi_ctrl/Reg =  / 0x00010000
+  /audio/i2s_transmitter/s_axi_ctrl/Reg =  / 0x00010000
+  /gpu_0/m_axi/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x00000000 / 0x40000000
+  /gpu_0/s_axi/reg0 =  / 0x00001000
+  /processing_system7_0/Data/SEG_audio_formatter_reg0 = 0x43C50000 / 0x00010000
+  /processing_system7_0/Data/SEG_gpu_0_reg0 = 0x43CB0000 / 0x00010000

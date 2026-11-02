@@ -1,0 +1,344 @@
+﻿
+****** Vivado v2018.3 (64-bit)
+  **** SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+  **** IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source {D:\ubuntu_iso\integrate_gpu_2018.tcl}
+# set ATK     {D:/ubuntu_iso/tmp_try2018/Navigator_7020}
+# set BD      $ATK/Navigator_7020.srcs/sources_1/bd/system/system.bd
+# set XDC     $ATK/Navigator_7020.srcs/constrs_1/system.xdc
+# set ATKREPO $ATK/ip_repo
+# set GPUREPO {D:/ubuntu_iso/gpu_ip}
+# set PROJ    {D:/ubuntu_iso/tmp_try2018/gpu_proj}
+# set GPUADDR 0x43CB0000
+# set LOG [open "D:/ubuntu_iso/integrate_result.txt" w]
+# proc L {msg} { global LOG; puts $LOG $msg; puts $msg }
+# L "======================================================"
+======================================================
+# L " GPU 集成 (Vivado [version -short])"
+ GPU 集成 (Vivado 2018.3)
+# L "======================================================"
+======================================================
+# if {[file exists $PROJ]} { file delete -force $PROJ }
+# create_project -force gpu_proj $PROJ -part xc7z020clg400-2
+# L " �? 工程已建: $PROJ"
+ �? 工程已建: D:/ubuntu_iso/tmp_try2018/gpu_proj
+# set_property ip_repo_paths [list $ATKREPO $GPUREPO] [current_project]
+# update_ip_catalog -rebuild
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'd:/ubuntu_iso/tmp_try2018/Navigator_7020/ip_repo'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'd:/ubuntu_iso/gpu_ip'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2018.3/data/ip'.
+# L " �? IP �?录已更新 (正点原子 9 �? + �?�? GPU)"
+ �? IP �?录已更新 (正点原子 9 �? + �?�? GPU)
+# set gpuips [get_ipdefs -all *dsh*gpu2d*]
+# if {[llength $gpuips] == 0} { L " �? 找不到自�? GPU IP!"; close $LOG; exit 1 }
+# L " �? 找到�?�? IP: $gpuips"
+ �? 找到�?�? IP: dsh:user:gpu2d_axi:1.0
+# add_files -norecurse $BD
+# add_files -fileset constrs_1 -norecurse $XDC
+# update_compile_order -fileset sources_1
+CRITICAL WARNING: [filemgmt 20-730] Could not find a top module in the fileset sources_1.
+Resolution: With the gui up, review the source files in the Sources window. Use Add Sources to add any needed sources. If the files are disabled, enable them. You can also select the file and choose Set Used In from the pop-up menu. Review if they are being used at the proper points of the flow.
+# L " �? BD + 约束已加�?"
+ �? BD + 约束已加�?
+# if {[catch {open_bd_design [get_files system.bd]} err]} {
+#     L " �? BD 打开失败: $err"; close $LOG; exit 1
+# }
+WARNING: [BD 41-1284] Cannot set parameter FREQ_TOLERANCE_HZ on port /aud_mclk
+Adding cell -- xilinx.com:ip:audio_formatter:1.0 - audio_formatter
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_audio_formatter_0 
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - axi_interconnect_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axi_interconnect_0_0 
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - xbar
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xbar_0 
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_us
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_us_0 
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_us
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_us_1 
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_pc_0 
+Adding cell -- xilinx.com:ip:i2s_receiver:1.0 - i2s_receiver
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_i2s_receiver_0 
+Adding cell -- xilinx.com:ip:i2s_transmitter:1.0 - i2s_transmitter
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_i2s_transmitter_0 
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_mclk
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_rst_mclk_0 
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_util_vector_logic_0_1 
+Adding cell -- xilinx.com:ip:axi_gpio:2.0 - axi_gpio_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axi_gpio_0_0 
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - axi_interconnect_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axi_interconnect_0_1 
+Adding cell -- xilinx.com:ip:axi_register_slice:2.1 - s00_regslice
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_s00_regslice_0 
+Adding cell -- xilinx.com:ip:axi_data_fifo:2.1 - s00_data_fifo
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_s00_data_fifo_0 
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_pc_1 
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_ps7_0_153M
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_rst_ps7_0_153M_0 
+Adding cell -- xilinx.com:ip:v_frmbuf_wr:2.1 - v_frmbuf_wr_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_v_frmbuf_wr_0_0 
+Adding cell -- xilinx.com:ip:v_vid_in_axi4s:4.0 - v_vid_in_axi4s_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_v_vid_in_axi4s_0_0 
+Adding cell -- xilinx.com:ip:xlslice:1.0 - xlslice_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlslice_0_0 
+Adding cell -- xilinx.com:ip:axis_subset_converter:1.1 - axis_subset_converter_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axis_subset_converter_0_2 
+Adding cell -- xilinx.com:ip:axi_gpio:2.0 - axi_gpio_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axi_gpio_1_0 
+Adding cell -- alientek.com:user:ov5640_capture_data:1.0 - ov5640_capture_data_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_ov5640_capture_data_0_2 
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_util_vector_logic_0_2 
+WARNING: [BD 41-1731] Type mismatch between connected pins: /camera_in/ov5640_capture_data_0/cmos_frame_ce(undef) and /camera_in/v_vid_in_axi4s_0/vid_io_in_ce(ce)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /camera_in/axi_gpio_0/gpio_io_o(undef) and /camera_in/ov5640_capture_data_0/rst_n(rst)
+Adding cell -- xilinx.com:ip:clk_wiz:6.0 - clk_wiz_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_clk_wiz_0_0 
+Adding cell -- xilinx.com:user:gmii2rgmii:1.0 - gmii2rgmii_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_gmii2rgmii_0_0 
+Adding cell -- openedv.com:user:DVI_Transmitter:1.0 - DVI_Transmitter_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_DVI_Transmitter_0_0 
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - axi_interconnect_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axi_interconnect_0_2 
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_pc_2 
+Adding cell -- xilinx.com:ip:axis_subset_converter:1.1 - axis_subset_converter_0
+Adding cell -- xilinx.com:ip:clk_wiz:6.0 - clk_wiz_dyn
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_clk_wiz_dyn_0 
+Adding cell -- xilinx.com:ip:v_tc:6.1 - hdmi_vtc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_hdmi_vtc_0 
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_hdmi_dynclk
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_rst_hdmi_dynclk_0 
+Adding cell -- xilinx.com:ip:v_axi4s_vid_out:4.0 - v_axi4s_vid_out_1
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_v_axi4s_vid_out_1_0 
+Adding cell -- xilinx.com:ip:v_frmbuf_rd:2.1 - v_frmbuf_rd_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_v_frmbuf_rd_0_0 
+Adding cell -- xilinx.com:ip:xlslice:1.0 - xlslice_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlslice_0_1 
+Adding cell -- xilinx.com:ip:axi_iic:2.0 - i2c2
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_i2c2_0 
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - axi_mem_intercon
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_axi_mem_intercon_0 
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_pc_3 
+Adding cell -- xilinx.com:ip:axi_gpio:2.0 - lcd_id
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_lcd_id_0 
+Adding cell -- digilentinc.com:IP:PWM:2.0 - lcd_pl_pwm
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_lcd_pl_pwm_0 
+Adding cell -- xilinx.com:ip:v_tc:6.1 - lcd_vtc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_lcd_vtc_0 
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - proc_sys_reset_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_proc_sys_reset_0_0 
+Adding cell -- www.alientek.com:user:rgb2lcd:1.0 - rgb2lcd
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_rgb2lcd_0 
+Adding cell -- xilinx.com:ip:v_axi4s_vid_out:4.0 - v_axi4s_vid_out_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_v_axi4s_vid_out_0_0 
+Adding cell -- xilinx.com:ip:v_frmbuf_rd:2.1 - v_frmbuf_rd_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_v_frmbuf_rd_0_1 
+Adding cell -- xilinx.com:ip:xlslice:1.0 - xlslice_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlslice_0_2 
+Adding cell -- xilinx.com:ip:axis_subset_converter:1.1 - axis_subset_converter_0
+Adding cell -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_processing_system7_0_0 
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - ps7_0_axi_periph
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_ps7_0_axi_periph_0 
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - xbar
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xbar_1 
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_pc_4 
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_cc_0 
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_cc_1 
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_auto_cc_2 
+Adding cell -- xilinx.com:ip:axi_gpio:2.0 - rest_gpio
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_rest_gpio_0 
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_ps7_0_100M
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_rst_ps7_0_100M_0 
+Adding cell -- xilinx.com:ip:xlconcat:2.1 - xlconcat_0
+INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlconcat_0_0 
+WARNING: [BD 41-1731] Type mismatch between connected pins: /processing_system7_0/FCLK_CLK2(clk) and /gmii2rgmii_0/idelay_clk(undef)
+Successfully read diagram <system> from BD file <D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/system.bd>
+INFO: [BD 41-433] 
+Design successfully migrated to use XCI files...
+open_bd_design: Time (s): cpu = 00:00:11 ; elapsed = 00:00:16 . Memory (MB): peak = 746.352 ; gain = 434.938
+# L " �? BD 已打开"
+ �? BD 已打开
+# if {[llength [get_bd_cells -quiet gpu_0]] > 0} {
+#     delete_bd_objs [get_bd_cells gpu_0]
+# }
+# create_bd_cell -type ip -vlnv dsh:user:gpu2d_axi:1.0 gpu_0
+# L " �? 已添�? gpu_0"
+ �? 已添�? gpu_0
+# set nummi [get_property CONFIG.NUM_MI [get_bd_cells ps7_0_axi_periph]]
+# L " 当前 NUM_MI = $nummi"
+ 当前 NUM_MI = 16
+# if {$nummi < 17} {
+#     set_property -dict [list CONFIG.NUM_MI {17}] [get_bd_cells ps7_0_axi_periph]
+#     L " �? NUM_MI -> 17"
+# }
+ �? NUM_MI -> 17
+# set m16 [get_bd_intf_pins -quiet ps7_0_axi_periph/M16_AXI]
+# if {$m16 eq ""} { L " �? 没有 M16_AXI"; close $LOG; exit 1 }
+# connect_bd_intf_net $m16 [get_bd_intf_pins gpu_0/S_AXI]
+# L " �? 控制�? -> ps7_0_axi_periph/M16_AXI"
+ �? 控制�? -> ps7_0_axi_periph/M16_AXI
+# if {[llength [get_bd_cells -quiet hp3_merge]] > 0} {
+#     delete_bd_objs [get_bd_cells hp3_merge]
+# }
+# create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 hp3_merge
+# set_property -dict [list CONFIG.NUM_SI {2} CONFIG.NUM_MI {1}] [get_bd_cells hp3_merge]
+# L " �? 已建 hp3_merge (2 �? 1 �?)"
+ �? 已建 hp3_merge (2 �? 1 �?)
+# set oldnet [get_bd_intf_nets -quiet -of_objects [get_bd_intf_pins processing_system7_0/S_AXI_HP3]]
+# if {$oldnet ne ""} {
+#     L " 拆掉原连�?: $oldnet"
+#     delete_bd_objs $oldnet
+# } else {
+#     L " ⚠️ 没找到原来连 HP3 的线(�?能名字不�?)"
+# }
+ 拆掉原连�?: /audio_M00_AXI
+# connect_bd_intf_net [get_bd_intf_pins audio/M00_AXI]     [get_bd_intf_pins hp3_merge/S00_AXI]
+# connect_bd_intf_net [get_bd_intf_pins gpu_0/M_AXI]       [get_bd_intf_pins hp3_merge/S01_AXI]
+# connect_bd_intf_net [get_bd_intf_pins hp3_merge/M00_AXI] [get_bd_intf_pins processing_system7_0/S_AXI_HP3]
+# L " �? 主机�? -> �? audio 共用 S_AXI_HP3"
+ �? 主机�? -> �? audio 共用 S_AXI_HP3
+# set iclk   [get_bd_pins -quiet ps7_0_axi_periph/ACLK]
+# set ireset [get_bd_pins -quiet ps7_0_axi_periph/ARESETN]
+# set clk_net [get_bd_nets -quiet -of_objects $iclk]
+# set rst_net [get_bd_nets -quiet -of_objects $ireset]
+# L " 时钟网络: $clk_net   复位网络: $rst_net"
+ 时钟网络: /processing_system7_0_FCLK_CLK0   复位网络: /rst_ps7_0_100M_peripheral_aresetn
+# set clk_src [get_bd_pins -quiet -of_objects $clk_net -filter {TYPE==clk}]
+# set rst_src [get_bd_pins -quiet -of_objects $rst_net -filter {TYPE==rst}]
+# L " 时钟源引�?: $clk_src"
+ 时钟源引�?: /processing_system7_0/FCLK_CLK0 /audio/s_axi_ctrl_aclk /axi_gpio_0/s_axi_aclk /clk_wiz_0/clk_in1 /clk_wiz_0/s_axi_aclk /hdmi_out/s00_axi_aclk /i2c2/s_axi_aclk /lcd_out/pwm_axi_aclk /processing_system7_0/M_AXI_GP0_ACLK /processing_system7_0/S_AXI_HP3_ACLK /ps7_0_axi_periph/ACLK /ps7_0_axi_periph/M00_ACLK /ps7_0_axi_periph/M01_ACLK /ps7_0_axi_periph/M02_ACLK /ps7_0_axi_periph/M04_ACLK /ps7_0_axi_periph/M06_ACLK /ps7_0_axi_periph/M07_ACLK /ps7_0_axi_periph/M08_ACLK /ps7_0_axi_periph/M09_ACLK /ps7_0_axi_periph/M10_ACLK /ps7_0_axi_periph/M11_ACLK /ps7_0_axi_periph/M12_ACLK /ps7_0_axi_periph/M13_ACLK /ps7_0_axi_periph/S00_ACLK /rest_gpio/s_axi_aclk /rst_ps7_0_100M/slowest_sync_clk /camera_in/s_axi_aclk /ps7_0_axi_periph/M15_ACLK
+# L " 复位源引�?: $rst_src"
+ 复位源引�?: /rst_ps7_0_100M/peripheral_aresetn /audio/s_axi_ctrl_aresetn /axi_gpio_0/s_axi_aresetn /clk_wiz_0/s_axi_aresetn /hdmi_out/s00_axi_aresetn /i2c2/s_axi_aresetn /lcd_out/pwm_axi_aresetn /ps7_0_axi_periph/ARESETN /ps7_0_axi_periph/M00_ARESETN /ps7_0_axi_periph/M01_ARESETN /ps7_0_axi_periph/M02_ARESETN /ps7_0_axi_periph/M04_ARESETN /ps7_0_axi_periph/M06_ARESETN /ps7_0_axi_periph/M07_ARESETN /ps7_0_axi_periph/M08_ARESETN /ps7_0_axi_periph/M09_ARESETN /ps7_0_axi_periph/M10_ARESETN /ps7_0_axi_periph/M11_ARESETN /ps7_0_axi_periph/M12_ARESETN /ps7_0_axi_periph/M13_ARESETN /ps7_0_axi_periph/S00_ARESETN /rest_gpio/s_axi_aresetn /lcd_out/ext_reset_in /camera_in/s_axi_aresetn /ps7_0_axi_periph/M15_ARESETN
+# if {[llength $clk_src] == 0 || [llength $rst_src] == 0} {
+#     L " �? 找不到时�?/复位源引�?"; close $LOG; exit 1
+# }
+WARNING: [BD 5-235] No pins matched 'get_bd_pins hp3_merge/S00_AXI_ACLK'
+WARNING: [BD 5-235] No pins matched 'get_bd_pins hp3_merge/S01_AXI_ACLK'
+WARNING: [BD 5-235] No pins matched 'get_bd_pins hp3_merge/M00_AXI_ACLK'
+# connect_bd_net [lindex $clk_src 0] \
+#     [get_bd_pins gpu_0/aclk] \
+#     [get_bd_pins hp3_merge/ACLK] \
+#     [get_bd_pins hp3_merge/S00_AXI_ACLK] \
+#     [get_bd_pins hp3_merge/S01_AXI_ACLK] \
+#     [get_bd_pins hp3_merge/M00_AXI_ACLK]
+WARNING: [BD 5-235] No pins matched 'get_bd_pins hp3_merge/S00_AXI_ARESETN'
+WARNING: [BD 5-235] No pins matched 'get_bd_pins hp3_merge/S01_AXI_ARESETN'
+WARNING: [BD 5-235] No pins matched 'get_bd_pins hp3_merge/M00_AXI_ARESETN'
+# connect_bd_net [lindex $rst_src 0] \
+#     [get_bd_pins gpu_0/aresetn] \
+#     [get_bd_pins hp3_merge/ARESETN] \
+#     [get_bd_pins hp3_merge/S00_AXI_ARESETN] \
+#     [get_bd_pins hp3_merge/S01_AXI_ARESETN] \
+#     [get_bd_pins hp3_merge/M00_AXI_ARESETN]
+# L " �? 时钟/复位已接"
+ �? 时钟/复位已接
+# L ""
+
+# L "=== 兡� BD �?连接的时�?/复位引脚 ==="
+=== 兡� BD �?连接的时�?/复位引脚 ===
+# set nbad 0
+# foreach p [get_bd_pins -quiet -filter {TYPE==clk || TYPE==rst}] {
+#     set n [get_bd_nets -quiet -of_objects $p]
+#     if {$n eq ""} { L "  �? $p"; incr nbad }
+# }
+# L "  合�??: $nbad �?"
+  合�??: 0 �?
+# L ""
+
+# L "=== gpu_0 的引脚连�? ==="
+=== gpu_0 的引脚连�? ===
+# foreach p [get_bd_pins -quiet gpu_0/*] {
+#     L "  [get_property PATH $p] -> [get_bd_nets -quiet -of_objects $p]"
+# }
+  /gpu_0/aclk -> /processing_system7_0_FCLK_CLK0
+  /gpu_0/aresetn -> /rst_ps7_0_100M_peripheral_aresetn
+  /gpu_0/m_axi_awaddr -> 
+  /gpu_0/m_axi_awburst -> 
+  /gpu_0/m_axi_awlen -> 
+  /gpu_0/m_axi_awready -> 
+  /gpu_0/m_axi_awsize -> 
+  /gpu_0/m_axi_awvalid -> 
+  /gpu_0/m_axi_bready -> 
+  /gpu_0/m_axi_bresp -> 
+  /gpu_0/m_axi_bvalid -> 
+  /gpu_0/m_axi_wdata -> 
+  /gpu_0/m_axi_wlast -> 
+  /gpu_0/m_axi_wready -> 
+  /gpu_0/m_axi_wstrb -> 
+  /gpu_0/m_axi_wvalid -> 
+  /gpu_0/s_axi_araddr -> 
+  /gpu_0/s_axi_arprot -> 
+  /gpu_0/s_axi_arready -> 
+  /gpu_0/s_axi_arvalid -> 
+  /gpu_0/s_axi_awaddr -> 
+  /gpu_0/s_axi_awprot -> 
+  /gpu_0/s_axi_awready -> 
+  /gpu_0/s_axi_awvalid -> 
+  /gpu_0/s_axi_bready -> 
+  /gpu_0/s_axi_bresp -> 
+  /gpu_0/s_axi_bvalid -> 
+  /gpu_0/s_axi_rdata -> 
+  /gpu_0/s_axi_rready -> 
+  /gpu_0/s_axi_rresp -> 
+  /gpu_0/s_axi_rvalid -> 
+  /gpu_0/s_axi_wdata -> 
+  /gpu_0/s_axi_wready -> 
+  /gpu_0/s_axi_wstrb -> 
+  /gpu_0/s_axi_wvalid -> 
+# L ""
+
+# L "=== hp3_merge 的时�?/复位 ==="
+=== hp3_merge 的时�?/复位 ===
+# foreach p [get_bd_pins -quiet hp3_merge/*] {
+#     set t [get_property TYPE $p]
+#     if {$t eq "clk" || $t eq "rst"} {
+#         L "  [get_property PATH $p] -> [get_bd_nets -quiet -of_objects $p]"
+#     }
+# }
+  /hp3_merge/ACLK -> /processing_system7_0_FCLK_CLK0
+  /hp3_merge/ARESETN -> /rst_ps7_0_100M_peripheral_aresetn
+  /hp3_merge/M00_ACLK -> 
+  /hp3_merge/M00_ARESETN -> 
+  /hp3_merge/S00_ACLK -> 
+  /hp3_merge/S00_ARESETN -> 
+  /hp3_merge/S01_ACLK -> 
+  /hp3_merge/S01_ARESETN -> 
+# assign_bd_address -quiet
+# set seg [get_bd_addr_segs -quiet gpu_0/S_AXI/Reg]
+# if {$seg ne ""} {
+#     set_property offset $GPUADDR $seg
+#     set_property range  64K      $seg
+#     L " �? GPU 地址 = $GPUADDR / 64K"
+# } else {
+#     L " ⚠️ 找不刡� gpu_0/S_AXI/Reg"
+# }
+ ⚠️ 找不刡� gpu_0/S_AXI/Reg
+# if {[catch {validate_bd_design} verr]} {
+#     L " �? BD 校验失败:"; L "    $verr"; close $LOG; exit 1
+# }
+vivado.bat : ERROR: [BD 41-758] The following clock pins are not connected to a valid clock source: 
+At line:3 char:8
++ $out = & vivado.bat -mode batch -source "D:\ubuntu_iso\integrate_gpu_ ...
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR: [BD 41-7... clock source: :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+/ps7_0_axi_periph/M16_ACLK
+/hp3_merge/S00_ACLK
+/hp3_merge/M00_ACLK
+/hp3_merge/S01_ACLK
+
+ �? BD 校验失败:
+    ERROR: [Common 17-39] 'validate_bd_design' failed due to earlier errors.
+
+INFO: [Common 17-206] Exiting Vivado at Sat Sep 19 14:38:34 2026...

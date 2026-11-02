@@ -1,0 +1,13 @@
+=== 1. gpu_0 的主机地址空间及其�? ===
+
+=== 2. hp3_merge 的从口地址�? ===
+
+=== 3. 接口位�?? (关键: GPU 32bit vs HP 口可�? 64bit) ===
+  gpu_0/M_AXI                        width=32  net=/gpu_0_m_axi
+  gpu_0/S_AXI                        width=32  net=/ps7_0_axi_periph_M16_AXI
+  hp3_merge/S00_AXI                  width=  net=/audio_M00_AXI
+  hp3_merge/S01_AXI                  width=  net=/gpu_0_m_axi
+  hp3_merge/M00_AXI                  width=  net=/hp3_merge_M00_AXI
+  processing_system7_0/S_AXI_HP3     width=64  net=/hp3_merge_M00_AXI
+
+=== 4. �?动插入的�?换器 (auto_ds/auto_us) ===

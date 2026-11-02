@@ -1,0 +1,45 @@
+{
+  "type": "waveform_analysis",
+  "result": {
+    "label": "square",
+    "label_cn": "方波",
+    "confidence": 0.973,
+    "fusion": {
+      "local_cnn": {
+        "label": "square",
+        "confidence": 0.731
+      },
+      "vision_model": {
+        "label": "square",
+        "confidence": 0.973
+      },
+      "agree": true,
+      "final_source": "vision_model"
+    },
+    "measurements": {
+      "freq_hz": 998.5,
+      "vpp_v": 1.008,
+      "vmax_v": 0.42,
+      "vmin_v": -0.577,
+      "duty_pct": 49.9,
+      "offset_v": -0.078,
+      "rise_us": 1.2,
+      "fall_us": 1.1
+    },
+    "quality": {
+      "score": 87,
+      "snr_db": 42.0,
+      "thd_pct": 1.5,
+      "jitter_ns": 3.0,
+      "overshoot_pct": 8.0
+    },
+    "channel": 0,
+    "ts": 1761000000.123
+  },
+  "style": {
+    "max_chars": 70,
+    "language": "zh-CN",
+    "tone": "concise",
+    "for_voice": true
+  }
+}

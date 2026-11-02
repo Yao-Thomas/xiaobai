@@ -1,0 +1,2 @@
+sudo sync
+sudo reboot

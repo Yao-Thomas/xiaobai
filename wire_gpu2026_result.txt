@@ -1,0 +1,29 @@
+=== 1. 先把 audio 的主口从 PS HP3 上摘下来 ===
+  HP3 当前连的 net: /audio_M00_AXI
+  已删陡� net: /audio_M00_AXI
+
+=== 2. �? hp3_merge (2 SI / 1 MI 互联) ===
+ �? hp3_merge 已建
+
+=== 3. 连线 ===
+  �? audio -> hp3_merge/S00
+  �? gpu   -> hp3_merge/S01
+  �? hp3_merge/M00 -> PS HP3
+  �? ps7_0_axi_periph/M16 -> gpu_0/s_axi (NUM_MI=17)
+
+=== 4. 时钟 / 复位 ===
+  �? 时钟复位全部接好
+
+=== 5. 分配地址 (必须甡� assign_bd_address, set_property 会因为只读而失�?) ===
+  GPU �?: /gpu_0/s_axi/reg0
+  �? 从机 /gpu_0/s_axi/reg0 -> 0x43CB0000 / 64K
+  ⚠️ 没找刡� gpu_0 的主机�??
+
+=== 6. 校验 + 保存 ===
+ �? BD 校验通过
+  实例敡�: 15
+ �? 已保�?
+
+=== 最终�?��?: GPU 地址 ===
+  /processing_system7_0/Data/SEG_gpu_0_reg0  =  0x43CB0000 / 0x00010000
+=== 结束 ===

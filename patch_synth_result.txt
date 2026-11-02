@@ -1,0 +1,18 @@
+=== �?�? ipshared + 重跑综合实现 ===
+ 当前时间: Sun Sep 20 00:41:51 +0800 2026
+ 覆盖 8 �?文件
+ 共�?�盖 8 �?文件
+  red/2df3/src/gpu2d_axi.v : 6 �?
+  red/31a1/src/gpu2d_axi.v : 6 �?
+  red/b5b0/src/gpu2d_axi.v : 6 �?
+  red/f810/src/gpu2d_axi.v : 6 �?
+
+>>> 综合  Sun Sep 20 00:41:59 +0800 2026
+ synth_1: 100%  synth_design Complete!
+ �? 综合通过
+
+>>> 实现  Sun Sep 20 01:01:50 +0800 2026
+ impl_1: 100%  write_bitstream Complete!
+ ★★�? BITSTREAM: D:/ubuntu_iso/atk2018/atk2018.runs/impl_1/system_wrapper.bit  (4045674 字节)
+ RESULT=OK
+=== 结束 ===

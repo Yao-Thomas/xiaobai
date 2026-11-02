@@ -1,0 +1,15 @@
+{
+  "base": "Qwen/Qwen2.5-0.5B-Instruct",
+  "epochs": 3,
+  "batch": 4,
+  "grad_accum": 8,
+  "lr": 0.0002,
+  "max_len": 512,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "dropout": 0.05,
+  "seed": 20261001,
+  "n_train": 772,
+  "n_val": 85,
+  "system_prompt": "你是「系统管家小白」，一个运行在 Zynq-7020 开发板上的自主助手。你只依据项目资料回答 FPGA/音频/示波器/CNN 等相关问题；资料里没有答案的，要明确说“这个问题不在我的知识范围内”。"
+}

@@ -1,0 +1,60 @@
+======================================================
+ add scope_cap IP into BD
+ time: Fri Sep 25 23:59:35 +0800 2026
+======================================================
+current ip_repo_paths: D:/ubuntu_iso/atk2026/Navigator_7020/ip_repo D:/ubuntu_iso/gpu_ip D:/ubuntu_iso/gpu_ip D:/ubuntu_iso/scope_ip
+ scope_ip already in ip_repo_paths
+  found IP: dsh:user:scope_cap_axi:1.0
+ BD opened
+ removed old scope_0
+ removed old scope_tie
+
+>>> create scope_0
+  scope_0 created
+  intf pins:
+     /scope_0/s_axi
+  plain pins:
+     /scope_0/aclk
+     /scope_0/adc_clk
+     /scope_0/adc_data
+     /scope_0/adc_dbg
+     /scope_0/aresetn
+     /scope_0/s_axi_araddr
+     /scope_0/s_axi_arprot
+     /scope_0/s_axi_arready
+     /scope_0/s_axi_arvalid
+     /scope_0/s_axi_awaddr
+     /scope_0/s_axi_awprot
+     /scope_0/s_axi_awready
+     /scope_0/s_axi_awvalid
+     /scope_0/s_axi_bready
+     /scope_0/s_axi_bresp
+     /scope_0/s_axi_bvalid
+     /scope_0/s_axi_rdata
+     /scope_0/s_axi_rready
+     /scope_0/s_axi_rresp
+     /scope_0/s_axi_rvalid
+     /scope_0/s_axi_wdata
+     /scope_0/s_axi_wready
+     /scope_0/s_axi_wstrb
+     /scope_0/s_axi_wvalid
+
+>>> tie adc_data to constant 0 (V1 = internal DDS source)
+  adc_data <- const 0
+
+>>> connect AXI-Lite
+  ps7_0_axi_periph/M17 -> scope_0/s_axi  (NUM_MI=18)
+  clocks/resets connected
+
+>>> assign address
+   slave /scope_0/s_axi/reg0 -> 0x43CC0000 / 64K
+
+>>> validate_bd_design
+ BD validated
+
+>>> generate_target all
+ generated
+
+=== addresses (scope/gpu) ===
+  /processing_system7_0/Data/SEG_gpu_0_reg0 = 0x43CB0000 / 0x00010000
+  /processing_system7_0/Data/SEG_scope_0_reg0 = 0x43CC0000 / 0x00010000

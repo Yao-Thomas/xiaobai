@@ -1,0 +1,23 @@
+{
+ "id": "vivado_real_001",
+ "status": "ok",
+ "ts": "2026-10-02 14:35:43",
+ "elapsed_sec": 37.1,
+ "steps": [
+  {
+   "desc": "跑 Vivado batch 打开工程",
+   "rc": 0,
+   "elapsed": 37.1,
+   "tail": "runs: synth_1 impl_1\r\n# set bit {D:/ubuntu_iso/atk2026/Navigator_7020/Navigator_7020.runs/impl_1/system_wrapper.bit}\r\n# if {[file exists $bit]} {\r\n#     set sz [file size $bit]\r\n#     puts \"BITSTREAM: $bit\"\r\n#     puts \"BITSTREAM_SIZE: $sz\"\r\n# }\r\nBITSTREAM: D:/ubuntu_iso/atk2026/Navigator_7020/Navigator_7020.runs/impl_1/system_wrapper.bit\r\nBITSTREAM_SIZE: 4045769\r\n# set f [open $OUT w]\r\n# puts $f \"daemon 驱动 Vivado 测试\"\r\n# puts $f \"时间: [clock format [clock seconds]]\"\r\n# puts $f \"工程: $PROJ\"\r\n# puts $f \"runs: $runs\"\r\n# if {[file exists $bit]} {\r\n#     puts $f \"bitstream 大小: [file size $bit]\"\r\n#     puts $f \"bitstream mtime: [clock format [file mtime $bit]]\"\r\n# }\r\n# close $f\r\n# puts \"报告写到 $OUT\"\r\n报告写到 D:/ubuntu_iso/fpga_jobs/_vivado_report.txt\r\n# puts \"RESULT=OK\"\r\nRESULT=OK\r\n# exit 0\r\nINFO: [Common 17-206] Exiting Vivado at Fri Oct  2 14:35:42 2026..."
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "fpga_jobs/_vivado_report.txt",
+   "size": 232,
+   "md5": "3c474a1f255a6f3ba93e42df0ba0a5ae",
+   "mtime": "2026-10-02 14:35:42"
+  }
+ ],
+ "error": ""
+}

@@ -1,0 +1,75 @@
+======================================================
+ GPU 集成 (Vivado 2018.3)
+======================================================
+ �? 工程已建: D:/ubuntu_iso/tmp_try2018/gpu_proj
+ �? IP �?录已更新 (正点原子 9 �? + �?�? GPU)
+ �? 找到�?�? IP: dsh:user:gpu2d_axi:1.0
+ �? BD + 约束已加�?
+ �? BD 已打开
+ �? 已添�? gpu_0
+ 当前 NUM_MI = 16
+ �? NUM_MI -> 17
+ �? 控制�? -> ps7_0_axi_periph/M16_AXI
+ �? 已建 hp3_merge (2 �? 1 �?)
+ 拆掉原连�?: /audio_M00_AXI
+ �? 主机�? -> �? audio 共用 S_AXI_HP3
+ 时钟网络: /processing_system7_0_FCLK_CLK0   复位网络: /rst_ps7_0_100M_peripheral_aresetn
+ 时钟源引�?: /processing_system7_0/FCLK_CLK0 /audio/s_axi_ctrl_aclk /axi_gpio_0/s_axi_aclk /clk_wiz_0/clk_in1 /clk_wiz_0/s_axi_aclk /hdmi_out/s00_axi_aclk /i2c2/s_axi_aclk /lcd_out/pwm_axi_aclk /processing_system7_0/M_AXI_GP0_ACLK /processing_system7_0/S_AXI_HP3_ACLK /ps7_0_axi_periph/ACLK /ps7_0_axi_periph/M00_ACLK /ps7_0_axi_periph/M01_ACLK /ps7_0_axi_periph/M02_ACLK /ps7_0_axi_periph/M04_ACLK /ps7_0_axi_periph/M06_ACLK /ps7_0_axi_periph/M07_ACLK /ps7_0_axi_periph/M08_ACLK /ps7_0_axi_periph/M09_ACLK /ps7_0_axi_periph/M10_ACLK /ps7_0_axi_periph/M11_ACLK /ps7_0_axi_periph/M12_ACLK /ps7_0_axi_periph/M13_ACLK /ps7_0_axi_periph/S00_ACLK /rest_gpio/s_axi_aclk /rst_ps7_0_100M/slowest_sync_clk /camera_in/s_axi_aclk /ps7_0_axi_periph/M15_ACLK
+ 复位源引�?: /rst_ps7_0_100M/peripheral_aresetn /audio/s_axi_ctrl_aresetn /axi_gpio_0/s_axi_aresetn /clk_wiz_0/s_axi_aresetn /hdmi_out/s00_axi_aresetn /i2c2/s_axi_aresetn /lcd_out/pwm_axi_aresetn /ps7_0_axi_periph/ARESETN /ps7_0_axi_periph/M00_ARESETN /ps7_0_axi_periph/M01_ARESETN /ps7_0_axi_periph/M02_ARESETN /ps7_0_axi_periph/M04_ARESETN /ps7_0_axi_periph/M06_ARESETN /ps7_0_axi_periph/M07_ARESETN /ps7_0_axi_periph/M08_ARESETN /ps7_0_axi_periph/M09_ARESETN /ps7_0_axi_periph/M10_ARESETN /ps7_0_axi_periph/M11_ARESETN /ps7_0_axi_periph/M12_ARESETN /ps7_0_axi_periph/M13_ARESETN /ps7_0_axi_periph/S00_ARESETN /rest_gpio/s_axi_aresetn /lcd_out/ext_reset_in /camera_in/s_axi_aresetn /ps7_0_axi_periph/M15_ARESETN
+ �? 时钟/复位已接 (�?互联新�?�的 M16_ACLK)
+
+=== 兡� BD �?连接的时�?/复位引脚 ===
+  合�??: 0 �?
+
+=== gpu_0 的引脚连�? ===
+  /gpu_0/aclk -> /processing_system7_0_FCLK_CLK0
+  /gpu_0/aresetn -> /rst_ps7_0_100M_peripheral_aresetn
+  /gpu_0/m_axi_awaddr -> 
+  /gpu_0/m_axi_awburst -> 
+  /gpu_0/m_axi_awlen -> 
+  /gpu_0/m_axi_awready -> 
+  /gpu_0/m_axi_awsize -> 
+  /gpu_0/m_axi_awvalid -> 
+  /gpu_0/m_axi_bready -> 
+  /gpu_0/m_axi_bresp -> 
+  /gpu_0/m_axi_bvalid -> 
+  /gpu_0/m_axi_wdata -> 
+  /gpu_0/m_axi_wlast -> 
+  /gpu_0/m_axi_wready -> 
+  /gpu_0/m_axi_wstrb -> 
+  /gpu_0/m_axi_wvalid -> 
+  /gpu_0/s_axi_araddr -> 
+  /gpu_0/s_axi_arprot -> 
+  /gpu_0/s_axi_arready -> 
+  /gpu_0/s_axi_arvalid -> 
+  /gpu_0/s_axi_awaddr -> 
+  /gpu_0/s_axi_awprot -> 
+  /gpu_0/s_axi_awready -> 
+  /gpu_0/s_axi_awvalid -> 
+  /gpu_0/s_axi_bready -> 
+  /gpu_0/s_axi_bresp -> 
+  /gpu_0/s_axi_bvalid -> 
+  /gpu_0/s_axi_rdata -> 
+  /gpu_0/s_axi_rready -> 
+  /gpu_0/s_axi_rresp -> 
+  /gpu_0/s_axi_rvalid -> 
+  /gpu_0/s_axi_wdata -> 
+  /gpu_0/s_axi_wready -> 
+  /gpu_0/s_axi_wstrb -> 
+  /gpu_0/s_axi_wvalid -> 
+
+=== hp3_merge 的时�?/复位 ===
+  /hp3_merge/ACLK -> /processing_system7_0_FCLK_CLK0
+  /hp3_merge/ARESETN -> /rst_ps7_0_100M_peripheral_aresetn
+  /hp3_merge/M00_ACLK -> /processing_system7_0_FCLK_CLK0
+  /hp3_merge/M00_ARESETN -> /rst_ps7_0_100M_peripheral_aresetn
+  /hp3_merge/S00_ACLK -> /processing_system7_0_FCLK_CLK0
+  /hp3_merge/S00_ARESETN -> /rst_ps7_0_100M_peripheral_aresetn
+  /hp3_merge/S01_ACLK -> /processing_system7_0_FCLK_CLK0
+  /hp3_merge/S01_ARESETN -> /rst_ps7_0_100M_peripheral_aresetn
+ ⚠️ 找不刡� gpu_0/S_AXI/Reg
+ �? BD 校验通过并已保存
+
+=== 结果摘�?? ===
+  BD 实例敡�: 15
+  NUM_MI: 17

@@ -1,0 +1,10 @@
+[Unit]
+Description=Desktop stall watchdog (restart zynq-desktop if its heartbeat stops)
+# 桌面本身可能已经卡死，所以这个服务不能依赖它
+After=zynq-desktop.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/desktop-watchdog.sh
+# 重启桌面本身会短暂切断心跳，给足时间别误判
+TimeoutStartSec=60

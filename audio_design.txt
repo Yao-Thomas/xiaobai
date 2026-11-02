@@ -1,0 +1,2593 @@
+==============================================================================
+一、V3.7 音频章节 37_audio_loopback 完整文件清单
+==============================================================================
+  共 295 项
+  过滤掉 Vivado 缓存后 29 项:
+     ZYNQ_7020_FPGA\37_audio_loopback\doc\audio_loopback.vsdx
+     ZYNQ_7020_FPGA\37_audio_loopback\doc\~$dio_loopback.docx
+     ZYNQ_7020_FPGA\37_audio_loopback\doc\~WRL0005.tmp
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\constrs_1\new\pin.xdc
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\sources_1\ip\clk_wiz_0\clk_wiz_0.xci
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.xpr
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_loopback.v
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_loopback.xdc
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_receive.v
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_send.v
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\i2c_dri.v
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\i2c_reg_cfg.v
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\wm8960_config.v
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl\wm8960_ctrl.v
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\sources_1\ip\clk_wiz_0
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\constrs_1\new
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\sources_1\ip
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\constrs_1
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\sources_1
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\.Xil
+     ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs
+     ZYNQ_7020_FPGA\37_audio_loopback\sim\sim
+     ZYNQ_7020_FPGA\37_audio_loopback\sim\tb
+     ZYNQ_7020_FPGA\37_audio_loopback\doc
+     ZYNQ_7020_FPGA\37_audio_loopback\prj
+     ZYNQ_7020_FPGA\37_audio_loopback\rtl
+     ZYNQ_7020_FPGA\37_audio_loopback\sim
+     ZYNQ_7020_FPGA\37_audio_loopback
+     ZYNQ_7020_FPGA
+
+==============================================================================
+二、解压到本地看源码
+==============================================================================
+  解压返回码 0
+  解出 235 个文件
+
+==============================================================================
+三、看音频相关的 RTL / BD / 约束
+==============================================================================
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.cache\ip\2020.2\2fb63971b471e178\clk_wiz_0_sim_netlist.v (6005) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:46:02 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode funcsim -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+      //               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ clk_wiz_0_sim_netlist.v
+      // Design      : clk_wiz_0
+      // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
+      //               or synthesized. This netlist cannot be used for SDF annotated simulation.
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      `timescale 1 ps / 1 ps
+      
+      (* NotValidForBitStream *)
+      module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix
+         (clk_out1,
+          reset,
+          clk_in1);
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      
+        (* IBUF_LOW_PWR *) wire clk_in1;
+        wire clk_out1;
+        wire reset;
+      
+        decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_wiz_0_clk_wiz inst
+             (.clk_in1(clk_in1),
+              .clk_out1(clk_out1),
+              .reset(reset));
+      endmodule
+      
+      module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_wiz_0_clk_wiz
+         (clk_out1,
+          reset,
+          clk_in1);
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      
+        wire clk_in1;
+        wire clk_in1_clk_wiz_0;
+        wire clk_out1;
+        wire clk_out1_clk_wiz_0;
+        wire clkfbout_buf_clk_wiz_0;
+        wire clkfbout_clk_wiz_0;
+        wire reset;
+        wire NLW_plle2_adv_inst_CLKOUT1_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED;
+        wire NLW_plle2_adv_inst_DRDY_UNCONNECTED;
+        wire NLW_plle2_adv_inst_LOCKED_UNCONNECTED;
+        wire [15:0]NLW_plle2_adv_inst_DO_UNCONNECTED;
+      
+        (* BOX_TYPE = "PRIMITIVE" *) 
+        BUFG clkf_buf
+             (.I(clkfbout_clk_wiz_0),
+              .O(clkfbout_buf_clk_wiz_0));
+        (* BOX_TYPE = "PRIMITIVE" *) 
+        (* CAPACITANCE = "DONT_CARE" *) 
+        (* IBUF_DELAY_VALUE = "0" *) 
+        (* IFD_DELAY_VALUE = "AUTO" *) 
+        IBUF #(
+          .IOSTANDARD("DEFAULT")) 
+          clkin1_ibufg
+             (.I(clk_in1),
+              .O(clk_in1_clk_wiz_0));
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.cache\ip\2020.2\2fb63971b471e178\clk_wiz_0_stub.v (1271) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:46:02 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode synth_stub -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+      //               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ clk_wiz_0_stub.v
+      // Design      : clk_wiz_0
+      // Purpose     : Stub declaration of top-level module interface
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      
+      // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
+      // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
+      // Please paste the declaration into a Verilog source file or add the file as an additional source.
+      module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix(clk_out1, reset, clk_in1)
+      /* synthesis syn_black_box black_box_pad_pin="clk_out1,reset,clk_in1" */;
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      endmodule
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.cache\ip\2020.2\acc7060027be6f52\clk_wiz_0_sim_netlist.v (5937) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:43:24 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode funcsim -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+      //               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ clk_wiz_0_sim_netlist.v
+      // Design      : clk_wiz_0
+      // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
+      //               or synthesized. This netlist cannot be used for SDF annotated simulation.
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      `timescale 1 ps / 1 ps
+      
+      (* NotValidForBitStream *)
+      module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix
+         (clk_out1,
+          locked,
+          clk_in1);
+        output clk_out1;
+        output locked;
+        input clk_in1;
+      
+        (* IBUF_LOW_PWR *) wire clk_in1;
+        wire clk_out1;
+        wire locked;
+      
+        decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_wiz_0_clk_wiz inst
+             (.clk_in1(clk_in1),
+              .clk_out1(clk_out1),
+              .locked(locked));
+      endmodule
+      
+      module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_wiz_0_clk_wiz
+         (clk_out1,
+          locked,
+          clk_in1);
+        output clk_out1;
+        output locked;
+        input clk_in1;
+      
+        wire clk_in1;
+        wire clk_in1_clk_wiz_0;
+        wire clk_out1;
+        wire clk_out1_clk_wiz_0;
+        wire clkfbout_buf_clk_wiz_0;
+        wire clkfbout_clk_wiz_0;
+        wire locked;
+        wire NLW_plle2_adv_inst_CLKOUT1_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED;
+        wire NLW_plle2_adv_inst_DRDY_UNCONNECTED;
+        wire [15:0]NLW_plle2_adv_inst_DO_UNCONNECTED;
+      
+        (* BOX_TYPE = "PRIMITIVE" *) 
+        BUFG clkf_buf
+             (.I(clkfbout_clk_wiz_0),
+              .O(clkfbout_buf_clk_wiz_0));
+        (* BOX_TYPE = "PRIMITIVE" *) 
+        (* CAPACITANCE = "DONT_CARE" *) 
+        (* IBUF_DELAY_VALUE = "0" *) 
+        (* IFD_DELAY_VALUE = "AUTO" *) 
+        IBUF #(
+          .IOSTANDARD("DEFAULT")) 
+          clkin1_ibufg
+             (.I(clk_in1),
+              .O(clk_in1_clk_wiz_0));
+        (* BOX_TYPE = "PRIMITIVE" *) 
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.cache\ip\2020.2\acc7060027be6f52\clk_wiz_0_stub.v (1275) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:43:24 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode synth_stub -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+      //               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ clk_wiz_0_stub.v
+      // Design      : clk_wiz_0
+      // Purpose     : Stub declaration of top-level module interface
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      
+      // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
+      // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
+      // Please paste the declaration into a Verilog source file or add the file as an additional source.
+      module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix(clk_out1, locked, clk_in1)
+      /* synthesis syn_black_box black_box_pad_pin="clk_out1,locked,clk_in1" */;
+        output clk_out1;
+        output locked;
+        input clk_in1;
+      endmodule
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\clk_wiz_0.v (3932) ----
+      
+      // file: clk_wiz_0.v
+      // 
+      // (c) Copyright 2008 - 2013 Xilinx, Inc. All rights reserved.
+      // 
+      // This file contains confidential and proprietary information
+      // of Xilinx, Inc. and is protected under U.S. and
+      // international copyright and other intellectual property
+      // laws.
+      // 
+      // DISCLAIMER
+      // This disclaimer is not a license and does not grant any
+      // rights to the materials distributed herewith. Except as
+      // otherwise provided in a valid license issued to you by
+      // Xilinx, and to the maximum extent permitted by applicable
+      // law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+      // WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+      // AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+      // BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+      // INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+      // (2) Xilinx shall not be liable (whether in contract or tort,
+      // including negligence, or under any other theory of
+      // liability) for any loss or damage of any kind or nature
+      // related to, arising under or in connection with these
+      // materials, including for any direct, or any indirect,
+      // special, incidental, or consequential loss or damage
+      // (including loss of data, profits, goodwill, or any type of
+      // loss or damage suffered as a result of any action brought
+      // by a third party) even if such damage or loss was
+      // reasonably foreseeable or Xilinx had been advised of the
+      // possibility of the same.
+      // 
+      // CRITICAL APPLICATIONS
+      // Xilinx products are not designed or intended to be fail-
+      // safe, or for use in any application requiring fail-safe
+      // performance, such as life-support or safety devices or
+      // systems, Class III medical devices, nuclear facilities,
+      // applications related to the deployment of airbags, or any
+      // other applications that could lead to death, personal
+      // injury, or severe property or environmental damage
+      // (individually and collectively, "Critical
+      // Applications"). Customer assumes the sole risk and
+      // liability of any use of Xilinx products in Critical
+      // Applications, subject only to applicable laws and
+      // regulations governing limitations on product liability.
+      // 
+      // THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+      // PART OF THIS FILE AT ALL TIMES.
+      // 
+      //----------------------------------------------------------------------------
+      // User entered comments
+      //----------------------------------------------------------------------------
+      // None
+      //
+      //----------------------------------------------------------------------------
+      //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
+      //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
+      //----------------------------------------------------------------------------
+      // clk_out1__12.00000______0.000______50.0______286.482____161.614
+      //
+      //----------------------------------------------------------------------------
+      // Input Clock   Freq (MHz)    Input Jitter (UI)
+      //----------------------------------------------------------------------------
+      // __primary__________50.000____________0.010
+      
+      `timescale 1ps/1ps
+      
+      (* CORE_GENERATION_INFO = "clk_wiz_0,clk_wiz_v6_0_6_0_0,{component_name=clk_wiz_0,use_phase_alignment=true,use_min_o_jitter=false,use_max_i_jitter=false,use_dyn_phase_shift=false,use_inclk_switchover=false,use_dyn_reconfig=false,enable_axi=0,feedback_source=FDBK_AUTO,PRIMITIVE=PLL,num_out_clk=1,clkin1_period=20.000,clkin2_period=10.000,use_power_down=false,use_reset=true,use_locked=false,use_inclk_stopped=false,feedback_type=SINGLE,CLOCK_MGR_TYPE=NA,manual_override=false}" *)
+      
+      module clk_wiz_0 
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\clk_wiz_0.xdc (2715) ----
+      
+      # file: clk_wiz_0.xdc
+      # 
+      # (c) Copyright 2008 - 2013 Xilinx, Inc. All rights reserved.
+      # 
+      # This file contains confidential and proprietary information
+      # of Xilinx, Inc. and is protected under U.S. and
+      # international copyright and other intellectual property
+      # laws.
+      # 
+      # DISCLAIMER
+      # This disclaimer is not a license and does not grant any
+      # rights to the materials distributed herewith. Except as
+      # otherwise provided in a valid license issued to you by
+      # Xilinx, and to the maximum extent permitted by applicable
+      # law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+      # WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+      # AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+      # BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+      # INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+      # (2) Xilinx shall not be liable (whether in contract or tort,
+      # including negligence, or under any other theory of
+      # liability) for any loss or damage of any kind or nature
+      # related to, arising under or in connection with these
+      # materials, including for any direct, or any indirect,
+      # special, incidental, or consequential loss or damage
+      # (including loss of data, profits, goodwill, or any type of
+      # loss or damage suffered as a result of any action brought
+      # by a third party) even if such damage or loss was
+      # reasonably foreseeable or Xilinx had been advised of the
+      # possibility of the same.
+      # 
+      # CRITICAL APPLICATIONS
+      # Xilinx products are not designed or intended to be fail-
+      # safe, or for use in any application requiring fail-safe
+      # performance, such as life-support or safety devices or
+      # systems, Class III medical devices, nuclear facilities,
+      # applications related to the deployment of airbags, or any
+      # other applications that could lead to death, personal
+      # injury, or severe property or environmental damage
+      # (individually and collectively, "Critical
+      # Applications"). Customer assumes the sole risk and
+      # liability of any use of Xilinx products in Critical
+      # Applications, subject only to applicable laws and
+      # regulations governing limitations on product liability.
+      # 
+      # THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+      # PART OF THIS FILE AT ALL TIMES.
+      # 
+      
+      # Input clock periods. These duplicate the values entered for the
+      # input clocks. You can use these to time your system. If required
+      # commented constraints can be used in the top level xdc 
+      #----------------------------------------------------------------
+      # Connect to input port when clock capable pin is selected for input
+      create_clock -period 20.000 [get_ports clk_in1]
+      set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.2
+      
+      
+      set_property PHASESHIFT_MODE WAVEFORM [get_cells -hierarchical *adv*]
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\clk_wiz_0_clk_wiz.v (6069) ----
+      
+      // file: clk_wiz_0.v
+      // 
+      // (c) Copyright 2008 - 2013 Xilinx, Inc. All rights reserved.
+      // 
+      // This file contains confidential and proprietary information
+      // of Xilinx, Inc. and is protected under U.S. and
+      // international copyright and other intellectual property
+      // laws.
+      // 
+      // DISCLAIMER
+      // This disclaimer is not a license and does not grant any
+      // rights to the materials distributed herewith. Except as
+      // otherwise provided in a valid license issued to you by
+      // Xilinx, and to the maximum extent permitted by applicable
+      // law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+      // WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+      // AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+      // BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+      // INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+      // (2) Xilinx shall not be liable (whether in contract or tort,
+      // including negligence, or under any other theory of
+      // liability) for any loss or damage of any kind or nature
+      // related to, arising under or in connection with these
+      // materials, including for any direct, or any indirect,
+      // special, incidental, or consequential loss or damage
+      // (including loss of data, profits, goodwill, or any type of
+      // loss or damage suffered as a result of any action brought
+      // by a third party) even if such damage or loss was
+      // reasonably foreseeable or Xilinx had been advised of the
+      // possibility of the same.
+      // 
+      // CRITICAL APPLICATIONS
+      // Xilinx products are not designed or intended to be fail-
+      // safe, or for use in any application requiring fail-safe
+      // performance, such as life-support or safety devices or
+      // systems, Class III medical devices, nuclear facilities,
+      // applications related to the deployment of airbags, or any
+      // other applications that could lead to death, personal
+      // injury, or severe property or environmental damage
+      // (individually and collectively, "Critical
+      // Applications"). Customer assumes the sole risk and
+      // liability of any use of Xilinx products in Critical
+      // Applications, subject only to applicable laws and
+      // regulations governing limitations on product liability.
+      // 
+      // THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+      // PART OF THIS FILE AT ALL TIMES.
+      // 
+      //----------------------------------------------------------------------------
+      // User entered comments
+      //----------------------------------------------------------------------------
+      // None
+      //
+      //----------------------------------------------------------------------------
+      //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
+      //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
+      //----------------------------------------------------------------------------
+      // clk_out1__12.00000______0.000______50.0______286.482____161.614
+      //
+      //----------------------------------------------------------------------------
+      // Input Clock   Freq (MHz)    Input Jitter (UI)
+      //----------------------------------------------------------------------------
+      // __primary__________50.000____________0.010
+      
+      `timescale 1ps/1ps
+      
+      module clk_wiz_0_clk_wiz 
+      
+       (// Clock in ports
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\clk_wiz_0_ooc.xdc (2486) ----
+      
+      # file: clk_wiz_0_ooc.xdc
+      # 
+      # (c) Copyright 2008 - 2013 Xilinx, Inc. All rights reserved.
+      # 
+      # This file contains confidential and proprietary information
+      # of Xilinx, Inc. and is protected under U.S. and
+      # international copyright and other intellectual property
+      # laws.
+      # 
+      # DISCLAIMER
+      # This disclaimer is not a license and does not grant any
+      # rights to the materials distributed herewith. Except as
+      # otherwise provided in a valid license issued to you by
+      # Xilinx, and to the maximum extent permitted by applicable
+      # law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+      # WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+      # AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+      # BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+      # INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+      # (2) Xilinx shall not be liable (whether in contract or tort,
+      # including negligence, or under any other theory of
+      # liability) for any loss or damage of any kind or nature
+      # related to, arising under or in connection with these
+      # materials, including for any direct, or any indirect,
+      # special, incidental, or consequential loss or damage
+      # (including loss of data, profits, goodwill, or any type of
+      # loss or damage suffered as a result of any action brought
+      # by a third party) even if such damage or loss was
+      # reasonably foreseeable or Xilinx had been advised of the
+      # possibility of the same.
+      # 
+      # CRITICAL APPLICATIONS
+      # Xilinx products are not designed or intended to be fail-
+      # safe, or for use in any application requiring fail-safe
+      # performance, such as life-support or safety devices or
+      # systems, Class III medical devices, nuclear facilities,
+      # applications related to the deployment of airbags, or any
+      # other applications that could lead to death, personal
+      # injury, or severe property or environmental damage
+      # (individually and collectively, "Critical
+      # Applications"). Customer assumes the sole risk and
+      # liability of any use of Xilinx products in Critical
+      # Applications, subject only to applicable laws and
+      # regulations governing limitations on product liability.
+      # 
+      # THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+      # PART OF THIS FILE AT ALL TIMES.
+      # 
+      
+      #################
+      #DEFAULT CLOCK CONSTRAINTS
+      
+      ############################################################
+      # Clock Period Constraints                                 #
+      ############################################################
+      #create_clock -period 20.000 [get_ports clk_in1]
+      
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\clk_wiz_0_sim_netlist.v (5940) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:46:02 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode funcsim
+      //               c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
+      // Design      : clk_wiz_0
+      // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
+      //               or synthesized. This netlist cannot be used for SDF annotated simulation.
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      `timescale 1 ps / 1 ps
+      
+      (* NotValidForBitStream *)
+      module clk_wiz_0
+         (clk_out1,
+          reset,
+          clk_in1);
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      
+        (* IBUF_LOW_PWR *) wire clk_in1;
+        wire clk_out1;
+        wire reset;
+      
+        clk_wiz_0_clk_wiz_0_clk_wiz inst
+             (.clk_in1(clk_in1),
+              .clk_out1(clk_out1),
+              .reset(reset));
+      endmodule
+      
+      (* ORIG_REF_NAME = "clk_wiz_0_clk_wiz" *) 
+      module clk_wiz_0_clk_wiz_0_clk_wiz
+         (clk_out1,
+          reset,
+          clk_in1);
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      
+        wire clk_in1;
+        wire clk_in1_clk_wiz_0;
+        wire clk_out1;
+        wire clk_out1_clk_wiz_0;
+        wire clkfbout_buf_clk_wiz_0;
+        wire clkfbout_clk_wiz_0;
+        wire reset;
+        wire NLW_plle2_adv_inst_CLKOUT1_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED;
+        wire NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED;
+        wire NLW_plle2_adv_inst_DRDY_UNCONNECTED;
+        wire NLW_plle2_adv_inst_LOCKED_UNCONNECTED;
+        wire [15:0]NLW_plle2_adv_inst_DO_UNCONNECTED;
+      
+        (* BOX_TYPE = "PRIMITIVE" *) 
+        BUFG clkf_buf
+             (.I(clkfbout_clk_wiz_0),
+              .O(clkfbout_buf_clk_wiz_0));
+        (* BOX_TYPE = "PRIMITIVE" *) 
+        (* CAPACITANCE = "DONT_CARE" *) 
+        (* IBUF_DELAY_VALUE = "0" *) 
+        (* IFD_DELAY_VALUE = "AUTO" *) 
+        IBUF #(
+          .IOSTANDARD("DEFAULT")) 
+          clkin1_ibufg
+             (.I(clk_in1),
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\clk_wiz_0_stub.v (1227) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:46:02 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode synth_stub
+      //               c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_stub.v
+      // Design      : clk_wiz_0
+      // Purpose     : Stub declaration of top-level module interface
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      
+      // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
+      // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
+      // Please paste the declaration into a Verilog source file or add the file as an additional source.
+      module clk_wiz_0(clk_out1, reset, clk_in1)
+      /* synthesis syn_black_box black_box_pad_pin="clk_out1,reset,clk_in1" */;
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      endmodule
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.gen\sources_1\ip\clk_wiz_0\doc\clk_wiz_v6_0_changelog.txt (8624) ----
+      2020.2:
+       * Version 6.0 (Rev. 6)
+       * Bug Fix: Internal GUI fixes
+       * Other: CR Fixes
+      
+      2020.1.1:
+       * Version 6.0 (Rev. 5)
+       * No changes
+      
+      2020.1:
+       * Version 6.0 (Rev. 5)
+       * Bug Fix: Internal GUI fixes
+       * Other: CR Fixes
+      
+      2019.2.2:
+       * Version 6.0 (Rev. 4)
+       * No changes
+      
+      2019.2.1:
+       * Version 6.0 (Rev. 4)
+       * No changes
+      
+      2019.2:
+       * Version 6.0 (Rev. 4)
+       * Bug Fix: Internal GUI fixes
+       * Other: CR Fixes
+      
+      2019.1.3:
+       * Version 6.0 (Rev. 3)
+       * No changes
+      
+      2019.1.2:
+       * Version 6.0 (Rev. 3)
+       * No changes
+      
+      2019.1.1:
+       * Version 6.0 (Rev. 3)
+       * No changes
+      
+      2019.1:
+       * Version 6.0 (Rev. 3)
+       * Bug Fix: Internal GUI fixes
+       * Other: New family support added
+      
+      2018.3.1:
+       * Version 6.0 (Rev. 2)
+       * No changes
+      
+      2018.3:
+       * Version 6.0 (Rev. 2)
+       * Bug Fix: Made input source independent for primary and secondary clock
+       * Other: New family support added
+      
+      2018.2:
+       * Version 6.0 (Rev. 1)
+       * Bug Fix: Removed vco freq check when Primitive is None
+       * Other: New family support added
+      
+      2018.1:
+       * Version 6.0
+       * Bug Fix: Bug fixes in Dynamic Reconfiguration feature and Write DRP feature
+       * Bug Fix: Bug fixes for connection issue for s_axi_aresetn pin in IPI
+       * Feature Enhancement: The default value of USE_PHASE_ALIGMENT is updated to false for UltraScale and UltraScale+ devices. Phase Alignment feature uses extra clock routes in UltraScale and UltraScale+ designs when MMCMs are used. These routing resources are wasted when user do not understand when phase alignment is really needed. Now, implementation tools can use these extra clock routing resources for high fanout signals.
+       * Feature Enhancement: A column "Max. freq of buffer" is added in the Output Clock table which shows the maximum frequency that the selected output buffer can support
+       * Other: DRCs added for invalid input values in Override mode
+      
+      2017.4:
+       * Version 5.4 (Rev. 3)
+       * Bug Fix: Internal GUI issues are fixed for COMPENSATION mode as INTERNAL
+       * Bug Fix: Fixed issue in dynamic reconfiguration of fractional values of M in MMCME3, MMCME4
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\ip\clk_wiz_0\clk_wiz_0_stub.v (1227) ----
+      // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      // --------------------------------------------------------------------------------
+      // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+      // Date        : Tue Jul  4 09:46:02 2023
+      // Host        : DESKTOP-ND6K090 running 64-bit major release  (build 9200)
+      // Command     : write_verilog -force -mode synth_stub
+      //               c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_stub.v
+      // Design      : clk_wiz_0
+      // Purpose     : Stub declaration of top-level module interface
+      // Device      : xc7z020clg400-2
+      // --------------------------------------------------------------------------------
+      
+      // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
+      // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
+      // Please paste the declaration into a Verilog source file or add the file as an additional source.
+      module clk_wiz_0(clk_out1, reset, clk_in1)
+      /* synthesis syn_black_box black_box_pad_pin="clk_out1,reset,clk_in1" */;
+        output clk_out1;
+        input reset;
+        input clk_in1;
+      endmodule
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\README.txt (3236) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required
+      #             to simulate the design for a simulator, the directory structure
+      #             and the generated exported files.
+      #
+      ################################################################################
+      
+      1. Simulate Design
+      
+      To simulate design, cd to the simulator directory and execute the script.
+      
+      For example:-
+      
+      % cd questa
+      % ./top.sh
+      
+      The export simulation flow requires the Xilinx pre-compiled simulation library
+      components for the target simulator. These components are referred using the
+      '-lib_map_path' switch. If this switch is specified, then the export simulation
+      will automatically set this library path in the generated script and update,
+      copy the simulator setup file(s) in the exported directory.
+      
+      If '-lib_map_path' is not specified, then the pre-compiled simulation library
+      information will not be included in the exported scripts and that may cause
+      simulation errors when running this script. Alternatively, you can provide the
+      library information using this switch while executing the generated script.
+      
+      For example:-
+      
+      % ./top.sh -lib_map_path /design/questa/clibs
+      
+      Please refer to the generated script header 'Prerequisite' section for more details.
+      
+      2. Directory Structure
+      
+      By default, if the -directory switch is not specified, export_simulation will
+      create the following directory structure:-
+      
+      <current_working_directory>/export_sim/<simulator>
+      
+      For example, if the current working directory is /tmp/test, export_simulation
+      will create the following directory path:-
+      
+      /tmp/test/export_sim/questa
+      
+      If -directory switch is specified, export_simulation will create a simulator
+      sub-directory under the specified directory path.
+      
+      For example, 'export_simulation -directory /tmp/test/my_test_area/func_sim'
+      command will create the following directory:-
+      
+      /tmp/test/my_test_area/func_sim/questa
+      
+      By default, if -simulator is not specified, export_simulation will create a
+      simulator sub-directory for each simulator and export the files for each simulator
+      in this sub-directory respectively.
+      
+      IMPORTANT: Please note that the simulation library path must be specified manually
+      in the generated script for the respective simulator. Please refer to the generated
+      script header 'Prerequisite' section for more details.
+      
+      3. Exported script and files
+      
+      Export simulation will create the driver shell script, setup files and copy the
+      design sources in the output directory path.
+      
+      By default, when the -script_name switch is not specified, export_simulation will
+      create the following script name:-
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\activehdl\README.txt (2181) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'compile', 'elaborate' and 'simulate' functions
+      implemented in the script file for the 3-step flow. These functions are called
+      from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\activehdl\file_info.txt (633) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\activehdl\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\ies\README.txt (2122) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'execute' function for the single-step flow. This
+      function is called from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\ies\file_info.txt (669) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\ies\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\modelsim\README.txt (2181) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'compile', 'elaborate' and 'simulate' functions
+      implemented in the script file for the 3-step flow. These functions are called
+      from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\modelsim\file_info.txt (633) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\modelsim\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\questa\README.txt (2181) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'compile', 'elaborate' and 'simulate' functions
+      implemented in the script file for the 3-step flow. These functions are called
+      from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\questa\file_info.txt (633) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\questa\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\riviera\README.txt (2181) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'compile', 'elaborate' and 'simulate' functions
+      implemented in the script file for the 3-step flow. These functions are called
+      from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\riviera\file_info.txt (633) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\riviera\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\vcs\README.txt (2181) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'compile', 'elaborate' and 'simulate' functions
+      implemented in the script file for the 3-step flow. These functions are called
+      from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\vcs\file_info.txt (669) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\vcs\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xcelium\README.txt (2122) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'execute' function for the single-step flow. This
+      function is called from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xcelium\file_info.txt (669) ----
+      xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2020.2/data/ip/xpm/xpm_VCOMP.vhd,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xcelium\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xsim\README.txt (2181) ----
+      ################################################################################
+      # Vivado (TM) v2020.2 (64-bit)
+      #
+      # README.txt: Please read the sections below to understand the steps required to
+      #             run the exported script and information about the source files.
+      #
+      # Generated by export_simulation on Tue Jul 04 09:45:35 +0800 2023
+      #
+      ################################################################################
+      
+      1. How to run the generated simulation script:-
+      
+      From the shell prompt in the current directory, issue the following command:-
+      
+      ./clk_wiz_0.sh
+      
+      This command will launch the 'compile', 'elaborate' and 'simulate' functions
+      implemented in the script file for the 3-step flow. These functions are called
+      from the main 'run' function in the script file.
+      
+      The 'run' function first executes the 'setup' function, the purpose of which is to
+      create simulator specific setup files, create design library mappings and library
+      directories and copy 'glbl.v' from the Vivado software install location into the
+      current directory.
+      
+      The 'setup' function is also used for removing the simulator generated data in
+      order to reset the current directory to the original state when export_simulation
+      was launched from Vivado. This generated data can be removed by specifying the
+      '-reset_run' switch to the './clk_wiz_0.sh' script.
+      
+      ./clk_wiz_0.sh -reset_run
+      
+      To keep the generated data from the previous run but regenerate the setup files and
+      library directories, use the '-noclean_files' switch.
+      
+      ./clk_wiz_0.sh -noclean_files
+      
+      For more information on the script, please type './clk_wiz_0.sh -help'.
+      
+      2. Additional design information files:-
+      
+      export_simulation generates following additional file that can be used for fetching
+      the design files information or for integrating with external custom scripts.
+      
+      Name   : file_info.txt
+      Purpose: This file contains detail design file information based on the compile order
+               when export_simulation was executed from Vivado. The file contains information
+               about the file type, name, whether it is part of the IP, associated library
+               and the file path information.
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xsim\cmd.tcl (464) ----
+      set curr_wave [current_wave_config]
+      if { [string length $curr_wave] == 0 } {
+        if { [llength [get_objects]] > 0} {
+          add_wave /
+          set_property needs_save false [current_wave_config]
+        } else {
+           send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+        }
+      }
+      
+      run -all
+      quit
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xsim\file_info.txt (382) ----
+      clk_wiz_0_clk_wiz.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      clk_wiz_0.v,verilog,xil_defaultlib,../../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v,incdir="$ref_dir/../../../ipstatic"incdir="../../../ipstatic"
+      glbl.v,Verilog,xil_defaultlib,glbl.v
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.ip_user_files\sim_scripts\clk_wiz_0\xsim\glbl.v (1762) ----
+      // $Header: /devl/xcs/repo/env/Databases/CAEInterfaces/verunilibs/data/glbl.v,v 1.14 2010/10/28 20:44:00 fphillip Exp $
+      `ifndef GLBL
+      `define GLBL
+      `timescale  1 ps / 1 ps
+      
+      module glbl ();
+      
+          parameter ROC_WIDTH = 100000;
+          parameter TOC_WIDTH = 0;
+          parameter GRES_WIDTH = 10000;
+          parameter GRES_START = 10000;
+      
+      //--------   STARTUP Globals --------------
+          wire GSR;
+          wire GTS;
+          wire GWE;
+          wire PRLD;
+          wire GRESTORE;
+          tri1 p_up_tmp;
+          tri (weak1, strong0) PLL_LOCKG = p_up_tmp;
+      
+          wire PROGB_GLBL;
+          wire CCLKO_GLBL;
+          wire FCSBO_GLBL;
+          wire [3:0] DO_GLBL;
+          wire [3:0] DI_GLBL;
+         
+          reg GSR_int;
+          reg GTS_int;
+          reg PRLD_int;
+          reg GRESTORE_int;
+      
+      //--------   JTAG Globals --------------
+          wire JTAG_TDO_GLBL;
+          wire JTAG_TCK_GLBL;
+          wire JTAG_TDI_GLBL;
+          wire JTAG_TMS_GLBL;
+          wire JTAG_TRST_GLBL;
+      
+          reg JTAG_CAPTURE_GLBL;
+          reg JTAG_RESET_GLBL;
+          reg JTAG_SHIFT_GLBL;
+          reg JTAG_UPDATE_GLBL;
+          reg JTAG_RUNTEST_GLBL;
+      
+          reg JTAG_SEL1_GLBL = 0;
+          reg JTAG_SEL2_GLBL = 0 ;
+          reg JTAG_SEL3_GLBL = 0;
+          reg JTAG_SEL4_GLBL = 0;
+      
+          reg JTAG_USER_TDO1_GLBL = 1'bz;
+          reg JTAG_USER_TDO2_GLBL = 1'bz;
+          reg JTAG_USER_TDO3_GLBL = 1'bz;
+          reg JTAG_USER_TDO4_GLBL = 1'bz;
+      
+          assign (strong1, weak0) GSR = GSR_int;
+          assign (strong1, weak0) GTS = GTS_int;
+          assign (weak1, weak0) PRLD = PRLD_int;
+          assign (strong1, weak0) GRESTORE = GRESTORE_int;
+      
+          initial begin
+      	GSR_int = 1'b1;
+      	PRLD_int = 1'b1;
+      	#(ROC_WIDTH)
+      	GSR_int = 1'b0;
+      	PRLD_int = 1'b0;
+          end
+      
+          initial begin
+      	GTS_int = 1'b1;
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\clk_wiz_0_synth_1\clk_wiz_0.tcl (13114) ----
+      # 
+      # Synthesis run script generated by Vivado
+      # 
+      
+      set TIME_start [clock seconds] 
+      namespace eval ::optrace {
+        variable script "C:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.runs/clk_wiz_0_synth_1/clk_wiz_0.tcl"
+        variable category "vivado_synth"
+      }
+      
+      # Try to connect to running dispatch if we haven't done so already.
+      # This code assumes that the Tcl interpreter is not using threads,
+      # since the ::dispatch::connected variable isn't mutex protected.
+      if {![info exists ::dispatch::connected]} {
+        namespace eval ::dispatch {
+          variable connected false
+          if {[llength [array get env XILINX_CD_CONNECT_ID]] > 0} {
+            set result "true"
+            if {[catch {
+              if {[lsearch -exact [package names] DispatchTcl] < 0} {
+                set result [load librdi_cd_clienttcl[info sharedlibextension]] 
+              }
+              if {$result eq "false"} {
+                puts "WARNING: Could not load dispatch client library"
+              }
+              set connect_id [ ::dispatch::init_client -mode EXISTING_SERVER ]
+              if { $connect_id eq "" } {
+                puts "WARNING: Could not initialize dispatch client"
+              } else {
+                puts "INFO: Dispatch client connection id - $connect_id"
+                set connected true
+              }
+            } catch_res]} {
+              puts "WARNING: failed to connect to dispatch server - $catch_res"
+            }
+          }
+        }
+      }
+      if {$::dispatch::connected} {
+        # Remove the dummy proc if it exists.
+        if { [expr {[llength [info procs ::OPTRACE]] > 0}] } {
+          rename ::OPTRACE ""
+        }
+        proc ::OPTRACE { task action {tags {} } } {
+          ::vitis_log::op_trace "$task" $action -tags $tags -script $::optrace::script -category $::optrace::category
+        }
+        # dispatch is generic. We specifically want to attach logging.
+        ::vitis_log::connect_client
+      } else {
+        # Add dummy proc if it doesn't exist.
+        if { [expr {[llength [info procs ::OPTRACE]] == 0}] } {
+          proc ::OPTRACE {{arg1 \"\" } {arg2 \"\"} {arg3 \"\" } {arg4 \"\"} {arg5 \"\" } {arg6 \"\"}} {
+              # Do nothing
+          }
+        }
+      }
+      
+      proc create_report { reportName command } {
+        set status "."
+        append status $reportName ".fail"
+        if { [file exists $status] } {
+          eval file delete [glob $status]
+        }
+        send_msg_id runtcl-4 info "Executing : $command"
+        set retval [eval catch { $command } msg]
+        if { $retval != 0 } {
+          set fp [open $status w]
+          close $fp
+          send_msg_id runtcl-5 warning "$msg"
+        }
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\clk_wiz_0_synth_1\dont_touch.xdc (2463) ----
+      # This file is automatically generated.
+      # It contains project source information necessary for synthesis and implementation.
+      
+      # IP: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+      # IP: The module: 'clk_wiz_0' is the root of the design. Do not add the DONT_TOUCH constraint.
+      
+      # XDC: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc
+      # XDC: The top module name and the constraint reference have the same name: 'clk_wiz_0'. Do not add the DONT_TOUCH constraint.
+      set_property KEEP_HIERARCHY SOFT [get_cells inst -quiet] -quiet
+      
+      # XDC: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc
+      # XDC: The top module name and the constraint reference have the same name: 'clk_wiz_0'. Do not add the DONT_TOUCH constraint.
+      #dup# set_property KEEP_HIERARCHY SOFT [get_cells inst -quiet] -quiet
+      
+      # XDC: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc
+      # XDC: The top module name and the constraint reference have the same name: 'clk_wiz_0'. Do not add the DONT_TOUCH constraint.
+      #dup# set_property KEEP_HIERARCHY SOFT [get_cells inst -quiet] -quiet
+      
+      # IP: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+      # IP: The module: 'clk_wiz_0' is the root of the design. Do not add the DONT_TOUCH constraint.
+      
+      # XDC: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc
+      # XDC: The top module name and the constraint reference have the same name: 'clk_wiz_0'. Do not add the DONT_TOUCH constraint.
+      #dup# set_property KEEP_HIERARCHY SOFT [get_cells inst -quiet] -quiet
+      
+      # XDC: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc
+      # XDC: The top module name and the constraint reference have the same name: 'clk_wiz_0'. Do not add the DONT_TOUCH constraint.
+      #dup# set_property KEEP_HIERARCHY SOFT [get_cells inst -quiet] -quiet
+      
+      # XDC: c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc
+      # XDC: The top module name and the constraint reference have the same name: 'clk_wiz_0'. Do not add the DONT_TOUCH constraint.
+      #dup# set_property KEEP_HIERARCHY SOFT [get_cells inst -quiet] -quiet
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\clk_wiz_0_synth_1\htr.txt (395) ----
+      REM
+      REM Vivado(TM)
+      REM htr.txt: a Vivado-generated description of how-to-repeat the
+      REM          the basic steps of a run.  Note that runme.bat/sh needs
+      REM          to be invoked for Vivado to track run status.
+      REM Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      REM
+      
+      vivado -log clk_wiz_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source clk_wiz_0.tcl
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\clk_wiz_0_synth_1\.Xil\clk_wiz_0_propImpl.xdc (462) ----
+      set_property SRC_FILE_INFO {cfile:c:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc rfile:../../../audio_loopback.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc id:1 order:EARLY scoped_inst:inst} [current_design]
+      current_instance inst
+      set_property src_info {type:SCOPED_XDC file:1 line:57 export:INPUT save:INPUT read:READ} [current_design]
+      set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.2
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\impl_1\audio_loopback.tcl (5242) ----
+      # 
+      # Report generation script generated by Vivado
+      # 
+      
+      proc create_report { reportName command } {
+        set status "."
+        append status $reportName ".fail"
+        if { [file exists $status] } {
+          eval file delete [glob $status]
+        }
+        send_msg_id runtcl-4 info "Executing : $command"
+        set retval [eval catch { $command } msg]
+        if { $retval != 0 } {
+          set fp [open $status w]
+          close $fp
+          send_msg_id runtcl-5 warning "$msg"
+        }
+      }
+      namespace eval ::optrace {
+        variable script "C:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.runs/impl_1/audio_loopback.tcl"
+        variable category "vivado_impl"
+      }
+      
+      # Try to connect to running dispatch if we haven't done so already.
+      # This code assumes that the Tcl interpreter is not using threads,
+      # since the ::dispatch::connected variable isn't mutex protected.
+      if {![info exists ::dispatch::connected]} {
+        namespace eval ::dispatch {
+          variable connected false
+          if {[llength [array get env XILINX_CD_CONNECT_ID]] > 0} {
+            set result "true"
+            if {[catch {
+              if {[lsearch -exact [package names] DispatchTcl] < 0} {
+                set result [load librdi_cd_clienttcl[info sharedlibextension]] 
+              }
+              if {$result eq "false"} {
+                puts "WARNING: Could not load dispatch client library"
+              }
+              set connect_id [ ::dispatch::init_client -mode EXISTING_SERVER ]
+              if { $connect_id eq "" } {
+                puts "WARNING: Could not initialize dispatch client"
+              } else {
+                puts "INFO: Dispatch client connection id - $connect_id"
+                set connected true
+              }
+            } catch_res]} {
+              puts "WARNING: failed to connect to dispatch server - $catch_res"
+            }
+          }
+        }
+      }
+      if {$::dispatch::connected} {
+        # Remove the dummy proc if it exists.
+        if { [expr {[llength [info procs ::OPTRACE]] > 0}] } {
+          rename ::OPTRACE ""
+        }
+        proc ::OPTRACE { task action {tags {} } } {
+          ::vitis_log::op_trace "$task" $action -tags $tags -script $::optrace::script -category $::optrace::category
+        }
+        # dispatch is generic. We specifically want to attach logging.
+        ::vitis_log::connect_client
+      } else {
+        # Add dummy proc if it doesn't exist.
+        if { [expr {[llength [info procs ::OPTRACE]] == 0}] } {
+          proc ::OPTRACE {{arg1 \"\" } {arg2 \"\"} {arg3 \"\" } {arg4 \"\"} {arg5 \"\" } {arg6 \"\"}} {
+              # Do nothing
+          }
+        }
+      }
+      
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\impl_1\htr.txt (413) ----
+      REM
+      REM Vivado(TM)
+      REM htr.txt: a Vivado-generated description of how-to-repeat the
+      REM          the basic steps of a run.  Note that runme.bat/sh needs
+      REM          to be invoked for Vivado to track run status.
+      REM Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      REM
+      
+      vivado -log audio_loopback.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source audio_loopback.tcl -notrace
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\synth_1\audio_loopback.tcl (6418) ----
+      # 
+      # Synthesis run script generated by Vivado
+      # 
+      
+      set TIME_start [clock seconds] 
+      namespace eval ::optrace {
+        variable script "C:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.runs/synth_1/audio_loopback.tcl"
+        variable category "vivado_synth"
+      }
+      
+      # Try to connect to running dispatch if we haven't done so already.
+      # This code assumes that the Tcl interpreter is not using threads,
+      # since the ::dispatch::connected variable isn't mutex protected.
+      if {![info exists ::dispatch::connected]} {
+        namespace eval ::dispatch {
+          variable connected false
+          if {[llength [array get env XILINX_CD_CONNECT_ID]] > 0} {
+            set result "true"
+            if {[catch {
+              if {[lsearch -exact [package names] DispatchTcl] < 0} {
+                set result [load librdi_cd_clienttcl[info sharedlibextension]] 
+              }
+              if {$result eq "false"} {
+                puts "WARNING: Could not load dispatch client library"
+              }
+              set connect_id [ ::dispatch::init_client -mode EXISTING_SERVER ]
+              if { $connect_id eq "" } {
+                puts "WARNING: Could not initialize dispatch client"
+              } else {
+                puts "INFO: Dispatch client connection id - $connect_id"
+                set connected true
+              }
+            } catch_res]} {
+              puts "WARNING: failed to connect to dispatch server - $catch_res"
+            }
+          }
+        }
+      }
+      if {$::dispatch::connected} {
+        # Remove the dummy proc if it exists.
+        if { [expr {[llength [info procs ::OPTRACE]] > 0}] } {
+          rename ::OPTRACE ""
+        }
+        proc ::OPTRACE { task action {tags {} } } {
+          ::vitis_log::op_trace "$task" $action -tags $tags -script $::optrace::script -category $::optrace::category
+        }
+        # dispatch is generic. We specifically want to attach logging.
+        ::vitis_log::connect_client
+      } else {
+        # Add dummy proc if it doesn't exist.
+        if { [expr {[llength [info procs ::OPTRACE]] == 0}] } {
+          proc ::OPTRACE {{arg1 \"\" } {arg2 \"\"} {arg3 \"\" } {arg4 \"\"} {arg5 \"\" } {arg6 \"\"}} {
+              # Do nothing
+          }
+        }
+      }
+      
+      proc create_report { reportName command } {
+        set status "."
+        append status $reportName ".fail"
+        if { [file exists $status] } {
+          eval file delete [glob $status]
+        }
+        send_msg_id runtcl-4 info "Executing : $command"
+        set retval [eval catch { $command } msg]
+        if { $retval != 0 } {
+          set fp [open $status w]
+          close $fp
+          send_msg_id runtcl-5 warning "$msg"
+        }
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\synth_1\htr.txt (405) ----
+      REM
+      REM Vivado(TM)
+      REM htr.txt: a Vivado-generated description of how-to-repeat the
+      REM          the basic steps of a run.  Note that runme.bat/sh needs
+      REM          to be invoked for Vivado to track run status.
+      REM Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+      REM
+      
+      vivado -log audio_loopback.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source audio_loopback.tcl
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.runs\synth_1\.Xil\audio_loopback_propImpl.xdc (1979) ----
+      set_property SRC_FILE_INFO {cfile:C:/Users/ALIENTEK/Desktop/N7020/audio_loopback/prj/audio_loopback.srcs/constrs_1/new/pin.xdc rfile:../../../audio_loopback.srcs/constrs_1/new/pin.xdc id:1} [current_design]
+      set_property src_info {type:XDC file:1 line:2 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN U18 IOSTANDARD LVCMOS33} [get_ports sys_clk]
+      set_property src_info {type:XDC file:1 line:3 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN N16 IOSTANDARD LVCMOS33} [get_ports sys_rst_n]
+      set_property src_info {type:XDC file:1 line:4 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN E18 IOSTANDARD LVCMOS33} [get_ports aud_scl]
+      set_property src_info {type:XDC file:1 line:5 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN F17 IOSTANDARD LVCMOS33} [get_ports aud_sda]
+      set_property src_info {type:XDC file:1 line:6 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN M17 IOSTANDARD LVCMOS33} [get_ports aud_adcdat]
+      set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN G18 IOSTANDARD LVCMOS33} [get_ports aud_lrc]
+      set_property src_info {type:XDC file:1 line:8 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN G17 IOSTANDARD LVCMOS33} [get_ports aud_dacdat]
+      set_property src_info {type:XDC file:1 line:9 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN E19 IOSTANDARD LVCMOS33} [get_ports aud_mclk]
+      set_property src_info {type:XDC file:1 line:10 export:INPUT save:INPUT read:READ} [current_design]
+      set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports aud_bclk]
+      set_property src_info {type:XDC file:1 line:15 export:INPUT save:INPUT read:READ} [current_design]
+      set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets aud_bclk_IBUF]
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\prj\audio_loopback.srcs\constrs_1\new\pin.xdc (931) ----
+      #管脚
+      set_property -dict {PACKAGE_PIN U18 IOSTANDARD LVCMOS33} [get_ports sys_clk]
+      set_property -dict {PACKAGE_PIN N16 IOSTANDARD LVCMOS33} [get_ports sys_rst_n]
+      set_property -dict {PACKAGE_PIN E18 IOSTANDARD LVCMOS33} [get_ports aud_scl]
+      set_property -dict {PACKAGE_PIN F17 IOSTANDARD LVCMOS33} [get_ports aud_sda]
+      set_property -dict {PACKAGE_PIN M17 IOSTANDARD LVCMOS33} [get_ports aud_adcdat]
+      set_property -dict {PACKAGE_PIN G18 IOSTANDARD LVCMOS33} [get_ports aud_lrc]
+      set_property -dict {PACKAGE_PIN G17 IOSTANDARD LVCMOS33} [get_ports aud_dacdat]
+      set_property -dict {PACKAGE_PIN E19 IOSTANDARD LVCMOS33} [get_ports aud_mclk]
+      set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports aud_bclk]
+      #时钟
+      create_clock -period 20.000 -name sys_clk[get_ports sys_clk]
+      create_clock -period 80.000 -name aud_bclk[get_ports aud_bclk]
+      # aud_bclk
+      set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets aud_bclk_IBUF]
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_loopback.v (2409) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           audio_loopback
+      // Created by:          正点原子
+      // Created date:        2023年2月3日14:17:02
+      // Version:             V1.0
+      // Descriptions:        audio_loopback
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************//
+      
+      module audio_loopback(
+          input           sys_clk   ,               // 系统时钟(50MHz)
+          input           sys_rst_n ,               // 系统复位
+          input           aud_bclk  ,               // 位时钟
+          input           aud_lrc   ,               // 左右通道时钟
+          input           aud_adcdat,               // 音频输入
+          
+          output          aud_mclk  ,               // 主时钟
+          output          aud_dacdat,               // 音频输出
+          output          aud_scl   ,               // I2C时钟信号
+          inout           aud_sda                   // I2C数据信号
+      );
+      
+      //*****************************************************
+      //**                    main code
+      //*****************************************************
+      
+      //例化PLL，生成WM8960主时钟
+      clk_wiz_0 u_pll_clk(
+          .reset              (~sys_rst_n),
+          .clk_in1            (sys_clk   ),
+          .clk_out1           (aud_mclk  )          // WM8960的MCLK信号（12MHz)
+      );
+          
+      //例化WM8960控制模块
+      wm8960_ctrl u_wm8960_ctrl(
+          .clk                (sys_clk    ),        // 时钟信号
+          .rst_n              (sys_rst_n  ),        // 复位信号
+          .aud_bclk           (aud_bclk   ),        // WM8960位时钟
+          .aud_lrc            (aud_lrc    ),        // 左右通道时钟
+          .aud_adcdat         (aud_adcdat ),        // 音频输入
+          
+          .aud_dacdat         (aud_dacdat ),        // 音频输出
+          .aud_scl            (aud_scl    ),        // WM8960的SCL信号
+          .aud_sda            (aud_sda    )         // WM8960的SDA信号
+      );
+      
+      endmodule 
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_loopback.xdc (898) ----
+      #
+      set_property -dict {PACKAGE_PIN U18 IOSTANDARD LVCMOS33} [get_ports sys_clk]
+      set_property -dict {PACKAGE_PIN N16 IOSTANDARD LVCMOS33} [get_ports sys_rst_n]
+      set_property -dict {PACKAGE_PIN E18 IOSTANDARD LVCMOS33} [get_ports aud_scl]
+      set_property -dict {PACKAGE_PIN F17 IOSTANDARD LVCMOS33} [get_ports aud_sda]
+      set_property -dict {PACKAGE_PIN M17 IOSTANDARD LVCMOS33} [get_ports aud_adcdat]
+      set_property -dict {PACKAGE_PIN G18 IOSTANDARD LVCMOS33} [get_ports aud_lrc]
+      set_property -dict {PACKAGE_PIN G17 IOSTANDARD LVCMOS33} [get_ports aud_dacdat]
+      set_property -dict {PACKAGE_PIN E19 IOSTANDARD LVCMOS33} [get_ports aud_mclk]
+      #
+      create_clock -period 20.000 [get_ports sys_clk]
+      create_clock -period 80.000 [get_ports aud_bclk]
+      # aud_bclk
+      set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets aud_bclk_IBUF]
+      set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports aud_bclk]
+      
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_receive.v (2907) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           audio_receive
+      // Created by:          正点原子
+      // Created date:        2023年2月3日14:17:02
+      // Version:             V1.0
+      // Descriptions:        audio_receive
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************//
+      
+      module audio_receive #(
+          parameter WL = 6'd24                 // WL(word length音频字长定义)
+      ) (      
+          input                 rst_n     ,     // 复位信号
+          input                 aud_bclk  ,     // WM8960位时钟
+          input                 aud_lrc   ,     // 左右通道时钟
+          input                 aud_adcdat,     // 音频输入
+          
+          output  reg           rx_done   ,     // FPGA接收数据完成
+          output  reg [WL-1:0]  adc_data        // FPGA接收的数据
+          
+      );
+      //reg define
+      reg              aud_lrc_d0;              // aud_lrc延迟一个时钟周期
+      reg    [ 5:0]    rx_cnt;                  // 发送数据计数
+      reg    [WL-1:0]  adc_data_t;              // 预输出的音频数据的暂存值
+      //wire define
+      wire             lrc_edge ;               // 边沿信号
+      
+      //*****************************************************
+      //**                    main code
+      //*****************************************************
+      
+      assign   lrc_edge = aud_lrc ^ aud_lrc_d0; // LRC信号的边沿检测
+      
+      //为了在aud_lrc变化的第二个AUD_BCLK上升沿采集aud_adcdat,延迟打拍采集
+      always @(posedge aud_bclk or negedge rst_n) begin
+          if(!rst_n)
+              aud_lrc_d0 <= 1'b0;
+          else
+              aud_lrc_d0 <= aud_lrc;
+      end
+      
+      //采集24位音频数据的计数
+      always @(posedge aud_bclk or negedge rst_n) begin
+          if(!rst_n)
+              rx_cnt <= 6'd0;
+          else if(lrc_edge == 1'b1)
+              rx_cnt <= 6'd0;
+          else if(rx_cnt <= WL)
+              rx_cnt <= rx_cnt + 1'b1;
+      end
+      
+      //把采集到的音频数据临时存放在一个寄存器内
+      always @(posedge aud_bclk or negedge rst_n) begin
+          if(!rst_n)
+              adc_data_t <= 0;
+          else if(rx_cnt < WL)
+              adc_data_t[WL - 1'd1 - rx_cnt] <= aud_adcdat;
+      end
+      
+      //把临时数据传递给adc_data,并使能rx_done,表明一次采集完成
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\audio_send.v (2959) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           audio_send
+      // Created by:          正点原子
+      // Created date:        2023年2月3日14:17:02
+      // Version:             V1.0
+      // Descriptions:        audio_send
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************//
+      
+      module audio_send #(
+          parameter WL = 6'd24                    // WL(word length音频字长定义)
+      )(    
+          input                   rst_n     ,       // 复位信号
+          input                   aud_bclk  ,       // WM8960位时钟
+          input                   aud_lrc   ,       // 左右通道时钟
+          input       [WL-1:0]    dac_data  ,       // 预输出的音频数据
+          
+          output reg              aud_dacdat,       // 音频数据输出
+          output reg              tx_done          // 发送一次音频位数完成
+      );
+      //reg define
+      reg              aud_lrc_d0;                 // 延迟一个时钟周期
+      reg    [ 5:0]    tx_cnt;                     // 发送数据计数
+      reg    [WL-1:0]  dac_data_t;                 // 预输出的音频数据的暂存值
+      //wire define
+      wire             lrc_edge;                   // 边沿信号
+      
+      //*****************************************************
+      //**                    main code
+      //*****************************************************
+      
+      assign  lrc_edge = aud_lrc ^ aud_lrc_d0;     // LRC信号的边沿检测
+      
+      //为了在aud_lrc变化的第二个AUD_BCLK上升沿发送aud_dacdat,延迟打拍采集
+      always @(posedge aud_bclk or negedge rst_n) begin
+          if(!rst_n)
+              aud_lrc_d0 <= 1'b0;
+          else
+              aud_lrc_d0 <= aud_lrc;
+      end
+      
+      //发送24位音频数据的计数
+      always @(posedge aud_bclk or negedge rst_n) begin
+          if(!rst_n) begin
+              tx_cnt     <=  6'd0;
+              dac_data_t <=  0;
+          end
+          else if(lrc_edge == 1'b1) begin
+              tx_cnt     <= 6'd0;
+              dac_data_t <= dac_data;
+          end
+          else if(tx_cnt <= WL)
+              tx_cnt <= tx_cnt + 1'b1;
+      end
+      
+      //把预发送的音频数据串行发送出去
+      always @(negedge aud_bclk or negedge rst_n) begin
+          if(!rst_n) begin
+              aud_dacdat <= 1'b0;
+          end
+          else if(tx_cnt < WL)
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\i2c_dri.v (23208) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           i2c_dri
+      // Created by:          正点原子
+      // Created date:        2023年5月16日14:17:02
+      // Version:             V1.0
+      // Descriptions:        IIC驱动模块
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************//
+      
+      module i2c_dri #(
+            parameter   SLAVE_ADDR = 7'b1010000   ,  //EEPROM从机地址
+            parameter   CLK_FREQ   = 26'd50_000_000, //模块输入的时钟频率
+            parameter   I2C_FREQ   = 18'd250_000     //IIC_SCL的时钟频率
+          )
+         (                                                            
+          input                clk        ,    
+          input                rst_n      ,                     
+          input                i2c_exec   ,  //I2C触发执行信号
+          input                bit_ctrl   ,  //字地址位控制(16b/8b)
+          input                i2c_rh_wl  ,  //I2C读写控制信号
+          input        [15:0]  i2c_addr   ,  //I2C器件内地址
+          input        [ 7:0]  i2c_data_w ,  //I2C要写的数据
+          
+          output  reg  [ 7:0]  i2c_data_r ,  //I2C读出的数据
+          output  reg          i2c_done   ,  //I2C一次操作完成
+          output  reg          i2c_ack    ,  //I2C应答标志 0:应答 1:未应答
+          output  reg          scl        ,  //I2C的SCL时钟信号
+          inout                 sda        ,  //I2C的SDA信号
+                                             
+          //user interface                   
+          output  reg          dri_clk       //驱动I2C操作的驱动时钟
+           );
+      
+      //localparam define
+      localparam  st_idle     = 8'b0000_0001; //空闲状态
+      localparam  st_sladdr   = 8'b0000_0010; //发送器件地址(slave address)
+      localparam  st_addr16   = 8'b0000_0100; //发送16位字地址
+      localparam  st_addr8    = 8'b0000_1000; //发送8位字地址
+      localparam  st_data_wr  = 8'b0001_0000; //写数据(8 bit)
+      localparam  st_addr_rd  = 8'b0010_0000; //发送器件地址读
+      localparam  st_data_rd  = 8'b0100_0000; //读数据(8 bit)
+      localparam  st_stop     = 8'b1000_0000; //结束I2C操作
+      
+      //reg define
+      reg            sda_dir   ; //I2C数据(SDA)方向控制
+      reg            sda_out   ; //SDA输出信号
+      reg            st_done   ; //状态结束
+      reg            wr_flag   ; //写标志
+      reg    [ 6:0]  cnt       ; //计数
+      reg    [ 7:0]  cur_state ; //状态机当前状态
+      reg    [ 7:0]  next_state; //状态机下一状态
+      reg    [15:0]  addr_t    ; //地址
+      reg    [ 7:0]  data_r    ; //读取的数据
+      reg    [ 7:0]  data_wr_t ; //I2C需写的数据的临时寄存
+      reg    [ 9:0]  clk_cnt   ; //分频时钟计数
+      
+      //wire define
+      wire          sda_in     ; //SDA输入信号
+      wire   [8:0]  clk_divide ; //模块驱动时钟的分频系数
+      
+      //*****************************************************
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\i2c_reg_cfg.v (6118) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           i2c_reg_cfg
+      // Created by:          正点原子
+      // Created date:        2023年2月3日14:17:02
+      // Version:             V1.0
+      // Descriptions:        i2c_reg_cfg
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************//
+      
+      module i2c_reg_cfg #(
+          parameter  WL          = 6'd24,         // word length音频字长参数设置
+          parameter  PHONE_VOLUME = 7'd121,        // 耳机输出音量大小参数（47~127），低于47时静音
+          parameter  SPEAK_VOLUME = 7'd121         // 喇叭输出音量大小参数（47~127），低于47时静音
+      )(
+          input                clk      ,         // i2c_reg_cfg驱动时钟(一般取1MHz)
+          input                rst_n    ,         // 复位信号
+          input                i2c_done ,         // I2C一次操作完成反馈信号
+      
+          output  reg          i2c_exec ,         // I2C触发执行信号
+          output  reg  [15:0]  i2c_data ,         // 寄存器数据（7位地址+9位数据）
+          output  reg          cfg_done           // WM8960配置完成
+      );
+      //localparam define
+      localparam REG_NUM      = 5'd21;            // 总共需要配置的寄存器个数
+      //reg define
+      reg    [1:0]  wl            ;               // word length音频字长参数定义
+      reg    [7:0]  start_init_cnt;               // 初始化延时计数器
+      reg    [4:0]  init_reg_cnt  ;               // 寄存器配置个数计数器
+      
+      //*****************************************************
+      //**                    main code
+      //*****************************************************
+      
+      //音频字长参数设置
+      always @(posedge clk or negedge rst_n) begin
+          if(!rst_n)
+              wl <= 2'b00;
+          else begin
+              case(WL)
+                  6'd16:  wl <= 2'b00; 
+                  6'd20:  wl <= 2'b01; 
+                  6'd24:  wl <= 2'b10; 
+                  6'd32:  wl <= 2'b11; 
+                  default: wl <= 2'd0;
+              endcase
+          end
+      end
+      
+      //上电或复位后延时一段时间
+      always @(posedge clk or negedge rst_n) begin
+          if(!rst_n)
+              start_init_cnt <= 8'd0;
+          else if(start_init_cnt < 8'hff)
+              start_init_cnt <= start_init_cnt + 1'b1;
+      end
+      
+      //触发I2C操作
+      always @(posedge clk or negedge rst_n) begin
+          if(!rst_n)
+              i2c_exec <= 1'b0;
+          else if(init_reg_cnt == 5'd0 & start_init_cnt == 8'hfe)
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\wm8960_config.v (3769) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           wm8960_config
+      // Created by:          正点原子
+      // Created date:        2023年2月3日14:17:02
+      // Version:             V1.0
+      // Descriptions:        wm8960_config
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************/
+      
+      module wm8960_config #(
+          parameter   SLAVE_ADDR = 7'h1A         ,    // 器件地址1A
+          parameter   WL         = 6'd24         ,    // word length音频字长参数设置
+          parameter   BIT_CTRL   = 1'b0          ,    // 地址位宽控制(1:16b; 0:8b)
+          parameter   CLK_FREQ   = 26'd50_000_000,    // i2c_dri模块的驱动时钟频率(CLK_FREQ)
+          parameter   I2C_FREQ   = 18'd250_000        // I2C的SCL时钟频率
+      )(
+          input       clk     ,                   // 时钟信号
+          input       rst_n   ,                   // 复位信号
+                                                  
+          output      aud_scl ,                   // WM8960的SCL时钟
+          inout       aud_sda                     // WM8960的SDA信号
+      );
+      //wire define
+      wire        clk_i2c   ;                     // i2c的操作时钟
+      wire        i2c_exec  ;                     // i2c触发控制
+      wire        i2c_done  ;                     // i2c操作结束标志
+      wire        cfg_done  ;                     // WM8978配置完成标志
+      wire [15:0] reg_data  ;                     // WM8978需要配置的寄存器（地址及数据）
+      wire        i2c_ack   ;
+      
+      //*****************************************************
+      //**                    main code
+      //*****************************************************
+      
+      //配置WM8960的寄存器
+      i2c_reg_cfg #(
+          .WL             (WL       )             // word length音频字长参数设置
+      ) u_i2c_reg_cfg(  
+          .clk            (clk_i2c  ),            // i2c_reg_cfg驱动时钟
+          .rst_n          (rst_n    ),            // 复位信号
+          .i2c_done       (i2c_done ),            // I2C一次操作完成的标志信号  
+          
+          .i2c_exec       (i2c_exec ),            // I2C触发执行信号
+          .i2c_data       (reg_data ),            // 寄存器数据（7位地址+9位数据）
+          .cfg_done       (cfg_done )             // WM8960配置完成    
+      );
+      
+      //调用IIC协议
+      i2c_dri #(
+          .SLAVE_ADDR     (SLAVE_ADDR),           // slave address从机地址
+          .CLK_FREQ       (CLK_FREQ  ),           // i2c_dri模块的驱动时钟频率(CLK_FREQ)
+          .I2C_FREQ       (I2C_FREQ  )            // I2C的SCL时钟频率
+      ) u_i2c_dri(  
+          .clk            (clk       ),           // i2c_dri模块的驱动时钟(CLK_FREQ)
+          .rst_n          (rst_n     ),           // 复位信号
+          .i2c_exec       (i2c_exec  ),           // I2C触发执行信号
+          .bit_ctrl       (BIT_CTRL  ),           // 器件地址位控制(16b/8b)
+          .i2c_rh_wl      (1'b0      ),           // I2C读写控制信号
+          .i2c_addr       (reg_data[15:8]),       // I2C器件字地址
+          .i2c_data_w     (reg_data[ 7:0]),       // I2C要写的数据
+          
+  ---- \ZYNQ_7020_FPGA\37_audio_loopback\rtl\wm8960_ctrl.v (3004) ----
+      //****************************************Copyright (c)***********************************//
+      //原子哥在线教学平台：www.yuanzige.com
+      //技术支持：http://www.openedv.com/forum.php
+      //淘宝店铺：https://zhengdianyuanzi.tmall.com
+      //关注微信公众平台微信号："正点原子"，免费获取ZYNQ & FPGA & STM32 & LINUX资料。
+      //版权所有，盗版必究。
+      //Copyright(C) 正点原子 2023-2033
+      //All rights reserved                                  
+      //----------------------------------------------------------------------------------------
+      // File name:           wm8960_ctrl
+      // Created by:          正点原子
+      // Created date:        2023年2月3日14:17:02
+      // Version:             V1.0
+      // Descriptions:        wm8960_ctrl
+      //
+      //----------------------------------------------------------------------------------------
+      //****************************************************************************************/
+      
+      
+      module wm8960_ctrl #(
+          parameter            WL = 6'd24     // word length音频字长定义
+      )(
+          input                clk        ,   // 时钟信号
+          input                rst_n      ,   // 复位信号
+          input                aud_bclk   ,   // WM8960位时钟
+          input                aud_lrc    ,   // 左右通道时钟
+          input                aud_adcdat ,   // 音频输入
+          
+          output               aud_dacdat ,   // 音频输出
+          output               aud_scl    ,   // WM8960的SCL信号
+          inout                aud_sda        // WM8960的SDA信号
+      );
+      //wire define
+      wire               rx_done    ;        // 一次采集完成
+      wire               tx_done    ;        // 一次发送完成
+      wire    [23:0]     data       ;        //数据
+      
+      //*****************************************************
+      //**                    main code
+      //*****************************************************
+      
+      //例化WM8960寄存器配置模块
+      wm8960_config #(
+          .WL             (WL)
+      ) u_wm8960_config(
+          .clk            (clk),              // 时钟信号
+          .rst_n          (rst_n),            // 复位信号
+              
+          .aud_scl        (aud_scl),          // WM8960的SCL时钟
+          .aud_sda        (aud_sda)           // WM8960的SDA信号
+      );
+      
+      //例化WM8960音频接收模块
+      audio_receive #(
+          .WL             (WL)
+      ) u_audio_receive(    
+          .rst_n          (rst_n),            // 复位信号
+          .aud_bclk       (aud_bclk),         // WM8960位时钟
+          .aud_lrc        (aud_lrc),          // 左右通道时钟
+          .aud_adcdat     (aud_adcdat),       // 音频输入
+              
+          .adc_data       (data   ),          // FPGA接收的数据
+          .rx_done        (rx_done)           // FPGA接收数据完成
+      );
+      
+      //例化WM8960音频发送模块
+      audio_send #(
+          .WL             (WL)
+      ) u_audio_send(
+          .rst_n          (rst_n),            // 复位信号  

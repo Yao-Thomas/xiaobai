@@ -1,0 +1,15 @@
+[Unit]
+Description=One-shot guard for the trial boot of HIS system
+After=wifi-connect.service zynq-desktop.service
+Wants=wifi-connect.service
+# 只有 /mnt/boot 上存在 image.ub (也就是我们真的铺了他的系统) 才启动
+ConditionPathExists=/mnt/boot/image.ub
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/his-trial-guard.sh
+TimeoutStartSec=600
+
+[Install]
+WantedBy=multi-user.target

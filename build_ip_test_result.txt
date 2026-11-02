@@ -1,0 +1,18 @@
+======================================================
+ IP 传播测试
+======================================================
+
+--- 跑之�? ---
+  �?(gpu_ip): default: s_axi_rdata <= 32'h47505532;
+  gen(ipshared): default: s_axi_rdata <= 32'hDEADBEEF;
+ project opened
+
+>>> update_ip_catalog -rebuild
+>>> generate_target all
+ OK
+
+--- 跑之�? ---
+  �?(gpu_ip): default: s_axi_rdata <= 32'h47505532;
+  gen(ipshared): default: s_axi_rdata <= 32'hDEADBEEF;
+
+=== 工程里的 IP 状�? ===

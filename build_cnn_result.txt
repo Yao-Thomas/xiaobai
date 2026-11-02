@@ -1,0 +1,45 @@
+======================================================
+ CNN integration build
+ start: 23:08:05
+======================================================
+ project opened, Vivado 2026.1
+ top: system_wrapper
+
+>>> update_ip_catalog -rebuild 23:08:21
+>>> generate_target all 23:08:22
+ OK
+
+=== existing runs ===
+  synth_1          synth_design Complete!  (100%)
+  impl_1           Not started  (0%)
+
+>>> synthesis 23:08:22
+ run: synth_1
+ synth_1: 100%  synth_design Complete!
+ synthesis OK 23:19:51
+
+>>> implementation + write_bitstream 23:19:51
+ run: impl_1
+ impl_1: 100%  write_bitstream Complete!
+
+=== timing summary ===
+   WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints
+   Timing constraints are not met.
+   Clock                                 WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints
+   From Clock               To Clock                     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints
+   Path Group                      From Clock                      To Clock                            WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints
+
+=== utilization ===
+   | Slice LUTs                 | 27838 |     0 |          0 |     53200 | 52.33 |
+   | Slice Registers            | 43878 |     0 |          0 |    106400 | 41.24 |
+   | Slice Registers                            | 43878 |     0 |          0 |    106400 | 41.24 |
+   | Block RAM Tile    | 17.5 |     0 |          0 |       140 | 12.50 |
+   | DSPs           |   58 |     0 |          0 |       220 | 26.36 |
+   | Bonded IOB                  |   92 |    92 |          0 |       125 |  73.60 |
+
+=== DRC ===
+
+=== bitstream ===
+ BITSTREAM: D:/ubuntu_iso/atk2026/Navigator_7020/Navigator_7020.runs/impl_1/system_wrapper.bit  (4045769 bytes)
+ RESULT=OK
+=== end 23:32:55 ===

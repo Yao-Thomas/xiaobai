@@ -1,0 +1,228 @@
+================================================================================
+ fdt-7020.dtb
+================================================================================
+
+########## 全局 ##########
+  model          = Alientek Navigator Zynq Development Board
+  compatible     = xlnx,zynq-zc702 xlnx,zynq-7000
+
+  --- aliases ---
+    ethernet0        = <0x2F616D62> <0x612F6574> <0x6865726E> <0x65744065> <0x30303062> <0x30303000>
+    ethernet1        = <0x2F616D62> <0x612F6574> <0x6865726E> <0x65744065> <0x30303063> <0x30303000>
+    i2c0             = /amba/i2c@e0004000
+    i2c1             = /amba/i2c@e0005000
+    i2c2             = /amba_pl/i2c@41600000
+    serial0          = /amba/serial@e0000000
+    serial1          = /amba/serial@e0001000
+    spi0             = /amba/spi@e000d000
+
+########## PS 侧 (/amba) ##########
+  adc@f8007100                               xlnx,zynq-xadc-1.00.a
+  can@e0008000                               xlnx,zynq-can-1.0
+  can@e0009000                               xlnx,zynq-can-1.0
+  gpio@e000a000                              xlnx,zynq-gpio-1.0
+  i2c@e0004000                               cdns,i2c-r1p10
+  i2c@e0005000                               cdns,i2c-r1p10
+  interrupt-controller@f8f01000              arm,cortex-a9-gic
+  cache-controller@f8f02000                  <0x61726D2C> <0x706C3331>
+  memory-controller@f8006000                 xlnx,zynq-ddrc-a05
+  ocmc@f800c000                              xlnx,zynq-ocmc-1.0
+  serial@e0000000                            xlnx,xuartps cdns,uart-r1p8
+  serial@e0001000                            xlnx,xuartps cdns,uart-r1p8
+  spi@e0006000                               xlnx,zynq-spi-r1p6
+  spi@e0007000                               xlnx,zynq-spi-r1p6
+  spi@e000d000                               xlnx,zynq-qspi-1.0
+  memory-controller@e000e000                 arm,pl353-smc-r2p1 arm,primecell
+  ethernet@e000b000                          cdns,zynq-gem cdns,gem
+  ethernet@e000c000                          cdns,zynq-gem cdns,gem
+  mmc@e0100000                               arasan,sdhci-8.9a
+  mmc@e0101000                               arasan,sdhci-8.9a
+  slcr@f8000000                              xlnx,zynq-slcr syscon
+  dmac@f8003000                              <0x61726D2C> <0x706C3333>
+  devcfg@f8007000                            xlnx,zynq-devcfg-1.0
+  efuse@f800d000                             <0x786C6E78> <0x2C7A796E>
+  timer@f8f00200                             arm,cortex-a9-global-timer
+  timer@f8001000                             cdns,ttc
+  timer@f8002000                             cdns,ttc
+  timer@f8f00600                             <0x61726D2C> <0x636F7274>
+  usb@e0002000                               xlnx,zynq-usb-2.20a chipidea,usb2
+  usb@e0003000                               xlnx,zynq-usb-2.20a chipidea,usb2
+  watchdog@f8005000                          cdns,wdt-r1p2
+  etb@f8801000                               arm,coresight-etb10 arm,primecell
+  tpiu@f8803000                              arm,coresight-tpiu arm,primecell
+  funnel@f8804000                            arm,coresight-static-funnel arm,primecell
+  ptm@f889c000                               arm,coresight-etm3x arm,primecell
+  ptm@f889d000                               arm,coresight-etm3x arm,primecell
+
+########## PL 侧 (/amba_pl) —— 系统设计的骨架 ##########
+
+  === audio_formatter@43c50000 ===
+      compatible             = xlnx,audio-formatter-1.0 xlnx,audio-formatter-1.0
+      reg                    = <0x43C50000> <0x10000>
+      interrupts             = <0x0> <0x24> <0x4> <0x0> <0x21> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = 00 00 00 01 00 00 00 0f 00 00 00 01 00 00 00 0f 00 00 00 08...
+      clock-names            = s_axi_lite_aclk m_axis_mm2s_aclk aud_mclk s_axis_s2mm_aclk
+      子节点: 
+
+  === i2s_receiver@43c60000 ===
+      compatible             = xlnx,i2s-receiver-1.0 xlnx,i2s-receiver-1.0
+      reg                    = <0x43C60000> <0x10000>
+      interrupts             = <0x0> <0x23> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = <0x1> <0xF> <0x8> <0x1> <0x1> <0xF>
+      clock-names            = s_axi_ctrl_aclk aud_mclk m_axis_aud_aclk
+      子节点: 
+
+  === i2s_transmitter@43c70000 ===
+      compatible             = xlnx,i2s-transmitter-1.0 xlnx,i2s-transmitter-1.0
+      reg                    = <0x43C70000> <0x10000>
+      interrupts             = <0x0> <0x22> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = <0x1> <0xF> <0x8> <0x1> <0x1> <0xF>
+      clock-names            = s_axi_ctrl_aclk aud_mclk s_axis_aud_aclk
+      子节点: 
+
+  === gpio@41210000 ===
+      compatible             = xlnx,axi-gpio-2.0 xlnx,xps-gpio-1.00.a
+      reg                    = <0x41210000> <0x10000>
+      clocks                 = <0x1> <0xF>
+      clock-names            = s_axi_aclk
+      子节点: 
+
+  === v_frmbuf_wr@43c40000 ===
+      compatible             = xlnx,v-frmbuf-wr-2.2 xlnx,axi-frmbuf-wr-v2.1
+      reg                    = <0x43C40000> <0x10000>
+      interrupts             = <0x0> <0x1F> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = <0x1> <0x10>
+      clock-names            = ap_clk
+      reset-gpios            = <0x1B> <0x1> <0x0> <0x1>
+      子节点: 
+
+  === clk_wiz@43c30000 ===
+      compatible             = xlnx,clocking-wizard
+      reg                    = <0x43C30000> <0x10000>
+      clocks                 = <0x1> <0xF> <0x1> <0xF>
+      clock-names            = s_axi_aclk clk_in1
+      子节点: 
+
+  === clk_wiz@43c80000 ===
+      compatible             = xlnx,clocking-wizard
+      reg                    = <0x43C80000> <0x10000>
+      clocks                 = <0x1> <0xF> <0x1> <0xF>
+      clock-names            = s_axi_aclk clk_in1
+      子节点: 
+
+  === v_tc@43c90000 ===
+      compatible             = xlnx,bridge-v-tc-6.1
+      reg                    = <0x43C90000> <0x10000>
+      interrupts             = <0x0> <0x35> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = <0x1C> <0x1> <0xF>
+      clock-names            = clk s_axi_aclk
+      子节点: 
+
+  === misc_clk_1 ===
+      compatible             = <0x66697865> <0x642D636C> <0x6F636B00>
+      子节点: 
+
+  === v_frmbuf_rd@43ca0000 ===
+      compatible             = xlnx,v-frmbuf-rd-2.2 xlnx,axi-frmbuf-rd-v2.1
+      reg                    = <0x43CA0000> <0x10000>
+      interrupts             = <0x0> <0x34> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = 0x0000001C
+      clock-names            = ap_clk
+      reset-gpios            = <0x1B> <0x2> <0x0> <0x1>
+      子节点: 
+
+  === i2c@41600000 ===
+      compatible             = xlnx,axi-iic-2.0 xlnx,xps-iic-2.00.a
+      reg                    = <0x41600000> <0x10000>
+      interrupts             = <0x0> <0x20> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = <0x1> <0xF>
+      clock-names            = s_axi_aclk
+      子节点: ov5640@3c
+
+  === gpio@41200000 ===
+      compatible             = xlnx,axi-gpio-2.0 xlnx,xps-gpio-1.00.a
+      reg                    = <0x41200000> <0x10000>
+      clocks                 = <0x1> <0xF>
+      clock-names            = s_axi_aclk
+      子节点: 
+
+  === PWM@43c00000 ===
+      compatible             = digilent,axi-pwm
+      reg                    = <0x43C00000> <0x10000>
+      clocks                 = <0x1> <0xF>
+      clock-names            = 0x70776D00
+      子节点: 
+
+  === v_tc@43c10000 ===
+      compatible             = xlnx,bridge-v-tc-6.1
+      reg                    = <0x43C10000> <0x10000>
+      interrupts             = <0x0> <0x1E> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = <0x1E> <0x1> <0xF>
+      clock-names            = clk s_axi_aclk
+      子节点: 
+
+  === misc_clk_2 ===
+      compatible             = <0x66697865> <0x642D636C> <0x6F636B00>
+      子节点: 
+
+  === v_frmbuf_rd@43c20000 ===
+      compatible             = xlnx,v-frmbuf-rd-2.2 xlnx,axi-frmbuf-rd-v2.1
+      reg                    = <0x43C20000> <0x10000>
+      interrupts             = <0x0> <0x1D> <0x4>
+      interrupt-parent       = 0x00000004
+      clocks                 = 0x0000001E
+      clock-names            = ap_clk
+      reset-gpios            = <0x1B> <0x0> <0x0> <0x1>
+      子节点: 
+
+  === gpio@41220000 ===
+      compatible             = xlnx,axi-gpio-2.0 xlnx,xps-gpio-1.00.a
+      reg                    = <0x41220000> <0x10000>
+      clocks                 = <0x1> <0xF>
+      clock-names            = s_axi_aclk
+      子节点: 
+
+  === drm_pl_disp_lcd ===
+      compatible             = xlnx,pl-disp
+      dmas                   = <0x1F> <0x0>
+      dma-names              = dma0
+      xlnx,vformat           = BG24
+      xlnx,bridge            = 0x00000020
+      子节点: ports
+
+  === atk_lcd_drm ===
+      compatible             = <0x61746B2C> <0x61746B5F> <0x64706900>
+      clocks                 = <0x8> <0x0>
+      clock-names            = lcd_pclk
+      status                 = okay
+      子节点: display-timings, ports
+
+  === drm_pl_disp_hdmi ===
+      compatible             = xlnx,pl-disp
+      dmas                   = <0x25> <0x0>
+      dma-names              = dma0
+      xlnx,vformat           = BG24
+      xlnx,bridge            = 0x00000026
+      子节点: ports
+
+  === atk_hdmi_drm ===
+      compatible             = atk,atk-hdmi
+      clocks                 = <0x28> <0x0> <0x28> <0x1>
+      clock-names            = hdmi_pclk hdmi_pclk_5x
+      status                 = okay
+      子节点: ports
+
+  === vcap_dvp ===
+      compatible             = xlnx,video
+      dmas                   = <0x2B> <0x0>
+      dma-names              = port0
+      status                 = okay
+      子节点: ports

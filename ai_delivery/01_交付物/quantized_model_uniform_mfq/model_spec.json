@@ -1,0 +1,288 @@
+{
+  "model_name": "wavenet9_28x28_uniform_mfq",
+  "task": "scope_waveform_recognition",
+  "input_shape": [
+    1,
+    28,
+    28
+  ],
+  "input_type": "wdens",
+  "input_dtype": "int8",
+  "input_quant": {
+    "note": "★ 唯一输入变换：int8 = uint8 - 128（8 位 ADC 码值中心化），scale = 1.0",
+    "u8_to_i8": "i8 = clip(u8 - 128, -128, 127)",
+    "preprocess": {
+      "mode": "wdens",
+      "cols": 28,
+      "rows": 28,
+      "col_samples": 146,
+      "compression": "sqrt",
+      "normalize": "per-sample peak",
+      "row0": "top = high level"
+    },
+    "dataset": {
+      "version": "1.1",
+      "source": "sim_dds"
+    },
+    "impl": "src/common/preprocess.py（numpy 与纯 Python 两条路径逐点一致）"
+  },
+  "layers": [
+    {
+      "type": "conv",
+      "name": "conv1",
+      "in_ch": 1,
+      "out_ch": 8,
+      "k": 3,
+      "stride": 1,
+      "pad": 0,
+      "out_hw": [
+        13,
+        13
+      ],
+      "note": "该层与 2x2 max-pool 融合（同 HLS cnn_conv_pool_q，池化步长 P=2）"
+    },
+    {
+      "type": "relu"
+    },
+    {
+      "type": "pool",
+      "k": 2,
+      "stride": 2
+    },
+    {
+      "type": "conv",
+      "name": "conv2",
+      "in_ch": 8,
+      "out_ch": 16,
+      "k": 3,
+      "stride": 1,
+      "pad": 0,
+      "out_hw": [
+        5,
+        5
+      ],
+      "note": "同上，与 2x2 max-pool 融合"
+    },
+    {
+      "type": "relu"
+    },
+    {
+      "type": "pool",
+      "k": 2,
+      "stride": 2
+    },
+    {
+      "type": "fc",
+      "name": "fc",
+      "in": 400,
+      "out": 8
+    }
+  ],
+  "requant": {
+    "formula": "out = relu/sat((acc * MFQ) >> 16)",
+    "shift": 16,
+    "MFQ": 119,
+    "MFQ_per_layer": {
+      "conv1": 119,
+      "conv2": 119,
+      "fc": 119
+    },
+    "MFQ_note": "★ 兼容回退版：全网络统一 MFQ=119（板端只需写一个寄存器值）。准确率明显低于逐层版 —— 因为 conv1 只有 9 次累加、FC 有 400 次，acc 峰值差 40 倍以上，统一乘子必然让某些层的权重被压到只剩 1~2 个量化级。",
+    "bias": "无偏置（与 HLS 一致，不传 bias 数组）",
+    "overflow_rule": "HLS 内 acc*MFQ 为 ap_int<32>，本项目已保证 max|acc|*MFQ < 2^31",
+    "uniform_mfq_variant": {
+      "MFQ": 119,
+      "test_acc": 0.554,
+      "matches_per_layer_acc": false
+    }
+  },
+  "accuracy": {
+    "test_set": 0.554,
+    "test_set_float_baseline": 0.9635,
+    "quantization_loss": 0.0045000000000000595,
+    "n_test": 2000,
+    "notes": "★ 本目录是统一 MFQ 回退版，test_set 是【该版】实测准确率；逐层版的准确率 0.9590。除非板端 PS 代码确实只能传一个 MFQ，否则请用逐层版 ../quantized_model/。",
+    "per_layer_variant_test_set": 0.959
+  },
+  "classes": [
+    "sine",
+    "square",
+    "triangle",
+    "sawtooth",
+    "noise",
+    "clipping",
+    "signal_loss",
+    "duty_abnormal"
+  ],
+  "classes_note": "★ 本模型不含类别 glitch。理由（已实测，见 docs/01_输入表示选型.md §4）：毛刺只有 2~10 个采样点，映射到 28×28 密度图后只改变 2~5 / 784 个像素，在同样的表示上做二分类只能收敛到多数类（召回 0.000），即**在 4096 点采集 + 28×28 画布上不可分**。按 06_分工总表 的分工，毛刺由**示波器负责人的 PL 硬件故障检测器**（100 MHz / 10 ns 分辨率）负责。需要 9 类时用 `dataset_gen.py --with-glitch` 重新生成数据集即可，代码路径完全一致。",
+  "class_descriptions": {
+    "sine": "正弦",
+    "square": "方波",
+    "triangle": "三角波",
+    "sawtooth": "锯齿波",
+    "noise": "噪声/无周期信号",
+    "glitch": "毛刺（窄脉冲）",
+    "clipping": "削顶（含轻度削顶）",
+    "signal_loss": "丢信号（平线或强衰减）",
+    "duty_abnormal": "占空比异常"
+  },
+  "weights_layout": {
+    "file": "weights.bin",
+    "dtype": "int8",
+    "endianness": "小端（单字节无所谓）",
+    "align_bytes": 128,
+    "tail_pad_multiple": 64,
+    "total_bytes": 4480,
+    "order": [
+      "conv1.weight",
+      "conv2.weight",
+      "fc.weight"
+    ],
+    "entries": [
+      {
+        "name": "conv1.weight",
+        "offset": 0,
+        "bytes": 72,
+        "shape": [
+          8,
+          1,
+          3,
+          3
+        ],
+        "desc": "Conv1 权重 [out_ch=8][in_ch=1][3][3]"
+      },
+      {
+        "name": "conv2.weight",
+        "offset": 128,
+        "bytes": 1152,
+        "shape": [
+          16,
+          8,
+          3,
+          3
+        ],
+        "desc": "Conv2 权重 [out_ch=16][in_ch=8][3][3]"
+      },
+      {
+        "name": "fc.weight",
+        "offset": 1280,
+        "bytes": 3200,
+        "shape": [
+          8,
+          400
+        ],
+        "desc": "FC 权重 [out=N][in=400]"
+      }
+    ],
+    "index_order": {
+      "conv": "w[(oc*IN_CH + ic)*KH*KW + ky*KW + kx]   ← 与 HLS 完全一致",
+      "fc": "w[oc*IN + i]"
+    }
+  },
+  "buffers": {
+    "note": "加速器按层读写 DDR 的缓冲区尺寸（★ 全部 64 字节对齐并补齐到 64 的倍数，上一轮就是因为最后一条不完整 cache line 未失效导致尾部全 0）",
+    "input_img": {
+      "bytes": 784,
+      "padded": 832
+    },
+    "conv1_out_f1": {
+      "shape": [
+        8,
+        13,
+        13
+      ],
+      "bytes": 1352,
+      "padded": 1408
+    },
+    "conv2_out_f2": {
+      "shape": [
+        16,
+        5,
+        5
+      ],
+      "bytes": 400,
+      "padded": 448
+    },
+    "logits": {
+      "shape": [
+        8
+      ],
+      "bytes": 8,
+      "padded": 64
+    }
+  },
+  "reference": {
+    "n_samples": 64,
+    "labels": [
+      "square",
+      "sine",
+      "signal_loss",
+      "triangle",
+      "sawtooth",
+      "noise",
+      "duty_abnormal",
+      "clipping",
+      "square",
+      "triangle",
+      "duty_abnormal",
+      "sine",
+      "clipping",
+      "sawtooth",
+      "signal_loss",
+      "noise",
+      "square",
+      "sine",
+      "sawtooth",
+      "clipping",
+      "duty_abnormal",
+      "signal_loss",
+      "triangle",
+      "noise",
+      "square",
+      "sine",
+      "sawtooth",
+      "duty_abnormal",
+      "signal_loss",
+      "triangle",
+      "clipping",
+      "noise",
+      "square",
+      "sine",
+      "sawtooth",
+      "duty_abnormal",
+      "signal_loss",
+      "clipping",
+      "noise",
+      "triangle",
+      "square",
+      "duty_abnormal",
+      "sine",
+      "sawtooth",
+      "clipping",
+      "noise",
+      "signal_loss",
+      "triangle",
+      "square",
+      "sawtooth",
+      "signal_loss",
+      "sine",
+      "clipping",
+      "duty_abnormal",
+      "noise",
+      "triangle",
+      "square",
+      "sawtooth",
+      "signal_loss",
+      "duty_abnormal",
+      "clipping",
+      "sine",
+      "noise",
+      "triangle"
+    ],
+    "reference_in_format": "连续的 int8 图像，每个 784 字节（= 28*28），即加速器输入缓冲的直接内容",
+    "reference_out_format": "连续的 int8 logits，每个 8 字节，顺序与输入一致",
+    "how_to_compare": "对第 k 个输入跑一遍硬件，把 8 字节输出与 reference_out.bin[k*8:(k+1)*8] 逐点比对，应全部相同（对应上一轮的 [CNN OK] N/N 点一致）"
+  },
+  "generated_by": "src/train/export_quantized.py",
+  "uniform_mfq_variant": true
+}

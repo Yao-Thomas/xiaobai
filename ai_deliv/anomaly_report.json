@@ -1,0 +1,18 @@
+{
+  "fit": "train embeddings",
+  "calibration": "val embeddings",
+  "train_dist_p50": 9.466393526055022,
+  "train_dist_p99": 14.850015529584473,
+  "train_dist_p999": 16.371930991636315,
+  "val_dist_p95": 16.29092240546033,
+  "val_dist_p99": 18.307035826342133,
+  "ood": {
+    "n": 300,
+    "ood_dist_p50": 16.24306707122551,
+    "detect_rate_at_val_p99": 0.3,
+    "detect_rate_at_val_p95": 0.49333333333333335,
+    "val_fp_at_p99": 0.01,
+    "val_fp_at_p95": 0.05
+  },
+  "note": "阈值取 val 距离 p99；OOD 为训练集未出现过的两类混合波形"
+}

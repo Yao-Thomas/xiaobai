@@ -1,0 +1,212 @@
+{
+  "args": {
+    "data": "D:\\wavetrain\\dataset_v3",
+    "out": "D:\\wavetrain\\run_v3",
+    "seed": 20261029,
+    "epochs_float": 60,
+    "epochs_qat": 40,
+    "bs": 256,
+    "lr_float": 0.003,
+    "lr_qat": 0.0003,
+    "lr_scale": 0.003,
+    "wd": 0.0001,
+    "gamma": 1.0,
+    "calib_pct": 99.9,
+    "fix_mfq": 0,
+    "gpu": 0,
+    "limit_train": 0,
+    "no_reference_eval": false
+  },
+  "input_type": "wdens",
+  "classes": [
+    "sine",
+    "square",
+    "triangle",
+    "sawtooth",
+    "noise",
+    "clipping",
+    "signal_loss",
+    "duty_abnormal"
+  ],
+  "stages": {
+    "p1_float": {
+      "train_acc": 0.9478571428571428,
+      "seconds": 123.91791462898254,
+      "val_acc": 0.9639285714285715,
+      "test_acc": 0.9667857142857142
+    },
+    "p3_qat": {
+      "best_val_acc": 0.9546428571428571,
+      "seconds": 119.12117886543274
+    }
+  },
+  "final": {
+    "test_acc_torch": 0.9564285714285714,
+    "test_acc_reference": 0.9564285714285714,
+    "reference_matches_torch": true,
+    "test_acc_float": 0.9667857142857142,
+    "test_acc_float_qat_weights": 0.915,
+    "quantization_loss": 0.010357142857142843,
+    "train_acc": 0.9626,
+    "train_acc_float": 0.9228,
+    "mfq": [
+      181,
+      161,
+      2846
+    ],
+    "calib_percentile": 99.9,
+    "diagnose": {
+      "mfq": [
+        181,
+        161,
+        2846
+      ],
+      "acc_absmax": [
+        58638.0,
+        71790.0,
+        5233.0
+      ],
+      "acc_times_mfq": [
+        10613478.0,
+        11558190.0,
+        14893118.0
+      ],
+      "int32_headroom": [
+        202.33552535747472,
+        185.79757271683542,
+        144.19301901724003
+      ],
+      "overflow_risk": [
+        false,
+        false,
+        false
+      ],
+      "saturation_frac": {
+        "f1": {
+          "low": 0.4492303069526627,
+          "high": 0.00038426867603550297
+        },
+        "f2": {
+          "low": 0.87456787109375,
+          "high": 0.0
+        },
+        "logits": {
+          "low": 0.0087890625,
+          "high": 0.0035400390625
+        }
+      },
+      "s_w": [
+        0.002971008187159896,
+        0.0035987866576761007,
+        0.004206148907542229
+      ],
+      "s_y": [
+        1.0737382173538208,
+        1.5723164081573486,
+        0.1522819697856903
+      ],
+      "w_int_max": {
+        "conv1.weight": 127,
+        "conv2.weight": 120,
+        "fc.weight": 96
+      },
+      "w_int_used_levels": {
+        "conv1.weight": 55,
+        "conv2.weight": 142,
+        "fc.weight": 102
+      }
+    },
+    "confusion": [
+      [
+        349,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        312,
+        0,
+        0,
+        0,
+        0,
+        2,
+        36
+      ],
+      [
+        3,
+        0,
+        345,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        350,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        350,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        348,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        343,
+        4
+      ],
+      [
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        4,
+        281
+      ]
+    ],
+    "classes": [
+      "sine",
+      "square",
+      "triangle",
+      "sawtooth",
+      "noise",
+      "clipping",
+      "signal_loss",
+      "duty_abnormal"
+    ]
+  }
+}

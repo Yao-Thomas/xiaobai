@@ -1,0 +1,10 @@
+# 运行依赖（本服务只用这些；全部是 CPU 版，不需要 GPU）
+# Python 3.9+ 实测于 3.11
+
+numpy>=1.24
+scipy>=1.10
+torch>=2.0          # CPU 版即可：pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# 仅训练/诊断脚本需要：
+# scikit-learn>=1.2   （scripts/_diag_*.py 里的对比实验）
+# matplotlib>=3.7     （runs/rep_preview*.png 可视化）

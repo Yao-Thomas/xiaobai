@@ -1,0 +1,21 @@
+[Unit]
+Description=Zynq 开机冷却暂停（温度守护重启后先凉一会儿再起桌面）
+# ★ 必须在桌面之前跑完 —— 否则桌面一起来就又开始发热，暂停就没意义了
+Before=zynq-desktop.service
+Before=graphical.target
+After=local-fs.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/zynq
+ExecStart=/usr/bin/python3 /home/zynq/cool_down.py
+User=root
+RemainAfterExit=yes
+# 最长允许暂停 30 分钟，超过就强杀（防止标志文件被写坏导致开不了机）
+TimeoutStartSec=1800
+StandardOutput=append:/var/log/thermal_guard.log
+StandardError=append:/var/log/thermal_guard.log
+
+[Install]
+WantedBy=multi-user.target

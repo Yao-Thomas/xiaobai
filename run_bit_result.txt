@@ -1,0 +1,15 @@
+======================================================
+ �? bitstream  Sat Sep 19 15:02:34 +0800 2026
+======================================================
+ top = system_wrapper
+ 源文件数: 9
+
+>>> 综合 synth_1  Sat Sep 19 15:02:36 +0800 2026
+ synth_1: 0%  synth_design ERROR  Sat Sep 19 15:02:47 +0800 2026
+ �? 综合失败
+ --- system_wrapper.vds 里的 ERROR ---
+   ERROR: [Synth 8-439] module 'system_audio_formatter_0' not found [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth/system.v:447]
+   ERROR: [Synth 8-6156] failed synthesizing module 'audio_imp_P9M2FY' [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth/system.v:12]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system' [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth/system.v:8808]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system_wrapper' [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
+   ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details

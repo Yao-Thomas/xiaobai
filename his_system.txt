@@ -1,0 +1,726 @@
+==============================================================================
+ 他的系统设计 —— 从 image.ub 内 fdt-7020.dtb 提取
+==============================================================================
+DTB 24028 字节 version=17, 节点数 159
+我们的 system.dtb: 29177 字节 version=17, 节点数 161
+
+### /chosen 与内存
+      bootargs                   = console=ttyPS0,115200 cma=50M earlycon root=/dev/mmcblk0p2 rw rootwait
+      stdout-path                = serial0:115200n8
+      device_type                = memory
+      reg                        = <0x0> <0x40000000>
+    /model 等:
+      compatible                 = xlnx,zynq-zc702 / xlnx,zynq-7000
+      model                      = Alientek Navigator Zynq Development Board
+
+### /amba_pl —— 这就是他的 PL(Block Design)
+  /amba_pl                                   simple-bus
+  PWM@43c00000                               digilent,axi-pwm
+  atk_hdmi_drm                               atk,atk-hdmi
+  atk_hdmi_drm/ports                         
+  atk_hdmi_drm/ports/port@0                  
+  atk_hdmi_drm/ports/port@0/endpoint         
+  atk_lcd_drm                                <0x61746B2C> <0x61746B5F> <0x64706900>
+  /amba_pl/atk_lcd_drm/display-timings
+  atk_lcd_drm/display-timings/timing0        
+  atk_lcd_drm/display-timings/timing1        
+  atk_lcd_drm/display-timings/timing2        
+  atk_lcd_drm/display-timings/timing3        
+  atk_lcd_drm/ports                          
+  atk_lcd_drm/ports/port@0                   
+  atk_lcd_drm/ports/port@0/endpoint          
+  audio_formatter@43c50000                   xlnx,audio-formatter-1.0 / xlnx,audio-formatter-1.0
+  clk_wiz@43c30000                           xlnx,clocking-wizard
+  clk_wiz@43c80000                           xlnx,clocking-wizard
+  drm_pl_disp_hdmi                           xlnx,pl-disp
+  drm_pl_disp_hdmi/ports                     
+  drm_pl_disp_hdmi/ports/port@0              
+  drm_pl_disp_hdmi/ports/port@0/endpoint     
+  drm_pl_disp_lcd                            xlnx,pl-disp
+  drm_pl_disp_lcd/ports                      
+  drm_pl_disp_lcd/ports/port@0               
+  drm_pl_disp_lcd/ports/port@0/endpoint      
+  gpio@41200000                              xlnx,axi-gpio-2.0 / xlnx,xps-gpio-1.00.a
+  gpio@41210000                              xlnx,axi-gpio-2.0 / xlnx,xps-gpio-1.00.a
+  gpio@41220000                              xlnx,axi-gpio-2.0 / xlnx,xps-gpio-1.00.a
+  i2c@41600000                               xlnx,axi-iic-2.0 / xlnx,xps-iic-2.00.a
+  i2c@41600000/ov5640@3c                     <0x6F767469> <0x2C6F7635> <0x36343000>
+  i2c@41600000/ov5640@3c/port@0              
+  i2c@41600000/ov5640@3c/port@0/endpoint     
+  i2s_receiver@43c60000                      xlnx,i2s-receiver-1.0 / xlnx,i2s-receiver-1.0
+  i2s_transmitter@43c70000                   xlnx,i2s-transmitter-1.0 / xlnx,i2s-transmitter-1.0
+  misc_clk_1                                 <0x66697865> <0x642D636C> <0x6F636B00>
+  misc_clk_2                                 <0x66697865> <0x642D636C> <0x6F636B00>
+  v_frmbuf_rd@43c20000                       xlnx,v-frmbuf-rd-2.2 / xlnx,axi-frmbuf-rd-v2.1
+  v_frmbuf_rd@43ca0000                       xlnx,v-frmbuf-rd-2.2 / xlnx,axi-frmbuf-rd-v2.1
+  v_frmbuf_wr@43c40000                       xlnx,v-frmbuf-wr-2.2 / xlnx,axi-frmbuf-wr-v2.1
+  v_tc@43c10000                              xlnx,bridge-v-tc-6.1
+  v_tc@43c90000                              xlnx,bridge-v-tc-6.1
+  vcap_dvp                                   xlnx,video
+  vcap_dvp/ports                             
+  vcap_dvp/ports/port@0                      
+  vcap_dvp/ports/port@0/endpoint             
+
+--- 逐个展开 ---
+  PWM@43c00000
+      clock-names                = 0x70776D00 (1886874880)
+      clocks                     = <0x1> <0xF>
+      compatible                 = digilent,axi-pwm
+      reg                        = <0x43C00000> <0x10000>
+      xlnx,pwm-axi-addr-width    = 0x00000007 (7)
+      xlnx,pwm-axi-data-width    = 0x00000020 (32)
+      #pwm-cells                 = 0x00000002 (2)
+      npwm                       = 0x00000001 (1)
+      phandle                    = 0x00000022 (34)
+
+  atk_hdmi_drm
+      compatible                 = atk,atk-hdmi
+      status                     = okay
+      clocks                     = <0x28> <0x0> <0x28> <0x1>
+      clock-names                = hdmi_pclk / hdmi_pclk_5x
+      clk-num                    = 0x00000002 (2)
+      ddc-i2c-bus                = 0x00000029 (41)
+      hpd-gpios                  = <0x9> <0x40> <0x0>
+
+  atk_hdmi_drm/ports
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+
+  atk_hdmi_drm/ports/port@0
+      reg                        = 0x00000000 (0)
+
+  atk_hdmi_drm/ports/port@0/endpoint
+      remote-endpoint            = 0x0000002A (42)
+      phandle                    = 0x00000027 (39)
+
+  atk_lcd_drm
+      compatible                 = <0x61746B2C> <0x61746B5F> <0x64706900>
+      status                     = okay
+      clocks                     = <0x8> <0x0>
+      clock-names                = lcd_pclk
+      pwms                       = <0x22> <0x0> <0x4C4B40>
+      lcdID                      = 00 00 00 23 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 23 00 00 00 01...
+
+  atk_lcd_drm/display-timings
+
+  atk_lcd_drm/display-timings/timing0
+      clock-frequency            = 0x00895440 (9000000)
+      hactive                    = 0x000001E0 (480)
+      vactive                    = 0x00000110 (272)
+      hback-porch                = 0x00000002 (2)
+      hfront-porch               = 0x00000002 (2)
+      hsync-len                  = 0x00000029 (41)
+      vback-porch                = 0x00000002 (2)
+      vfront-porch               = 0x00000002 (2)
+      vsync-len                  = 0x0000000A (10)
+      hsync-active               = 0x00000000 (0)
+      vsync-active               = 0x00000000 (0)
+      de-active                  = 0x00000001 (1)
+
+  atk_lcd_drm/display-timings/timing1
+      clock-frequency            = 0x01FC9350 (33330000)
+      hactive                    = 0x00000320 (800)
+      vactive                    = 0x000001E0 (480)
+      hback-porch                = 0x00000058 (88)
+      hfront-porch               = 0x00000028 (40)
+      hsync-len                  = 0x00000080 (128)
+      vback-porch                = 0x00000021 (33)
+      vfront-porch               = 0x0000000A (10)
+      vsync-len                  = 0x00000002 (2)
+      hsync-active               = 0x00000000 (0)
+      vsync-active               = 0x00000000 (0)
+      de-active                  = 0x00000001 (1)
+      pixelclk-active            = 0x00000000 (0)
+
+  atk_lcd_drm/display-timings/timing2
+      clock-frequency            = 0x030D4000 (51200000)
+      hactive                    = 0x00000400 (1024)
+      vactive                    = 0x00000258 (600)
+      hback-porch                = 0x0000008C (140)
+      hfront-porch               = 0x000000A0 (160)
+      hsync-len                  = 0x00000014 (20)
+      vback-porch                = 0x00000014 (20)
+      vfront-porch               = 0x0000000C (12)
+      vsync-len                  = 0x00000003 (3)
+      hsync-active               = 0x00000000 (0)
+      vsync-active               = 0x00000000 (0)
+      de-active                  = 0x00000001 (1)
+      pixelclk-active            = 0x00000000 (0)
+
+  atk_lcd_drm/display-timings/timing3
+      clock-frequency            = 0x043CE660 (71100000)
+      hactive                    = 0x00000500 (1280)
+      vactive                    = 0x00000320 (800)
+      hback-porch                = 0x00000050 (80)
+      hfront-porch               = 0x00000046 (70)
+      hsync-len                  = 0x0000000A (10)
+      vback-porch                = 0x0000000A (10)
+      vfront-porch               = 0x0000000A (10)
+      vsync-len                  = 0x00000003 (3)
+      hsync-active               = 0x00000000 (0)
+      vsync-active               = 0x00000000 (0)
+      de-active                  = 0x00000001 (1)
+      pixelclk-active            = 0x00000000 (0)
+
+  atk_lcd_drm/ports
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+
+  atk_lcd_drm/ports/port@0
+      reg                        = 0x00000000 (0)
+
+  atk_lcd_drm/ports/port@0/endpoint
+      remote-endpoint            = 0x00000024 (36)
+      phandle                    = 0x00000021 (33)
+
+  audio_formatter@43c50000
+      clock-names                = s_axi_lite_aclk / m_axis_mm2s_aclk / aud_mclk / s_axis_s2mm_aclk
+      clocks                     = 00 00 00 01 00 00 00 0f 00 00 00 01 00 00 00 0f 00 00 00 08 00 00 00 01...
+      compatible                 = xlnx,audio-formatter-1.0 / xlnx,audio-formatter-1.0
+      interrupt-names            = irq_mm2s / irq_s2mm
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = 00 00 00 00 00 00 00 24 00 00 00 04 00 00 00 00 00 00 00 21 00 00 00 04
+      reg                        = <0x43C50000> <0x10000>
+      xlnx,include-mm2s          = 0x00000001 (1)
+      xlnx,include-s2mm          = 0x00000001 (1)
+      xlnx,max-num-channels-mm2s = 0x00000002 (2)
+      xlnx,max-num-channels-s2mm = 0x00000002 (2)
+      xlnx,mm2s-addr-width       = 0x00000020 (32)
+      xlnx,mm2s-async-clock      = 0x00000000 (0)
+      xlnx,mm2s-dataformat       = 0x00000003 (3)
+      xlnx,packing-mode-mm2s     = 0x00000000 (0)
+      xlnx,packing-mode-s2mm     = 0x00000000 (0)
+      xlnx,rx                    = 0x00000017 (23)
+      xlnx,s2mm-addr-width       = 0x00000020 (32)
+      xlnx,s2mm-async-clock      = 0x00000000 (0)
+      xlnx,s2mm-dataformat       = 0x00000001 (1)
+      xlnx,tx                    = 0x00000018 (24)
+      audio-codec                = 0x00000019 (25)
+      phandle                    = 0x0000001A (26)
+
+  clk_wiz@43c30000
+      #clock-cells               = 0x00000001 (1)
+      clock-names                = s_axi_aclk / clk_in1
+      clock-output-names         = 0x43c30000-lcd_pclk / 0x43c30000-mclk
+      clocks                     = <0x1> <0xF> <0x1> <0xF>
+      compatible                 = xlnx,clocking-wizard
+      reg                        = <0x43C30000> <0x10000>
+      speed-grade                = 0x00000002 (2)
+      xlnx,nr-outputs            = 0x00000002 (2)
+      phandle                    = 0x00000008 (8)
+
+  clk_wiz@43c80000
+      #clock-cells               = 0x00000001 (1)
+      clock-names                = s_axi_aclk / clk_in1
+      clock-output-names         = 0x43c80000-hdmi_pclk / 0x43c80000-hdmi_pclk_5x
+      clocks                     = <0x1> <0xF> <0x1> <0xF>
+      compatible                 = xlnx,clocking-wizard
+      reg                        = <0x43C80000> <0x10000>
+      speed-grade                = 0x00000002 (2)
+      xlnx,nr-outputs            = 0x00000002 (2)
+      phandle                    = 0x00000028 (40)
+
+  drm_pl_disp_hdmi
+      compatible                 = xlnx,pl-disp
+      dmas                       = <0x25> <0x0>
+      dma-names                  = dma0
+      xlnx,vformat               = BG24
+      xlnx,bridge                = 0x00000026 (38)
+
+  drm_pl_disp_hdmi/ports
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+
+  drm_pl_disp_hdmi/ports/port@0
+      reg                        = 0x00000000 (0)
+
+  drm_pl_disp_hdmi/ports/port@0/endpoint
+      remote-endpoint            = 0x00000027 (39)
+      phandle                    = 0x0000002A (42)
+
+  drm_pl_disp_lcd
+      compatible                 = xlnx,pl-disp
+      dmas                       = <0x1F> <0x0>
+      dma-names                  = dma0
+      xlnx,vformat               = BG24
+      xlnx,bridge                = 0x00000020 (32)
+
+  drm_pl_disp_lcd/ports
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+
+  drm_pl_disp_lcd/ports/port@0
+      reg                        = 0x00000000 (0)
+
+  drm_pl_disp_lcd/ports/port@0/endpoint
+      remote-endpoint            = 0x00000021 (33)
+      phandle                    = 0x00000024 (36)
+
+  gpio@41200000
+      #gpio-cells                = 0x00000003 (3)
+      clock-names                = s_axi_aclk
+      clocks                     = <0x1> <0xF>
+      compatible                 = xlnx,axi-gpio-2.0 / xlnx,xps-gpio-1.00.a
+      gpio-controller            = (空)
+      reg                        = <0x41200000> <0x10000>
+      xlnx,all-inputs            = 0x00000000 (0)
+      xlnx,all-inputs-2          = 0x00000000 (0)
+      xlnx,all-outputs           = 0x00000000 (0)
+      xlnx,all-outputs-2         = 0x00000000 (0)
+      xlnx,dout-default          = 0x00000000 (0)
+      xlnx,dout-default-2        = 0x00000000 (0)
+      xlnx,gpio-width            = 0x00000003 (3)
+      xlnx,gpio2-width           = 0x00000020 (32)
+      xlnx,interrupt-present     = 0x00000000 (0)
+      xlnx,is-dual               = 0x00000000 (0)
+      xlnx,tri-default           = 0xFFFFFFFF (4294967295)
+      xlnx,tri-default-2         = 0xFFFFFFFF (4294967295)
+      phandle                    = 0x00000023 (35)
+
+  gpio@41210000
+      #gpio-cells                = 0x00000003 (3)
+      clock-names                = s_axi_aclk
+      clocks                     = <0x1> <0xF>
+      compatible                 = xlnx,axi-gpio-2.0 / xlnx,xps-gpio-1.00.a
+      gpio-controller            = (空)
+      reg                        = <0x41210000> <0x10000>
+      xlnx,all-inputs            = 0x00000000 (0)
+      xlnx,all-inputs-2          = 0x00000000 (0)
+      xlnx,all-outputs           = 0x00000001 (1)
+      xlnx,all-outputs-2         = 0x00000000 (0)
+      xlnx,dout-default          = 0x00000000 (0)
+      xlnx,dout-default-2        = 0x00000000 (0)
+      xlnx,gpio-width            = 0x00000002 (2)
+      xlnx,gpio2-width           = 0x00000020 (32)
+      xlnx,interrupt-present     = 0x00000000 (0)
+      xlnx,is-dual               = 0x00000000 (0)
+      xlnx,tri-default           = 0xFFFFFFFF (4294967295)
+      xlnx,tri-default-2         = 0xFFFFFFFF (4294967295)
+      phandle                    = 0x0000002D (45)
+
+  gpio@41220000
+      #gpio-cells                = 0x00000003 (3)
+      clock-names                = s_axi_aclk
+      clocks                     = <0x1> <0xF>
+      compatible                 = xlnx,axi-gpio-2.0 / xlnx,xps-gpio-1.00.a
+      gpio-controller            = (空)
+      reg                        = <0x41220000> <0x10000>
+      xlnx,all-inputs            = 0x00000000 (0)
+      xlnx,all-inputs-2          = 0x00000000 (0)
+      xlnx,all-outputs           = 0x00000001 (1)
+      xlnx,all-outputs-2         = 0x00000000 (0)
+      xlnx,dout-default          = 0x00000000 (0)
+      xlnx,dout-default-2        = 0x00000000 (0)
+      xlnx,gpio-width            = 0x00000003 (3)
+      xlnx,gpio2-width           = 0x00000020 (32)
+      xlnx,interrupt-present     = 0x00000000 (0)
+      xlnx,is-dual               = 0x00000000 (0)
+      xlnx,tri-default           = 0xFFFFFFFF (4294967295)
+      xlnx,tri-default-2         = 0xFFFFFFFF (4294967295)
+      phandle                    = 0x0000001B (27)
+
+  i2c@41600000
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+      clock-names                = s_axi_aclk
+      clocks                     = <0x1> <0xF>
+      compatible                 = xlnx,axi-iic-2.0 / xlnx,xps-iic-2.00.a
+      interrupt-names            = iic2intc_irpt
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x20> <0x4>
+      reg                        = <0x41600000> <0x10000>
+      clock-frequency            = 0x000186A0 (100000)
+
+  i2c@41600000/ov5640@3c
+      compatible                 = <0x6F767469> <0x2C6F7635> <0x36343000>
+      reg                        = 0x0000003C (60)
+      pwdn-gpios                 = <0x9> <0x3D> <0x0>
+      reset-gpios                = <0x9> <0x3E> <0x1>
+      status                     = okay
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+
+  i2c@41600000/ov5640@3c/port@0
+      reg                        = 0x00000000 (0)
+
+  i2c@41600000/ov5640@3c/port@0/endpoint
+      remote-endpoint            = 0x0000001D (29)
+      phandle                    = 0x0000002C (44)
+
+  i2s_receiver@43c60000
+      aud_mclk                   = 0x01026A3B (16935483)
+      clock-names                = s_axi_ctrl_aclk / aud_mclk / m_axis_aud_aclk
+      clocks                     = 00 00 00 01 00 00 00 0f 00 00 00 08 00 00 00 01 00 00 00 01 00 00 00 0f
+      compatible                 = xlnx,i2s-receiver-1.0 / xlnx,i2s-receiver-1.0
+      interrupt-names            = 0x69727100 (1769107712)
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x23> <0x4>
+      reg                        = <0x43C60000> <0x10000>
+      xlnx,depth                 = 0x00000080 (128)
+      xlnx,dwidth                = 0x00000018 (24)
+      xlnx,num-channels          = 0x00000001 (1)
+      xlnx,snd-pcm               = 0x0000001A (26)
+      phandle                    = 0x00000017 (23)
+
+  i2s_transmitter@43c70000
+      aud_mclk                   = 0x01026A3B (16935483)
+      clock-names                = s_axi_ctrl_aclk / aud_mclk / s_axis_aud_aclk
+      clocks                     = 00 00 00 01 00 00 00 0f 00 00 00 08 00 00 00 01 00 00 00 01 00 00 00 0f
+      compatible                 = xlnx,i2s-transmitter-1.0 / xlnx,i2s-transmitter-1.0
+      interrupt-names            = 0x69727100 (1769107712)
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x22> <0x4>
+      reg                        = <0x43C70000> <0x10000>
+      xlnx,depth                 = 0x00000080 (128)
+      xlnx,dwidth                = 0x00000018 (24)
+      xlnx,num-channels          = 0x00000001 (1)
+      xlnx,snd-pcm               = 0x0000001A (26)
+      phandle                    = 0x00000018 (24)
+
+  misc_clk_1
+      #clock-cells               = 0x00000000 (0)
+      clock-frequency            = 0x08D9EE20 (148500000)
+      compatible                 = <0x66697865> <0x642D636C> <0x6F636B00>
+      phandle                    = 0x0000001C (28)
+
+  misc_clk_2
+      #clock-cells               = 0x00000000 (0)
+      clock-frequency            = 0x01FCA055 (33333333)
+      compatible                 = <0x66697865> <0x642D636C> <0x6F636B00>
+      phandle                    = 0x0000001E (30)
+
+  v_frmbuf_rd@43c20000
+      #dma-cells                 = 0x00000001 (1)
+      clock-names                = ap_clk
+      clocks                     = 0x0000001E (30)
+      compatible                 = xlnx,v-frmbuf-rd-2.2 / xlnx,axi-frmbuf-rd-v2.1
+      interrupt-names            = interrupt
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x1D> <0x4>
+      reg                        = <0x43C20000> <0x10000>
+      reset-gpios                = <0x1B> <0x0> <0x0> <0x1>
+      xlnx,dma-addr-width        = 0x00000020 (32)
+      xlnx,dma-align             = 0x00000008 (8)
+      xlnx,max-height            = 0x00000438 (1080)
+      xlnx,max-width             = 0x00000780 (1920)
+      xlnx,pixels-per-clock      = 0x00000001 (1)
+      xlnx,s-axi-ctrl-addr-width = 0x00000007 (7)
+      xlnx,s-axi-ctrl-data-width = 0x00000020 (32)
+      xlnx,vid-formats           = rgb888 / bgr888
+      xlnx,video-width           = 0x00000008 (8)
+      phandle                    = 0x0000001F (31)
+
+  v_frmbuf_rd@43ca0000
+      #dma-cells                 = 0x00000001 (1)
+      clock-names                = ap_clk
+      clocks                     = 0x0000001C (28)
+      compatible                 = xlnx,v-frmbuf-rd-2.2 / xlnx,axi-frmbuf-rd-v2.1
+      interrupt-names            = interrupt
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x34> <0x4>
+      reg                        = <0x43CA0000> <0x10000>
+      reset-gpios                = <0x1B> <0x2> <0x0> <0x1>
+      xlnx,dma-addr-width        = 0x00000020 (32)
+      xlnx,dma-align             = 0x00000008 (8)
+      xlnx,max-height            = 0x00000438 (1080)
+      xlnx,max-width             = 0x00000780 (1920)
+      xlnx,pixels-per-clock      = 0x00000001 (1)
+      xlnx,s-axi-ctrl-addr-width = 0x00000007 (7)
+      xlnx,s-axi-ctrl-data-width = 0x00000020 (32)
+      xlnx,vid-formats           = rgb888 / bgr888
+      xlnx,video-width           = 0x00000008 (8)
+      phandle                    = 0x00000025 (37)
+
+  v_frmbuf_wr@43c40000
+      #dma-cells                 = 0x00000001 (1)
+      clock-names                = ap_clk
+      clocks                     = <0x1> <0x10>
+      compatible                 = xlnx,v-frmbuf-wr-2.2 / xlnx,axi-frmbuf-wr-v2.1
+      interrupt-names            = interrupt
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x1F> <0x4>
+      reg                        = <0x43C40000> <0x10000>
+      reset-gpios                = <0x1B> <0x1> <0x0> <0x1>
+      xlnx,dma-addr-width        = 0x00000020 (32)
+      xlnx,dma-align             = 0x00000008 (8)
+      xlnx,max-height            = 0x00000438 (1080)
+      xlnx,max-width             = 0x00000780 (1920)
+      xlnx,pixels-per-clock      = 0x00000001 (1)
+      xlnx,s-axi-ctrl-addr-width = 0x00000007 (7)
+      xlnx,s-axi-ctrl-data-width = 0x00000020 (32)
+      xlnx,vid-formats           = rgb888 / bgr888
+      xlnx,video-width           = 0x00000008 (8)
+      phandle                    = 0x0000002B (43)
+
+  v_tc@43c10000
+      clock-names                = clk / s_axi_aclk
+      clocks                     = <0x1E> <0x1> <0xF>
+      compatible                 = xlnx,bridge-v-tc-6.1
+      interrupt-names            = 0x69727100 (1769107712)
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x1E> <0x4>
+      reg                        = <0x43C10000> <0x10000>
+      xlnx,generator             = (空)
+      xlnx,pixels-per-clock      = 0x00000001 (1)
+      phandle                    = 0x00000020 (32)
+
+  v_tc@43c90000
+      clock-names                = clk / s_axi_aclk
+      clocks                     = <0x1C> <0x1> <0xF>
+      compatible                 = xlnx,bridge-v-tc-6.1
+      interrupt-names            = 0x69727100 (1769107712)
+      interrupt-parent           = 0x00000004 (4)
+      interrupts                 = <0x0> <0x35> <0x4>
+      reg                        = <0x43C90000> <0x10000>
+      xlnx,generator             = (空)
+      xlnx,pixels-per-clock      = 0x00000001 (1)
+      phandle                    = 0x00000026 (38)
+
+  vcap_dvp
+      compatible                 = xlnx,video
+      dmas                       = <0x2B> <0x0>
+      dma-names                  = port0
+      status                     = okay
+
+  vcap_dvp/ports
+      #address-cells             = 0x00000001 (1)
+      #size-cells                = 0x00000000 (0)
+
+  vcap_dvp/ports/port@0
+      reg                        = 0x00000000 (0)
+      direction                  = input
+
+  vcap_dvp/ports/port@0/endpoint
+      remote-endpoint            = 0x0000002C (44)
+      phandle                    = 0x0000001D (29)
+
+### PS 侧外设 (和我们的差异)
+  [只有我们有] /__symbols__
+  [属性不同] /amba   他有:[] 我们有:['phandle']
+  [属性不同] /amba/adc@f8007100   他有:[] 我们有:['phandle']
+  [属性不同] /amba/cache-controller@f8f02000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/can@e0008000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/can@e0009000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/dmac@f8003000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/efuse@f800d000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/ethernet@e000b000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/ethernet@e000c000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/funnel@f8804000/in-ports/port@2/endpoint   他有:[] 我们有:['phandle']
+  [属性不同] /amba/i2c@e0004000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/memory-controller@e000e000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/memory-controller@e000e000/flash@e1000000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/memory-controller@e000e000/flash@e2000000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/memory-controller@f8006000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/mmc@e0100000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/mmc@e0101000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/ocmc@f800c000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/serial@e0000000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/serial@e0001000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/slcr@f8000000/pinctrl@700   他有:[] 我们有:['phandle']
+  [属性不同] /amba/slcr@f8000000/rstc@200   他有:[] 我们有:['phandle']
+  [属性不同] /amba/spi@e0006000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/spi@e0007000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/spi@e000d000   他有:[] 我们有:['phandle']
+  [只有我们有] /amba/spi@e000d000/flash@0/partition@0x600000
+  [只有我们有] /amba/spi@e000d000/flash@0/partition@0x620000
+  [属性不同] /amba/timer@f8001000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/timer@f8002000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/timer@f8f00200   他有:[] 我们有:['phandle']
+  [属性不同] /amba/timer@f8f00600   他有:[] 我们有:['phandle']
+  [属性不同] /amba/usb@e0002000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/usb@e0003000   他有:[] 我们有:['phandle']
+  [属性不同] /amba/watchdog@f8005000   他有:[] 我们有:['phandle']
+  [属性不同] /fpga-full   他有:[] 我们有:['phandle']
+
+### 节点集合差异
+  只有他有 2 个:
+     /amba/spi@e000d000/flash@0/partition@0x100000
+     /amba/spi@e000d000/flash@0/partition@0x120000
+  只有我们有 4 个:
+     /__symbols__
+     /amba/spi@e000d000/flash@0/partition@0x600000
+     /amba/spi@e000d000/flash@0/partition@0x620000
+     /amba_pl/misc_clk_0
+
+### 同名节点的属性值差异 (只列前 60 条)
+  /aliases :: i2c0
+        他 = /amba/i2c@e0004000
+        我 = /amba_pl/i2c@41600000
+  /aliases :: i2c1
+        他 = /amba/i2c@e0005000
+        我 = /amba/i2c@e0004000
+  /aliases :: i2c2
+        他 = /amba_pl/i2c@41600000
+        我 = /amba/i2c@e0005000
+  /amba :: phandle
+        他 = (无)
+        我 = 0x00000030 (48)
+  /amba/adc@f8007100 :: phandle
+        他 = (无)
+        我 = 0x00000031 (49)
+  /amba/cache-controller@f8f02000 :: phandle
+        他 = (无)
+        我 = 0x00000035 (53)
+  /amba/can@e0008000 :: phandle
+        他 = (无)
+        我 = 0x00000032 (50)
+  /amba/can@e0009000 :: phandle
+        他 = (无)
+        我 = 0x00000033 (51)
+  /amba/dmac@f8003000 :: phandle
+        他 = (无)
+        我 = 0x00000046 (70)
+  /amba/efuse@f800d000 :: phandle
+        他 = (无)
+        我 = 0x00000047 (71)
+  /amba/ethernet@e000b000 :: phandle
+        他 = (无)
+        我 = 0x00000040 (64)
+  /amba/ethernet@e000c000 :: phandle
+        他 = (无)
+        我 = 0x00000041 (65)
+  /amba/funnel@f8804000/in-ports/port@2/endpoint :: phandle
+        他 = (无)
+        我 = 0x0000004F (79)
+  /amba/i2c@e0004000 :: phandle
+        他 = (无)
+        我 = 0x00000034 (52)
+  /amba/i2c@e0004000/wm8960@1a :: phandle
+        他 = 0x00000019 (25)
+        我 = 0x0000001A (26)
+  /amba/i2c@e0005000 :: phandle
+        他 = 0x00000029 (41)
+        我 = 0x0000002A (42)
+  /amba/memory-controller@e000e000 :: phandle
+        他 = (无)
+        我 = 0x0000003D (61)
+  /amba/memory-controller@e000e000/flash@e1000000 :: phandle
+        他 = (无)
+        我 = 0x0000003E (62)
+  /amba/memory-controller@e000e000/flash@e2000000 :: phandle
+        他 = (无)
+        我 = 0x0000003F (63)
+  /amba/memory-controller@f8006000 :: phandle
+        他 = (无)
+        我 = 0x00000036 (54)
+  /amba/mmc@e0100000 :: phandle
+        他 = (无)
+        我 = 0x00000042 (66)
+  /amba/mmc@e0101000 :: phandle
+        他 = (无)
+        我 = 0x00000043 (67)
+  /amba/ocmc@f800c000 :: phandle
+        他 = (无)
+        我 = 0x00000037 (55)
+  /amba/serial@e0000000 :: phandle
+        他 = (无)
+        我 = 0x00000038 (56)
+  /amba/serial@e0001000 :: phandle
+        他 = (无)
+        我 = 0x00000039 (57)
+  /amba/slcr@f8000000/pinctrl@700 :: phandle
+        他 = (无)
+        我 = 0x00000045 (69)
+  /amba/slcr@f8000000/rstc@200 :: phandle
+        他 = (无)
+        我 = 0x00000044 (68)
+  /amba/spi@e0006000 :: phandle
+        他 = (无)
+        我 = 0x0000003A (58)
+  /amba/spi@e0007000 :: phandle
+        他 = (无)
+        我 = 0x0000003B (59)
+  /amba/spi@e000d000 :: phandle
+        他 = (无)
+        我 = 0x0000003C (60)
+  /amba/spi@e000d000/flash@0/partition@0x000000 :: reg
+        他 = <0x0> <0x100000>
+        我 = <0x0> <0x600000>
+  /amba/timer@f8001000 :: phandle
+        他 = (无)
+        我 = 0x00000049 (73)
+  /amba/timer@f8002000 :: phandle
+        他 = (无)
+        我 = 0x0000004A (74)
+  /amba/timer@f8f00200 :: phandle
+        他 = (无)
+        我 = 0x00000048 (72)
+  /amba/timer@f8f00600 :: phandle
+        他 = (无)
+        我 = 0x0000004B (75)
+  /amba/usb@e0002000 :: phandle
+        他 = (无)
+        我 = 0x0000004C (76)
+  /amba/usb@e0003000 :: phandle
+        他 = (无)
+        我 = 0x0000004D (77)
+  /amba/watchdog@f8005000 :: phandle
+        他 = (无)
+        我 = 0x0000004E (78)
+  /amba_pl :: phandle
+        他 = (无)
+        我 = 0x00000050 (80)
+  /amba_pl/PWM@43c00000 :: phandle
+        他 = 0x00000022 (34)
+        我 = 0x00000023 (35)
+  /amba_pl/atk_hdmi_drm :: clocks
+        他 = <0x28> <0x0> <0x28> <0x1>
+        我 = <0x29> <0x0> <0x29> <0x1>
+  /amba_pl/atk_hdmi_drm :: ddc-i2c-bus
+        他 = 0x00000029 (41)
+        我 = 0x0000002A (42)
+  /amba_pl/atk_hdmi_drm/ports/port@0/endpoint :: phandle
+        他 = 0x00000027 (39)
+        我 = 0x00000028 (40)
+  /amba_pl/atk_hdmi_drm/ports/port@0/endpoint :: remote-endpoint
+        他 = 0x0000002A (42)
+        我 = 0x0000002B (43)
+  /amba_pl/atk_lcd_drm :: lcdID
+        他 = 00 00 00 23 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 23 00 00 00 01...
+        我 = 00 00 00 24 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 24 00 00 00 01...
+  /amba_pl/atk_lcd_drm :: pwms
+        他 = <0x22> <0x0> <0x4C4B40>
+        我 = <0x23> <0x0> <0x4C4B40>
+  /amba_pl/atk_lcd_drm/display-timings/timing0 :: phandle
+        他 = (无)
+        我 = 0x00000052 (82)
+  /amba_pl/atk_lcd_drm/display-timings/timing1 :: phandle
+        他 = (无)
+        我 = 0x00000053 (83)
+  /amba_pl/atk_lcd_drm/display-timings/timing2 :: phandle
+        他 = (无)
+        我 = 0x00000054 (84)
+  /amba_pl/atk_lcd_drm/display-timings/timing3 :: phandle
+        他 = (无)
+        我 = 0x00000055 (85)
+  /amba_pl/atk_lcd_drm/ports/port@0/endpoint :: phandle
+        他 = 0x00000021 (33)
+        我 = 0x00000022 (34)
+  /amba_pl/atk_lcd_drm/ports/port@0/endpoint :: remote-endpoint
+        他 = 0x00000024 (36)
+        我 = 0x00000025 (37)
+  /amba_pl/audio_formatter@43c50000 :: audio-codec
+        他 = 0x00000019 (25)
+        我 = 0x0000001A (26)
+  /amba_pl/audio_formatter@43c50000 :: clocks
+        他 = 00 00 00 01 00 00 00 0f 00 00 00 01 00 00 00 0f 00 00 00 08 00 00 00 01...
+        我 = 00 00 00 01 00 00 00 0f 00 00 00 01 00 00 00 0f 00 00 00 17 00 00 00 01...
+  /amba_pl/audio_formatter@43c50000 :: phandle
+        他 = 0x0000001A (26)
+        我 = 0x0000001B (27)
+  /amba_pl/audio_formatter@43c50000 :: xlnx,rx
+        他 = 0x00000017 (23)
+        我 = 0x00000018 (24)
+  /amba_pl/audio_formatter@43c50000 :: xlnx,tx
+        他 = 0x00000018 (24)
+        我 = 0x00000019 (25)
+  /amba_pl/clk_wiz@43c80000 :: phandle
+        他 = 0x00000028 (40)
+        我 = 0x00000029 (41)
+  /amba_pl/drm_pl_disp_hdmi :: dmas
+        他 = <0x25> <0x0>
+        我 = <0x26> <0x0>
+  /amba_pl/drm_pl_disp_hdmi :: xlnx,bridge
+        他 = 0x00000026 (38)
+        我 = 0x00000027 (39)
+  ...共 99 处属性值不同

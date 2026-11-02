@@ -1,0 +1,8 @@
+=== STEP1: 生成 IP (需要系统时�? <= 2021) ===
+ 当前时间: Mon Jun 15 12:00:09 +0800 2020
+ �? generate_target 完成: Mon Jun 15 12:00:56 +0800 2020
+   system_v_frmbuf_rd_0_0 : 9 �?
+   system_v_frmbuf_rd_0_1 : 9 �?
+   system_v_frmbuf_wr_0_0 : 9 �?
+ RESULT=OK
+=== STEP1 结束 ===

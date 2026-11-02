@@ -1,0 +1,1 @@
+sudo sh /tmp/_flash3.sh

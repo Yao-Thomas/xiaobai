@@ -1,0 +1,20 @@
+======================================================
+ 重新生成 IP + �? bitstream
+ 开�?: Sat Sep 19 15:00:57 +0800 2026
+======================================================
+ 删除旧缓�?: D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/ip
+ 删除旧缓�?: D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth
+
+>>> reset_target + generate_target (�?�? 10-20 分钟)  Sat Sep 19 15:01:06 +0800 2026
+ �? 生成完成  Sat Sep 19 15:01:48 +0800 2026
+ wrapper: D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/hdl/system_wrapper.v
+ top = system_wrapper
+
+>>> 综合 synth_1  Sat Sep 19 15:01:50 +0800 2026
+ synth_1: 0%  synth_design ERROR  Sat Sep 19 15:02:03 +0800 2026
+ �? 综合还是失败, 日志�?�?:
+   
+   *** Running vivado
+       with args -log system_wrapper.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_wrapper.tcl
+   
+   

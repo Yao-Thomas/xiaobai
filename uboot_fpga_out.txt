@@ -1,0 +1,1221 @@
+﻿[board] 已知 IP 命中: 192.168.10.18
+[uboot] 触发重启 ...
+[uboot] ✅ 进了 u-boot
+
+
+>>> 
+
+
+Zynq>     ==> ✅ 成功
+
+>>> version
+version
+
+U-Boot 2020.01 (Sep 14 2023 - 10:03:26 +0000)
+
+
+
+arm-xilinx-linux-gnueabi-gcc (GCC) 9.2.0
+
+GNU ld (GNU Binutils) 2.32.0.20190204
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga
+fpga
+
+fpga - loadable FPGA image support
+
+
+
+Usage:
+
+fpga [operation type] [device number] [image address] [image size]
+
+fpga operations:
+
+  dump	[dev] [address] [size]	Load device to memory buffer
+
+  info	[dev]			list known device information
+
+  load	[dev] [address] [size]	Load device from memory buffer
+
+  loadp	[dev] [address] [size]	Load device from memory buffer with partial bitstream
+
+  loadb	[dev] [address] [size]	Load device from bitstream buffer (Xilinx only)
+
+  loadbp	[dev] [address] [size]	Load device from bitstream buffer with partial bitstream(Xilinx only)
+
+Load device from filesystem (FAT by default) (Xilinx only)
+
+  loadfs [dev] [address] [image size] [blocksize] <interface>
+
+        [<dev[:part]>] <filename>
+
+  loadmk [dev] [address]	Load device generated with mkimage
+
+	For loadmk operating on FIT format uImage address must include
+
+	subimage unit name in the form of addr:<subimg_uname>
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga info 0
+fpga info 0
+
+Xilinx Device
+
+Descriptor @ 0x3ffdbe84
+
+Family:        	Zynq PL
+
+Interface type:	Device configuration interface (Zynq)
+
+Device Size:   	4045564 bytes
+
+Cookie:        	0x0 (0)
+
+Device name:   	7z020
+
+No Device Function Table.
+
+Zynq>     ==> ✅ 成功
+
+>>> mmc dev 0
+mmc dev 0
+
+switch to partitions #0, OK
+
+mmc0 is current device
+
+Zynq>     ==> ✅ 成功
+
+==========================================================
+试: 完整 .bit (带文本头)  [t_gpu.bit]
+==========================================================
+
+>>> fatload mmc 0:1 0x08000000 t_gpu.bit
+fatload mmc 0:1 0x08000000 t_gpu.bit
+
+4045769 bytes read in 262 ms (14.7 MiB/s)
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga load  0 0x08000000 ${filesize}
+fpga load  0 0x08000000 ${filesize}
+
+zynq_validate_bitstream: Bitstream is not validated yet (diff cd)
+
+Command 'load' failed: Error 1
+
+Zynq>     ==> ★ 失败
+
+==========================================================
+试: 字节交换 .bin  [t_sw.bin]
+==========================================================
+
+>>> fatload mmc 0:1 0x08000000 t_sw.bin
+fatload mmc 0:1 0x08000000 t_sw.bin
+
+4045532 bytes read in 258 ms (15 MiB/s)
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga loadb 0 0x08000000 ${filesize}
+fpga loadb 0 0x08000000 ${filesize}
+
+Command 'loadb' failed: Error 1
+
+Zynq>     ==> ★ 失败
+
+==========================================================
+试: 未交换 raw  [t_raw.bin]
+==========================================================
+
+>>> fatload mmc 0:1 0x08000000 t_raw.bin
+fatload mmc 0:1 0x08000000 t_raw.bin
+
+4045532 bytes read in 259 ms (14.9 MiB/s)
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga loadb 0 0x08000000 ${filesize}
+fpga loadb 0 0x08000000 ${filesize}
+
+Command 'loadb' failed: Error 1
+
+Zynq>     ==> ★ 失败
+
+==========================================================
+试: bootgen 官方 .bin  [t_bg.bin]
+==========================================================
+
+>>> fatload mmc 0:1 0x08000000 t_bg.bin
+fatload mmc 0:1 0x08000000 t_bg.bin
+
+4045568 bytes read in 258 ms (15 MiB/s)
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga loadb 0 0x08000000 ${filesize}
+fpga loadb 0 0x08000000 ${filesize}
+
+Command 'loadb' failed: Error 1
+
+Zynq>     ==> ★ 失败
+
+==========================================================
+试: .bit 当 bin 试  [t_gpu.bit]
+==========================================================
+
+>>> fatload mmc 0:1 0x08000000 t_gpu.bit
+fatload mmc 0:1 0x08000000 t_gpu.bit
+
+4045769 bytes read in 262 ms (14.7 MiB/s)
+
+Zynq>     ==> ✅ 成功
+
+>>> fpga loadb 0 0x08000000 ${filesize}
+fpga loadb 0 0x08000000 ${filesize}
+
+  design filename = "system_wrapper;UserID=0XFFFFFFFF;Version=2026.1;SW_CRC=9fcac953;SW_HDR_SHA256=270cd3808e7a08291894e29c845b7ec1c9cf79bb8df9789471b929141d23dc43"
+
+  part number = "7z020clg400"
+
+  date = "2026/09/24"
+
+  time = "23:22:24"
+
+  bytes in bitstream = 4045564
+
+zynq_align_dma_buffer: Align buffer at 80000cd to 8000000(swap 1)
+
+INFO:post config was not run, please run manually if needed
+
+Zynq>     ==> ✅ 成功
+
+==========================================================
+汇总
+==========================================================
+  完整 .bit (带文本头)           t_gpu.bit      ★ 失败
+  字节交换 .bin                t_sw.bin       ★ 失败
+  未交换 raw                  t_raw.bin      ★ 失败
+  bootgen 官方 .bin          t_bg.bin       ★ 失败
+  .bit 当 bin 试             t_gpu.bit      ✅ 成功
+==========================================================
+
+继续启动 Linux ...
+
+>>> boot
+boot
+
+switch to partitions #0, OK
+
+mmc0 is current device
+
+Scanning mmc 0:1...
+
+Found U-Boot script /boot.scr
+
+2199 bytes read in 19 ms (112.3 KiB/s)
+
+## Executing script at 03000000
+
+4828024 bytes read in 297 ms (15.5 MiB/s)
+
+29177 bytes read in 20 ms (1.4 MiB/s)
+
+4045532 bytes read in 258 ms (15 MiB/s)
+
+Command 'loadb' failed: Error 1
+
+## Flattened Device Tree blob at 00100000
+
+   Booting using the fdt blob at 0x100000
+
+   Loading Device Tree to 1fff5000, end 1ffff1f8 ... OK
+
+
+
+Starting kernel ...
+
+
+
+Booting Linux on physical CPU 0x0
+
+Linux version 5.4.0-xilinx-v2020.2 (oe-user@oe-host) (gcc version 9.2.0 (GCC)) #1 SMP PREEMPT Thu Sep 14 08:39:17 UTC 2023
+
+CPU: ARMv7 Processor [413fc090] revision 0 (ARMv7), cr=18c5387d
+
+CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+
+OF: fdt: Machine model: Alientek Navigator Zynq Development Board
+
+earlycon: cdns0 at MMIO 0xe0000000 (options '115200n8')
+
+printk: bootconsole [cdns0] enabled
+
+Memory policy: Data cache writealloc
+
+cma: Reserved 16 MiB at 0x3f000000
+
+percpu: Embedded 15 pages/cpu s31884 r8192 d21364 u61440
+
+Built 1 zonelists, mobility grouping on.  Total pages: 260608
+
+Kernel command line: console=ttyPS0,115200 root=/dev/mmcblk0p2 rw rootwait earlycon
+
+Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+
+Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+
+mem auto-init: stack:off, heap alloc:off, heap free:off
+
+Memory: 1010840K/1048576K available (7168K kernel code, 214K rwdata, 2056K rodata, 1024K init, 144K bss, 21352K reserved, 16384K cma-reserved, 245760K highmem)
+
+rcu: Preemptible hierarchical RCU implementation.
+
+rcu: 	RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=2.
+
+	Tasks RCU enabled.
+
+rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+
+rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
+
+NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+
+efuse mapped to (ptrval)
+
+slcr mapped to (ptrval)
+
+L2C: platform modifies aux control register: 0x72360000 -> 0x72760000
+
+L2C: DT/platform modifies aux control register: 0x72360000 -> 0x72760000
+
+L2C-310 erratum 769419 enabled
+
+L2C-310 enabling early BRESP for Cortex-A9
+
+L2C-310 full line of zeros enabled for Cortex-A9
+
+L2C-310 ID prefetch enabled, offset 1 lines
+
+L2C-310 dynamic clock gating enabled, standby mode enabled
+
+L2C-310 cache controller enabled, 8 ways, 512 kB
+
+L2C-310: CACHE_ID 0x410000c8, AUX_CTRL 0x76760001
+
+random: get_random_bytes called from start_kernel+0x260/0x424 with crng_init=0
+
+zynq_clock_init: clkc starts at (ptrval)
+
+Zynq clock init
+
+sched_clock: 64 bits at 383MHz, resolution 2ns, wraps every 4398046511103ns
+
+clocksource: arm_global_timer: mask: 0xffffffffffffffff max_cycles: 0x58688d738d, max_idle_ns: 440795214563 ns
+
+Switching to timer-based delay loop, resolution 2ns
+
+Console: colour dummy device 80x30
+
+Calibrating delay loop (skipped), value calculated using timer frequency.. 766.66 BogoMIPS (lpj=3833333)
+
+pid_max: default: 32768 minimum: 301
+
+Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+
+Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+
+CPU: Testing write buffer coherency: ok
+
+CPU0: Spectre v2: using BPIALL workaround
+
+CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+
+Setting up static identity map for 0x100000 - 0x100060
+
+rcu: Hierarchical SRCU implementation.
+
+smp: Bringing up secondary CPUs ...
+
+CPU1: thread -1, cpu 1, socket 0, mpidr 80000001
+
+CPU1: Spectre v2: using BPIALL workaround
+
+smp: Brought up 1 node, 2 CPUs
+
+SMP: Total of 2 processors activated (1533.33 BogoMIPS).
+
+CPU: All CPU(s) started in SVC mode.
+
+devtmpfs: initialized
+
+VFP support v0.3: implementor 41 architecture 3 part 30 variant 9 rev 4
+
+clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+
+futex hash table entries: 512 (order: 3, 32768 bytes, linear)
+
+pinctrl core: initialized pinctrl subsystem
+
+NET: Registered protocol family 16
+
+DMA: preallocated 256 KiB pool for atomic coherent allocations
+
+cpuidle: using governor menu
+
+hw-breakpoint: found 5 (+1 reserved) breakpoint and 1 watchpoint registers.
+
+hw-breakpoint: maximum watchpoint size is 4 bytes.
+
+zynq-ocm f800c000.ocmc: ZYNQ OCM pool: 256 KiB @ 0x(ptrval)
+
+e0000000.serial: ttyPS0 at MMIO 0xe0000000 (irq = 27, base_baud = 6249999) is a xuartps
+
+printk: console [ttyPS0] enabled
+
+printk: console [ttyPS0] enabled
+
+printk: bootconsole [cdns0] disabled
+
+printk: bootconsole [cdns0] disabled
+
+e0001000.serial: ttyPS1 at MMIO 0xe0001000 (irq = 28, base_baud = 6249999) is a xuartps
+
+vgaarb: loaded
+
+SCSI subsystem initialized
+
+usbcore: registered new interface driver usbfs
+
+usbcore: registered new interface driver hub
+
+usbcore: registered new device driver usb
+
+mc: Linux media interface: v0.10
+
+videodev: Linux video capture interface: v2.00
+
+pps_core: LinuxPPS API ver. 1 registered
+
+pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+
+PTP clock support registered
+
+EDAC MC: Ver: 3.0.0
+
+FPGA manager framework
+
+Advanced Linux Sound Architecture Driver Initialized.
+
+clocksource: Switched to clocksource arm_global_timer
+
+thermal_sys: Registered thermal governor 'step_wise'
+
+NET: Registered protocol family 2
+
+tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 6144 bytes, linear)
+
+TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+
+TCP bind hash table entries: 8192 (order: 4, 65536 bytes, linear)
+
+TCP: Hash tables configured (established 8192 bind 8192)
+
+UDP hash table entries: 512 (order: 2, 16384 bytes, linear)
+
+UDP-Lite hash table entries: 512 (order: 2, 16384 bytes, linear)
+
+NET: Registered protocol family 1
+
+RPC: Registered named UNIX socket transport module.
+
+RPC: Registered udp transport module.
+
+RPC: Registered tcp transport module.
+
+RPC: Registered tcp NFSv4.1 backchannel transport module.
+
+PCI: CLS 0 bytes, default 64
+
+hw perfevents: no interrupt-affinity property for /pmu@f8891000, guessing.
+
+hw perfevents: enabled with armv7_cortex_a9 PMU driver, 7 counters available
+
+Initialise system trusted keyrings
+
+workingset: timestamp_bits=30 max_order=18 bucket_order=0
+
+NFS: Registering the id_resolver key type
+
+Key type id_resolver registered
+
+Key type id_legacy registered
+
+Installing knfsd (copyright (C) 1996 okir@monad.swb.de).
+
+ntfs: driver 2.1.32 [Flags: R/O].
+
+jffs2: version 2.2. (NAND) (SUMMARY)  © 2001-2006 Red Hat, Inc.
+
+Key type asymmetric registered
+
+Asymmetric key parser 'x509' registered
+
+bounce: pool size: 64 pages
+
+io scheduler mq-deadline registered
+
+io scheduler kyber registered
+
+zynq-pinctrl 700.pinctrl: zynq pinctrl initialized
+
+GPIO IRQ not connected
+
+XGpio: gpio@41210000: registered, base is 1022
+
+GPIO IRQ not connected
+
+XGpio: gpio@41200000: registered, base is 1019
+
+GPIO IRQ not connected
+
+XGpio: gpio@41220000: registered, base is 1016
+
+pwm_clk=99999999  period_min_ns=10
+
+dma-pl330 f8003000.dmac: Loaded driver for PL330 DMAC-241330
+
+dma-pl330 f8003000.dmac: 	DBUFF-128x8bytes Num_Chans-8 Num_Peri-4 Num_Events-16
+
+xilinx-frmbuf 43c40000.v_frmbuf_wr: Xilinx AXI frmbuf DMA_DEV_TO_MEM
+
+xilinx-frmbuf 43c40000.v_frmbuf_wr: Xilinx AXI FrameBuffer Engine Driver Probed!!
+
+xilinx-frmbuf 43ca0000.v_frmbuf_rd: Xilinx AXI frmbuf DMA_MEM_TO_DEV
+
+xilinx-frmbuf 43ca0000.v_frmbuf_rd: Xilinx AXI FrameBuffer Engine Driver Probed!!
+
+xilinx-frmbuf 43c20000.v_frmbuf_rd: Xilinx AXI frmbuf DMA_MEM_TO_DEV
+
+xilinx-frmbuf 43c20000.v_frmbuf_rd: Xilinx AXI FrameBuffer Engine Driver Probed!!
+
+xlnx,bridge-vtc 43c90000.v_tc: vtc ppc = 1
+
+xlnx,bridge-vtc 43c90000.v_tc: Xilinx VTC IP version : 0x0602000c
+
+xlnx,bridge-vtc 43c90000.v_tc: Xilinx VTC DRM Bridge driver probed
+
+xlnx,bridge-vtc 43c10000.v_tc: vtc ppc = 1
+
+xlnx,bridge-vtc 43c10000.v_tc: Xilinx VTC IP version : 0x0602000c
+
+xlnx,bridge-vtc 43c10000.v_tc: Xilinx VTC DRM Bridge driver probed
+
+xlnx-pl-disp amba_pl:drm_pl_disp_lcd: Xlnx PL display driver probed
+
+xlnx-pl-disp amba_pl:drm_pl_disp_hdmi: Xlnx PL display driver probed
+
+atk-dpi amba_pl:atk_lcd_drm: Alientek LCD ID: 2
+
+period=500000  period=500000
+
+[drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+
+[drm] No driver support for vblank timestamp query.
+
+xlnx-drm xlnx-drm.0: bound amba_pl:drm_pl_disp_lcd (ops 0xc0842308)
+
+xlnx-drm xlnx-drm.0: bound amba_pl:atk_lcd_drm (ops 0xc0842534)
+
+Console: switching to colour frame buffer device 128x37
+
+xlnx-pl-disp amba_pl:drm_pl_disp_lcd: fb0: xlnxdrmfb frame buffer device
+
+[drm] Initialized xlnx 1.0.0 20130509 for amba_pl:drm_pl_disp_lcd on minor 0
+
+atk-dpi amba_pl:atk_lcd_drm: Atk encoder driver probed
+
+[drm] failed get ddc i2c adapter by node
+
+brd: module loaded
+
+loop: module loaded
+
+spi-nor spi0.0: w25q256 (32768 Kbytes)
+
+5 fixed-partitions partitions found on MTD device spi0.0
+
+Creating 5 MTD partitions on "spi0.0":
+
+0x000000000000-0x000000600000 : "boot"
+
+0x000000600000-0x000000620000 : "bootenv"
+
+0x000000620000-0x000000d20000 : "image.ub"
+
+0x000000d20000-0x000000d40000 : "boot.scr"
+
+0x000000d40000-0x000002000000 : "space"
+
+libphy: Fixed MDIO Bus: probed
+
+CAN device driver interface
+
+libphy: MACB_mii_bus: probed
+
+Generic PHY e000b000.ethernet-ffffffff:07: attached PHY driver [Generic PHY] (mii_bus:phy_addr=e000b000.ethernet-ffffffff:07, irq=POLL)
+
+macb e000b000.ethernet eth0: Cadence GEM rev 0x00020118 at 0xe000b000 irq 30 (00:0a:35:00:8b:87)
+
+libphy: MACB_mii_bus: probed
+
+Generic PHY e000c000.ethernet-ffffffff:04: attached PHY driver [Generic PHY] (mii_bus:phy_addr=e000c000.ethernet-ffffffff:04, irq=POLL)
+
+macb e000c000.ethernet eth1: Cadence GEM rev 0x00020118 at 0xe000c000 irq 31 (00:0a:35:00:11:55)
+
+e1000e: Intel(R) PRO/1000 Network Driver - 3.2.6-k
+
+e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+
+ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+
+ehci-pci: EHCI PCI platform driver
+
+usbcore: registered new interface driver usb-storage
+
+chipidea-usb2 e0002000.usb: e0002000.usb supply vbus not found, using dummy regulator
+
+ULPI transceiver vendor/product ID 0x0424/0x0007
+
+Found SMSC USB3320 ULPI transceiver.
+
+ULPI integrity check: passed.
+
+ci_hdrc ci_hdrc.0: EHCI Host Controller
+
+ci_hdrc ci_hdrc.0: new USB bus registered, assigned bus number 1
+
+ci_hdrc ci_hdrc.0: USB 2.0 started, EHCI 1.00
+
+hub 1-0:1.0: USB hub found
+
+hub 1-0:1.0: 1 port detected
+
+input: beep as /devices/soc0/beep/input/input0
+
+i2c /dev entries driver
+
+at24 1-0050: 8192 byte 24c64 EEPROM, writable, 32 bytes/write
+
+rtc-pcf8563 1-0051: registered as rtc0
+
+cdns-i2c e0004000.i2c: 100 kHz mmio e0004000 irq 23
+
+edt_ft5426 2-0038: Alientek LCD ID: 2
+
+usb 1-1: new high-speed USB device number 2 using ci_hdrc
+
+edt_ft5426 2-0038: edt_ft5426_ts_write: write error, addr=0x0 len=1.
+
+edt_ft5426: probe of 2-0038 failed with error -1
+
+hub 1-1:1.0: USB hub found
+
+hub 1-1:1.0: 4 ports detected
+
+goodix_ts 2-0014: ID: 911, version: 1060
+
+goodix_ts 2-0014: X_MAX: 1024, Y_MAX: 600, TRIGGER: 0x02, Touch Number: 5
+
+input: Goodix Capacitive TouchScreen as /devices/soc0/amba/e0005000.i2c/i2c-2/2-0014/input/input1
+
+cdns-i2c e0005000.i2c: 100 kHz mmio e0005000 irq 24
+
+ov5640 0-003c: ov5640_read_reg: error: addr=0x300a
+
+ov5640 0-003c: ov5640_check_chip_id: failed to read chip identifier
+
+ov5640: probe of 0-003c failed with error -5
+
+xilinx-video amba_pl:vcap_dvp: device registered
+
+uvcvideo: Unable to create debugfs directory
+
+usbcore: registered new interface driver uvcvideo
+
+USB Video Class driver (1.1.1)
+
+cdns-wdt f8005000.watchdog: Xilinx Watchdog Timer with timeout 10s
+
+EDAC MC: ECC not enabled
+
+Xilinx Zynq CpuIdle Driver started
+
+sdhci: Secure Digital Host Controller Interface driver
+
+sdhci: Copyright(c) Pierre Ossman
+
+sdhci-pltfm: SDHCI platform and OF driver helper
+
+mmc0: SDHCI controller on e0100000.mmc [e0100000.mmc] using ADMA
+
+mmc1: SDHCI controller on e0101000.mmc [e0101000.mmc] using ADMA
+
+ledtrig-cpu: registered to indicate activity on CPUs
+
+clocksource: ttc_clocksource: mask: 0xffff max_cycles: 0xffff, max_idle_ns: 467424388 ns
+
+timer #0 at (ptrval), irq=45
+
+usbcore: registered new interface driver usbhid
+
+usbhid: USB HID core driver
+
+exFAT: Version 1.3.0
+
+usb 1-1.2: new high-speed USB device number 3 using ci_hdrc
+
+random: fast init done
+
+fpga_manager fpga0: Xilinx Zynq FPGA Manager registered
+
+wm8960 1-001a: Failed to issue reset
+
+xlnx_formatter_pcm 43c50000.audio_formatter: sound card device will use DAI link: i2s_transmitter
+
+xlnx_formatter_pcm 43c50000.audio_formatter: sound card device will use DAI link: i2s_receiver
+
+mmc0: new high speed SDHC card at address 0001
+
+xlnx_formatter_pcm 43c50000.audio_formatter: pcm platform device registered
+
+xlnx_i2s 43c60000.i2s_receiver: xlnx_i2s_capture DAI registered
+
+mmcblk0: mmc0:0001 SD16G 29.1 GiB 
+
+xlnx_i2s 43c70000.i2s_transmitter: xlnx_i2s_playback DAI registered
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+NET: Registered protocol family 10
+
+ mmcblk0: p1 p2
+
+Segment Routing with IPv6
+
+sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+
+NET: Registered protocol family 17
+
+mmc1: new high speed MMC card at address 0001
+
+can: controller area network core (rev 20170425 abi 9)
+
+NET: Registered protocol family 29
+
+can: raw protocol (rev 20170425)
+
+mmcblk1: mmc1:0001 8GTF4R 7.28 GiB 
+
+can: broadcast manager protocol (rev 20170425 t)
+
+mmcblk1boot0: mmc1:0001 8GTF4R partition 1 4.00 MiB
+
+can: netlink gateway (rev 20190810) max_hops=1
+
+mmcblk1boot1: mmc1:0001 8GTF4R partition 2 4.00 MiB
+
+Key type dns_resolver registered
+
+mmcblk1rpmb: mmc1:0001 8GTF4R partition 3 512 KiB, chardev (245:0)
+
+Registering SWP/SWPB emulation handler
+
+ mmcblk1: p1
+
+Loading compiled-in X.509 certificates
+
+of-fpga-region fpga-full: FPGA Region probed
+
+[drm] Success to get ddc i2c adapter by node
+
+[drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+
+[drm] No driver support for vblank timestamp query.
+
+xlnx-drm xlnx-drm.1: bound amba_pl:drm_pl_disp_hdmi (ops 0xc0842308)
+
+xlnx-drm xlnx-drm.1: bound amba_pl:atk_hdmi_drm (ops 0xc08426c4)
+
+[drm] Cannot find any crtc or sizes
+
+hub 1-1.2:1.0: USB hub found
+
+[drm] Cannot find any crtc or sizes
+
+hub 1-1.2:1.0: 4 ports detected
+
+[drm] Initialized xlnx 1.0.0 20130509 for amba_pl:drm_pl_disp_hdmi on minor 1
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+input: keys as /devices/soc0/keys/input/input2
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+rtc-pcf8563 1-0051: setting system clock to 2026-09-24T16:54:04 UTC (1790268844)
+
+of_cfs_init
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+of_cfs_init: OK
+
+cfg80211: Loading compiled-in X.509 certificates for regulatory database
+
+cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+
+platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+
+cfg80211: failed to load regulatory.db
+
+ALSA device list:
+
+  No soundcards found.
+
+EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null)
+
+VFS: Mounted root (ext4 filesystem) on device 179:2.
+
+devtmpfs: mounted
+
+Freeing unused kernel memory: 1024K
+
+Run /sbin/init as init process
+
+usb 1-1.2.1: new high-speed USB device number 4 using ci_hdrc
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+usb 1-1.2.2: new high-speed USB device number 5 using ci_hdrc
+
+systemd[1]: Failed to find module 'autofs4'
+
+systemd[1]: systemd 245.4-4ubuntu3.24 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=hybrid)
+
+usb-storage 1-1.2.2:1.0: USB Mass Storage device detected
+
+systemd[1]: Detected architecture arm.
+
+scsi host0: usb-storage 1-1.2.2:1.0
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+
+
+Welcome to [1mUbuntu 20.04.5 LTS[0m!
+
+
+
+systemd[1]: Set hostname to <zynq-board>.
+
+random: systemd: uninitialized urandom read (16 bytes read)
+
+random: systemd: uninitialized urandom read (16 bytes read)
+
+systemd[1]: system-modprobe.slice: unit configures an IP firewall, but the local system does not support BPF/cgroup firewalling.
+
+systemd[1]: (This warning is only shown for the first unit using IP firewalling.)
+
+systemd[1]: Created slice system-modprobe.slice.
+
+[[0;32m  OK  [0m] Created slice [0;1;39msystem-modprobe.slice[0m.
+
+random: systemd: uninitialized urandom read (16 bytes read)
+
+systemd[1]: Created slice system-serial\x2dgetty.slice.
+
+[[0;32m  OK  [0m] Created slice [0;1;39msystem-serial\x2dgetty.slice[0m.
+
+systemd[1]: Created slice User and Session Slice.
+
+[[0;32m  OK  [0m] Created slice [0;1;39mUser and Session Slice[0m.
+
+scsi 0:0:0:0: Direct-Access     FLASH    UDISK            2.30 PQ: 0 ANSI: 2
+
+sd 0:0:0:0: Attached scsi generic sg0 type 0
+
+sd 0:0:0:0: [sda] 7944 512-byte logical blocks: (4.07 MB/3.88 MiB)
+
+sd 0:0:0:0: [sda] Write Protect is on
+
+sd 0:0:0:0: [sda] No Caching mode page found
+
+sd 0:0:0:0: [sda] Assuming drive cache: write through
+
+systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+
+[[0;32m  OK  [0m] Started [0;1;39mForward Password R…uests to Wall Directory Watch[0m.
+
+systemd[1]: Condition check resulted in Arbitrary Executable File Formats File System Automount Point being skipped.
+
+systemd[1]: Reached target Remote File Systems.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mRemote File Systems[ sda: sda1
+
+0m.
+
+sd 0:0:0:0: [sda] Attached SCSI removable disk
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+systemd[1]: Reached target Slices.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mSlices[0m.
+
+systemd[1]: Reached target Swap.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mSwap[0m.
+
+systemd[1]: Listening on fsck to fsckd communication Socket.
+
+[[0;32m  OK  [0m] Listening on [0;1;39mfsck to fsckd communication Socket[0m.
+
+systemd[1]: Listening on initctl Compatibility Named Pipe.
+
+[[0;32m  OK  [0m] Listening on [0;1;39minitctl Compatibility Named Pipe[0m.
+
+systemd[1]: Condition check resulted in Journal Audit Socket being skipped.
+
+systemd[1]: Listening on Journal Socket (/dev/log).
+
+[[0;32m  OK  [0m] Listening on [0;1;39mJournal Socket (/dev/log)[0m.
+
+systemd[1]: Listening on Journal Socket.
+
+[[0;32m  OK  [0m] Listening on [0;1;39mJournal Socket[0m.
+
+systemd[1]: Listening on Network Service Netlink Socket.
+
+[[0;32m  OK  [0m] Listening on [0;1;39mNetwork Service Netlink Socket[0m.
+
+systemd[1]: Listening on udev Control Socket.
+
+[[0;32m  OK  [0m] Listening on [0;1;39mudev Control Socket[0m.
+
+systemd[1]: Listening on udev Kernel Socket.
+
+[[0;32m  OK  [0m] Listening on [0;1;39mudev Kernel Socket[0m.
+
+systemd[1]: Condition check resulted in Huge Pages File System being skipped.
+
+systemd[1]: Condition check resulted in POSIX Message Queue File System being skipped.
+
+systemd[1]: Condition check resulted in Kernel Debug File System being skipped.
+
+systemd[1]: Condition check resulted in Kernel Trace File System being skipped.
+
+systemd[1]: Starting Journal Service...
+
+         Starting [0;1;39mJournal Service[0m...
+
+systemd[1]: Condition check resulted in Create list of static device nodes for the current kernel being skipped.
+
+systemd[1]: Starting Load Kernel Module chromeos_pstore...
+
+         Starting [0;1;39mLoad Kernel Module chromeos_pstore[0m...
+
+systemd[1]: Condition check resulted in Load Kernel Module drm being skipped.
+
+systemd[1]: Starting Load Kernel Module efi_pstore...
+
+         Starting [0;1;39mLoad Kernel Module efi_pstore[0m...
+
+systemd[1]: Starting Load Kernel Module pstore_blk...
+
+         Starting [0;1;39mLoad Kernel Module pstore_blk[0m...
+
+systemd[1]: Starting Load Kernel Module pstore_zone...
+
+         Starting [0;1;39mLoad Kernel Module pstore_zone[0m...
+
+systemd[1]: Starting Load Kernel Module ramoops...
+
+         Starting [0;1;39mLoad Kernel Module ramoops[0m...
+
+systemd[1]: Condition check resulted in Set Up Additional Binary Formats being skipped.
+
+systemd[1]: Condition check resulted in File System Check on Root Device being skipped.
+
+systemd[1]: Starting Load Kernel Modules...
+
+         Starting [0;1;39mLoad Kernel Modules[0m...
+
+systemd[1]: Starting Remount Root and Kernel File Systems...
+
+         Starting [0;1;39mRemount Root and Kernel File Systems[0m...
+
+systemd[1]: Starting udev Coldplug all Devices...
+
+         Starting [0;1;39mudev Coldplug all Devices[0m...
+
+systemd[1]: Started Journal Service.
+
+[[0;32m  OK  [0m] Started [0;1;39mJournal Service[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad Kernel Module chromeos_pstore[0m.
+
+EXT4-fs (mmcblk0p2): re-mounted. Opts: errors=remount-ro
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad Kernel Module efi_pstore[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad Kernel Module pstore_blk[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad Kernel Module pstore_zone[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad Kernel Module ramoops[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad Kernel Modules[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mRemount Root and Kernel File Systems[0m.
+
+         Mounting [0;1;39mKernel Configuration File System[0m...
+
+         Starting [0;1;39mFlush Journal to Persistent Storage[0m...
+
+         Starting [0;1;39mLoad/Save Random Seed[0m...
+
+systemd-journald[118]: Received client request to flush runtime journal.
+
+         Starting [0;1;39mApply Kernel Variables[0m...
+
+         Starting [0;1;39mCreate System Users[0m...
+
+[[0;32m  OK  [0m] Mounted [0;1;39mKernel Configuration File System[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mCreate System Users[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mApply Kernel Variables[0m.
+
+         Starting [0;1;39mCreate Static Device Nodes in /dev[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mudev Coldplug all Devices[0m.
+
+         Starting [0;1;39mHelper to synchronize boot up for ifupdown[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mCreate Static Device Nodes in /dev[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mHelper to synchronize boot up for ifupdown[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mLocal File Systems (Pre)[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mLocal File Systems[0m.
+
+         Starting [0;1;39mRaise network interfaces[0m...
+
+         Starting [0;1;39mTell Plymouth To Write Out Runtime Data[0m...
+
+         Starting [0;1;39mudev Kernel Device Manager[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mTell Plymouth To Write Out Runtime Data[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mRaise network interfaces[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mFlush Journal to Persistent Storage[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mudev Kernel Device Manager[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mDispatch Password …ts to Console Directory Watch[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mLocal Encrypted Volumes[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mPaths[0m.
+
+         Starting [0;1;39mNetwork Service[0m...
+
+         Starting [0;1;39mCreate Volatile Files and Directories[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mCreate Volatile Files and Directories[0m.
+
+         Starting [0;1;39mNetwork Time Synchronization[0m...
+
+         Starting [0;1;39mUpdate UTMP about System Boot/Shutdown[0m...
+
+[[0;32m  OK  [0m] Started [0;1;39mNetwork Service[0m.
+
+[[0;32m  OK  [0m] Found device [0;1;39m/dev/ttyPS0[0m.
+
+         Starting [0;1;39mWait for Network to be Configured[0m...
+
+         Starting [0;1;39mNetwork Name Resolution[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mUpdate UTMP about System Boot/Shutdown[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mNetwork Time Synchronization[0m.
+
+[[0;32m  OK  [0m] Finished [0;1;39mLoad/Save Random Seed[0m.
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+[[0;32m  OK  [0m] Finished [0;1;39mWait for Network to be Configured[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mNetwork Name Resolution[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mHost and Network Name Lookups[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mSystem Initialization[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mDaily Cleanup of Temporary Directories[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mSystem Time Set[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mSystem Time Synchronized[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mDaily apt download activities[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mDaily apt upgrade and clean activities[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mPeriodic ext4 Onli…ata Check for All Filesystems[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mDiscard unused blocks once a week[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mDaily man-db regeneration[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mMessage of the Day[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mTimers[0m.
+
+[[0;32m  OK  [0m] Listening on [0;1;39mD-Bus System Message Bus Socket[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mSockets[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mBasic System[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mD-Bus System Message Bus[0m.
+
+         Starting [0;1;39mRemove Stale Onli…t4 Metadata Check Snapshots[0m...
+
+[[0;32m  OK  [0m] Started [0;1;39mSet the CPU Frequency Scaling governor[0m.
+
+         Starting [0;1;39mLogin Service[0m...
+
+         Starting [0;1;39mAIC8800 WiFi auto connect[0m...
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+         Starting [0;1;39mWPA supplicant[0m...
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+[[0;32m  OK  [0m] Finished [0;1;39mRemove Stale Onli…ext4 Metadata Check Snapshots[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mWPA supplicant[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mNetwork[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mNetwork is Online[0m.
+
+         Starting [0;1;39mOpenBSD Secure Shell server[0m...
+
+         Starting [0;1;39mPermit User Sessions[0m...
+
+         Starting [0;1;39mZynq Framebuffer Desktop[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mPermit User Sessions[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mLogin Service[0m.
+
+         Starting [0;1;39mLight Display Manager[0m...
+
+         Starting [0;1;39mHold until boot process finishes up[0m...
+
+[[0;32m  OK  [0m] Finished [0;1;39mHold until boot process finishes up[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mSerial Getty on ttyPS0[0m.
+
+[[0;32m  OK  [0m] Reached target [0;1;39mLogin Prompts[0m.
+
+[[0;32m  OK  [0m] Started [0;1;39mOpenBSD Secure Shell server[0m.
+
+[[0;1;31mFAILED[0m] Failed to start [0;1;39mLight Display Manager[0m.
+
+See 'systemctl status lightdm.service' for details.
+
+[[0;32m  OK  [0m] Stopped [0;1;39mLight Display Manager[0m.
+
+         Starting [0;1;39mLight Display Manager[0m...
+
+[[0;1;31mFAILED[0m] Failed to start [0;1;39mLight Display Manager[0m.
+
+See 'systemctl status lightdm.service' for details.
+
+ieee80211 phy0: 
+
+*******************************************************
+
+** CAUTION: USING PERMISSIVE CUSTOM REGULATORY RULES **
+
+*******************************************************
+
+xlnx_snd_card xlnx_snd_card.0.auto: ASoC: failed to init link xilinx-i2s_playback: -517
+
+xlnx_snd_card xlnx_snd_card.0.auto: xlnx-i2s-snd-card-0 registration failed
+
+[[0;32m  OK  [0m] Stopped [0;1;39mLight Display Manager[0m.
+
+         Starting [0;1;39mLight Display Manager[0m...
+
+[[0;1;31mFAILED[0m] Failed to start [0;1;39mLight Display Manager[0m.
+
+See 'systemctl status lightdm.service' for details.
+
+[[0;32m  OK  [0m] Stopped [0;1;39mLight Display Manager[0m.
+
+         Starting [0;1;39mLight Display Manager[0m...
+
+[[0;1;31mFAILED[0m] Failed to start [0;1;39mLight Display Manager[0m.
+
+See 'systemctl status lightdm.service' for details.
+
+[[0;32m  OK  [0m] Stopped [0;1;39mLight Display Manager[0m.
+
+         Starting [0;1;39mLight Display Manager[0m...
+
+[[0;1;31mFAILED[0m] Failed to start [0;1;39mLight Display Manager[0m.
+
+See 'systemctl status lightdm.service' for details.
+
+[[0;32m  OK  [0m] Stopped [0;1;39mLight Display Manager[0m.
+
+[[0;1;31mFAILED[0m] Failed to start [0;1;39mLight Display Manager[0m.
+
+See 'systemctl status lightdm.service' for details.
+
+
+
+
+Ubuntu 20.04.5 LTS zynq-board ttyPS0
+
+
+
+zynq-board login:     ==> ★ 失败

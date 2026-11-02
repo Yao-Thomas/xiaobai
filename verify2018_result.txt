@@ -1,0 +1,18 @@
+=== BD ÂÜÖÂ?πÊ?ÄÊü? (Vivado 2018.3) ===
+OPEN=OK
+CELLCOUNT=13
+  CELL audio  ()
+  CELL axi_gpio_0  (xilinx.com:ip:axi_gpio:2.0)
+  CELL camera_in  ()
+  CELL clk_wiz_0  (xilinx.com:ip:clk_wiz:6.0)
+  CELL gmii2rgmii_0  (xilinx.com:user:gmii2rgmii:1.0)
+  CELL hdmi_out  ()
+  CELL i2c2  (xilinx.com:ip:axi_iic:2.0)
+  CELL lcd_out  ()
+  CELL processing_system7_0  (xilinx.com:ip:processing_system7:5.5)
+  CELL ps7_0_axi_periph  (xilinx.com:ip:axi_interconnect:2.1)
+  CELL rest_gpio  (xilinx.com:ip:axi_gpio:2.0)
+  CELL rst_ps7_0_100M  (xilinx.com:ip:proc_sys_reset:5.0)
+  CELL xlconcat_0  (xilinx.com:ip:xlconcat:2.1)
+
+=== ÂÖ≥ÈîÆÊé•Âè£ ===

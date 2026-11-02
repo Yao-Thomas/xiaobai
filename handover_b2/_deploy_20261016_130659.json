@@ -1,0 +1,13 @@
+{
+  "ts": "20261016_130659",
+  "host": "192.168.10.20",
+  "base": "0x43CF0000",
+  "steps": [
+    "files installed"
+  ],
+  "ok": false,
+  "backup_dir": "/home/zynq/ui/_b2_backup_20261016_130659",
+  "so_size": 24244,
+  "so_md5": "504b9dfba910dbfcf108306e5ee43b99",
+  "error": "板上 desktop.py 语法不过，已中止（请立即 rollback）：un_globals)\n  File \"/usr/lib/python3.8/py_compile.py\", line 215, in <module>\n    sys.exit(main())\n  File \"/usr/lib/python3.8/py_compile.py\", line 207, in main\n    compile(filename, doraise=True)\n  File \"/usr/lib/python3.8/py_compile.py\", line 172, in compile\n    importlib._bootstrap_external._write_atomic(cfile, bytecode, mode)\n  File \"<frozen importlib._bootstrap_external>\", line 186, in _write_atomic\nPermissionError: [Errno 13] Permission denied: '__pycache__/desktop.cpython-38.pyc.3065273696'"
+}

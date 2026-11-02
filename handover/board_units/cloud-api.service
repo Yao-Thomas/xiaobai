@@ -1,0 +1,39 @@
+# /etc/systemd/system/cloud-api.service
+[Unit]
+Description=系统管家小白 · 云协同统一入口（文件传输 / 远程硬件操作 / 变更历史）
+Documentation=file:/home/zynq/CLOUD_API.md
+
+# ★★★ 依赖尽量少（真机踩出来的）★★★
+#
+# 原来的写法：
+#     After=network-online.target zynq-agent.service
+#     Wants=network-online.target
+# 结果：开机后 journalctl -b -u cloud-api 显示 "No entries" ——
+#       系统【根本没尝试启动它】。手动 start 完全正常。
+# 原因：After=zynq-agent.service 把启动顺序绑到了一个 zynq 用户服务上，
+#       而那个服务的启动时机在这块板子上不稳定；network-online.target
+#       在这种精简系统里也容易一直不达成。
+#
+# ⇒ 改成：只依赖最基础的东西，不等网络也不等 agent。
+#   服务自己绑 0.0.0.0，网络没起来它也就是个监听不到的状态，不影响启动。
+After=basic.target
+Wants=basic.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/zynq
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -u /home/zynq/cloud_api.py
+Restart=always
+RestartSec=5
+# ★ 别让它被 OOM 杀掉（板子只有 1GB 内存）
+OOMScoreAdjust=-300
+StandardOutput=append:/var/log/cloud_api.log
+StandardError=append:/var/log/cloud_api.log
+# ★ 启动失败也算失败，让我们能从 systemctl 看到
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,31 @@
+======================================================
+ scope capture build
+ start: 00:00:28
+======================================================
+ project opened, Vivado 2026.1
+ top: system_wrapper
+
+>>> update_ip_catalog -rebuild 00:00:42
+>>> generate_target all 00:00:42
+ OK
+
+=== existing runs ===
+  synth_1          Out-of-date  (0%)
+  impl_1           Not started  (0%)
+
+>>> synthesis 00:00:42
+ run: synth_1
+ synth_1: 100%  synth_design Complete!
+ synthesis OK 00:08:20
+
+>>> implementation + write_bitstream 00:08:20
+ run: impl_1
+ impl_1: 100%  write_bitstream Complete!
+
+=== timing summary ===
+   (no timing_summary_routed.rpt)
+
+=== bitstream ===
+ BITSTREAM: D:/ubuntu_iso/atk2026/Navigator_7020/Navigator_7020.runs/impl_1/system_wrapper.bit  (4045769 bytes)
+ RESULT=OK
+=== end 00:17:43 ===

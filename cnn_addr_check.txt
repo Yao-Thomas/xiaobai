@@ -1,0 +1,122 @@
+BD opened
+
+=========== 1) æ‰€æœ‰ä¸»æ§æ¥å? ===========
+   MASTER  /audio/M00_AXI
+   MASTER  /axi_gpio_0/GPIO
+   MASTER  /camera_in/M00_AXI
+   MASTER  /cnn_conv_pool_0/m_axi_gmem_img
+   MASTER  /cnn_conv_pool_0/m_axi_gmem_out
+   MASTER  /cnn_conv_pool_0/m_axi_gmem_w
+   MASTER  /cnn_fc_0/m_axi_gmem_out
+   MASTER  /cnn_fc_0/m_axi_gmem_w
+   MASTER  /cnn_fc_0/m_axi_gmem_x
+   MASTER  /cnn_mem_ic/M00_AXI
+   MASTER  /gmii2rgmii_0/RGMII
+   MASTER  /gpu_0/m_axi
+   MASTER  /hdmi_out/M00_AXI
+   MASTER  /hdmi_out/tmds
+   MASTER  /hp3_merge/M00_AXI
+   MASTER  /i2c2/IIC
+   MASTER  /lcd_out/M00_AXI
+   MASTER  /lcd_out/lcd
+   MASTER  /lcd_out/lcd_rgb
+   MASTER  /processing_system7_0/CAN_0
+   MASTER  /processing_system7_0/DDR
+   MASTER  /processing_system7_0/FIXED_IO
+   MASTER  /processing_system7_0/GMII_ETHERNET_1
+   MASTER  /processing_system7_0/GPIO_0
+   MASTER  /processing_system7_0/IIC_0
+   MASTER  /processing_system7_0/IIC_1
+   MASTER  /processing_system7_0/MDIO_ETHERNET_1
+   MASTER  /processing_system7_0/M_AXI_GP0
+   MASTER  /processing_system7_0/UART_1
+   MASTER  /processing_system7_0/USBIND_0
+   MASTER  /ps7_0_axi_periph/M00_AXI
+   MASTER  /ps7_0_axi_periph/M01_AXI
+   MASTER  /ps7_0_axi_periph/M02_AXI
+   MASTER  /ps7_0_axi_periph/M03_AXI
+   MASTER  /ps7_0_axi_periph/M04_AXI
+   MASTER  /ps7_0_axi_periph/M05_AXI
+   MASTER  /ps7_0_axi_periph/M06_AXI
+   MASTER  /ps7_0_axi_periph/M07_AXI
+   MASTER  /ps7_0_axi_periph/M08_AXI
+   MASTER  /ps7_0_axi_periph/M09_AXI
+   MASTER  /ps7_0_axi_periph/M10_AXI
+   MASTER  /ps7_0_axi_periph/M11_AXI
+   MASTER  /ps7_0_axi_periph/M12_AXI
+   MASTER  /ps7_0_axi_periph/M13_AXI
+   MASTER  /ps7_0_axi_periph/M14_AXI
+   MASTER  /ps7_0_axi_periph/M15_AXI
+   MASTER  /ps7_0_axi_periph/M16_AXI
+   MASTER  /ps7_0_axi_periph/M17_AXI
+   MASTER  /ps7_0_axi_periph/M18_AXI
+   MASTER  /ps7_0_axi_periph/M19_AXI
+   MASTER  /rest_gpio/GPIO
+
+=========== 2) CNN ç›¸å…³çš„åœ°å€æ®? ===========
+
+   --- cnn_conv_pool_0/m_axi_gmem_img ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+   --- cnn_conv_pool_0/m_axi_gmem_w ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+   --- cnn_conv_pool_0/m_axi_gmem_out ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+   --- cnn_fc_0/m_axi_gmem_x ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+   --- cnn_fc_0/m_axi_gmem_w ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+   --- cnn_fc_0/m_axi_gmem_out ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+   --- cnn_mem_ic/M00_AXI ---
+      â˜? æ²¡æœ‰åˆ†é…ä»»ä½•åœ°å€æ®µï¼
+
+=========== 3) hp3_merge çš„è¿æ? ===========
+   /hp3_merge/M00_AXI  ->  /hp3_merge_M00_AXI
+   /hp3_merge/S00_AXI  ->  /audio_M00_AXI
+   /hp3_merge/S01_AXI  ->  /gpu_0_m_axi1
+   /hp3_merge/S02_AXI  ->  /cnn_mem_ic_M00_AXI
+
+=========== 4) HP3 ä¸ŠæŒ‚äº†è° ===========
+   S_AXI_HP3 æ¥å£: /processing_system7_0/S_AXI_HP3
+   net = /hp3_merge_M00_AXI
+      /hp3_merge/M00_AXI
+      /processing_system7_0/S_AXI_HP3
+
+=========== 5) æ‰€æœ‰ä¸»æ§çš„åœ°å€ç©ºé—´ï¼ˆDataï¼‰æ˜ å°? ===========
+   /audio/audio_formatter/m_axi_mm2s                    æœ? 1 ä¸?æ®?
+   /audio/audio_formatter/m_axi_s2mm                    æœ? 1 ä¸?æ®?
+   /audio/audio_formatter/s_axi_lite                    æœ? 1 ä¸?æ®?
+   /audio/i2s_receiver/s_axi_ctrl                       æœ? 1 ä¸?æ®?
+   /audio/i2s_transmitter/s_axi_ctrl                    æœ? 1 ä¸?æ®?
+   /axi_gpio_0/S_AXI                                    æœ? 1 ä¸?æ®?
+   /camera_in/axi_gpio_0/S_AXI                          æœ? 1 ä¸?æ®?
+   /camera_in/v_frmbuf_wr_0/Data_m_axi_mm_video         æœ? 1 ä¸?æ®?
+   /camera_in/v_frmbuf_wr_0/s_axi_CTRL                  æœ? 1 ä¸?æ®?
+   /clk_wiz_0/s_axi_lite                                æœ? 1 ä¸?æ®?
+   /cnn_conv_pool_0/s_axi_control                       æœ? 1 ä¸?æ®?
+   /cnn_fc_0/s_axi_control                              æœ? 1 ä¸?æ®?
+   /gpu_0/m_axi                                         æœ? 1 ä¸?æ®?
+   /gpu_0/s_axi                                         æœ? 1 ä¸?æ®?
+   /hdmi_out/clk_wiz_dyn/s_axi_lite                     æœ? 1 ä¸?æ®?
+   /hdmi_out/hdmi_vtc/ctrl                              æœ? 1 ä¸?æ®?
+   /hdmi_out/v_frmbuf_rd_0/Data_m_axi_mm_video          æœ? 1 ä¸?æ®?
+   /hdmi_out/v_frmbuf_rd_0/s_axi_CTRL                   æœ? 1 ä¸?æ®?
+   /i2c2/S_AXI                                          æœ? 1 ä¸?æ®?
+   /lcd_out/lcd_id/S_AXI                                æœ? 1 ä¸?æ®?
+   /lcd_out/lcd_pl_pwm/PWM_AXI                          æœ? 1 ä¸?æ®?
+   /lcd_out/lcd_vtc/ctrl                                æœ? 1 ä¸?æ®?
+   /lcd_out/v_frmbuf_rd_0/Data_m_axi_mm_video           æœ? 1 ä¸?æ®?
+   /lcd_out/v_frmbuf_rd_0/s_axi_CTRL                    æœ? 1 ä¸?æ®?
+   /processing_system7_0/Data                           æœ? 20 ä¸?æ®?
+   /processing_system7_0/S_AXI_HP0                      æœ? 1 ä¸?æ®?
+   /processing_system7_0/S_AXI_HP1                      æœ? 1 ä¸?æ®?
+   /processing_system7_0/S_AXI_HP2                      æœ? 1 ä¸?æ®?
+   /processing_system7_0/S_AXI_HP3                      æœ? 1 ä¸?æ®?
+   /rest_gpio/S_AXI                                     æœ? 1 ä¸?æ®?
+   /scope_0/s_axi                                       æœ? 1 ä¸?æ®?

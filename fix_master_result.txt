@@ -1,0 +1,17 @@
+=== �?�? GPU 主机口地址�? ===
+  找到候�?: /gpu_0/m_axi/SEG_processing_system7_0_HP3_DDR_LOWOCM
+ �?标�??: /gpu_0/m_axi/SEG_processing_system7_0_HP3_DDR_LOWOCM
+ �?改前: offset=0x00000000 range=0x00010000
+ �?改后: offset=0x00000000 range=0x40000000
+ 从机�? /gpu_0/s_axi/reg0 : offset= range=0x00001000
+ �? BD 校验+保存
+
+>>> 综合  Sun Sep 20 00:12:37 +0800 2026
+ synth_1: 100%  synth_design Complete!
+ �? 综合通过
+
+>>> 实现  Sun Sep 20 00:32:46 +0800 2026
+ impl_1: 100%  write_bitstream Complete!
+ ★★�? BITSTREAM: D:/ubuntu_iso/atk2018/atk2018.runs/impl_1/system_wrapper.bit  (4045674 字节)
+ RESULT=OK
+=== 结束 ===

@@ -1,0 +1,25 @@
+=== Vivado 2026.1 出流 ===
+ 开�?: 23:01:07
+ �? 工程已打开
+ Vivado: 2026.1
+ 工程 top: system_wrapper
+
+>>> 生成 BD 输出  23:01:20
+ �? BD 输出已生�?
+
+=== 现有 run ===
+  %synth_1         Out-of-date  (100%)
+  %impl_1          Out-of-date  (100%)
+
+>>> 综合  23:02:26
+ 甡� run: synth_1
+ synth_1: 100%  synth_design Complete!
+ �? 综合通过  23:14:24
+
+>>> 实现 + 出流  23:14:24
+ 甡� run: impl_1
+ impl_1: 100%  write_bitstream Complete!
+
+ ★★�? BITSTREAM: D:/ubuntu_iso/atk2026/Navigator_7020/Navigator_7020.runs/impl_1/system_wrapper.bit  (4045769 字节)
+ RESULT=OK
+=== 结束 23:22:41 ===

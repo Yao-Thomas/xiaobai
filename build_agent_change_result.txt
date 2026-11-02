@@ -1,0 +1,10 @@
+======================================================
+ agent 改动后出流（跳过 IP 重新生成�?
+ start: 23:07:17
+======================================================
+ project opened, Vivado 2026.1
+
+>>> 跳过 update_ip_catalog / generate_target（保�? ipshared 里的改动�?
+ �? 当前 gpu2d_axi.v �? default 分支: default: s_axi_rdata <= 32'h47505532;
+
+>>> synthesis 23:07:42

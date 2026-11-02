@@ -1,0 +1,30 @@
+// ============================================================================
+// system-user.dtsi —— PetaLinux 用户设备树补充（只服务"系统+屏幕"）
+//   放到 <proj>/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
+//   仅补充 7 寸 1024x600 显示时序；节点名以 PetaLinux 生成的 pl.dtsi 为准。
+// ============================================================================
+
+/ {
+    /* 7 寸 1024x600 显示时序（⚠️ 数值需与你屏实际参数核对） */
+    display_timing_1024x600: timing_1024x600 {
+        clock-frequency = <51200000>;   /* 51.2 MHz */
+        hactive         = <1024>;
+        vactive         = <600>;
+        hfront-porch    = <160>;
+        hback-porch     = <140>;
+        hsync-len       = <20>;
+        vfront-porch    = <12>;
+        vback-porch     = <20>;
+        vsync-len       = <3>;
+        hsync-active    = <0>;          /* 负极性，按屏改 */
+        vsync-active    = <0>;
+        de-active       = <1>;
+        pixelclk-active = <1>;
+    };
+};
+
+/* ---- 显示相关节点：以 PetaLinux 生成的 pl.dtsi 里的实际名字为准，需要时打开 ----
+&axi_vdma_0        { status = "okay"; };
+&v_tc_0            { status = "okay"; };
+&v_axi4s_vid_out_0 { status = "okay"; };
+*/

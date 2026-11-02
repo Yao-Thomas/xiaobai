@@ -1,0 +1,375 @@
+{
+  "model_name": "scope_policy_mlp",
+  "task": "scope_autoset",
+  "input_shape": [
+    74
+  ],
+  "input_dtype": "int8",
+  "input_quant": {
+    "note": "obs∈[-1,1] 的浮点观测量化为 int8：i8 = round(clip(obs,-1,1)×127)（round half to even）",
+    "formula": "i8 = round(clip(obs, -1, 1) * 127)",
+    "obs_dim": 74
+  },
+  "layers": [
+    {
+      "type": "fc",
+      "name": "fc0",
+      "in": 74,
+      "out": 64
+    },
+    {
+      "type": "fc",
+      "name": "fc1",
+      "in": 64,
+      "out": 64
+    },
+    {
+      "type": "fc",
+      "name": "head0",
+      "in": 64,
+      "out": 16,
+      "head": true,
+      "factor": 0
+    },
+    {
+      "type": "fc",
+      "name": "head1",
+      "in": 64,
+      "out": 16,
+      "head": true,
+      "factor": 1
+    },
+    {
+      "type": "fc",
+      "name": "head2",
+      "in": 64,
+      "out": 5,
+      "head": true,
+      "factor": 2
+    }
+  ],
+  "action_space": {
+    "type": "factored_discrete",
+    "factors": [
+      16,
+      16,
+      5
+    ],
+    "note": "因子化离散动作：对每个头 argmax 得到动作下标，再按 decode 表映射到真实设置"
+  },
+  "decode": {
+    "factor_names": [
+      "trig_level",
+      "dec",
+      "vgain"
+    ],
+    "factors": [
+      {
+        "name": "trig_level",
+        "n": 16,
+        "decode": [
+          0,
+          17,
+          34,
+          51,
+          68,
+          85,
+          102,
+          119,
+          136,
+          153,
+          170,
+          187,
+          204,
+          221,
+          238,
+          255
+        ],
+        "unit": "LSB(0~255)"
+      },
+      {
+        "name": "dec",
+        "n": 16,
+        "decode": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          11,
+          15,
+          21,
+          30,
+          43,
+          61,
+          86,
+          122,
+          173,
+          255
+        ],
+        "unit": "抽取(1~255)"
+      },
+      {
+        "name": "vgain",
+        "n": 5,
+        "decode": [
+          0.5,
+          0.7071067811865476,
+          1.0,
+          1.4142135623730951,
+          2.0
+        ],
+        "unit": "数字缩放因子"
+      }
+    ]
+  },
+  "requant": {
+    "formula": "out = sat((acc * MFQ) >> 16)",
+    "shift": 16,
+    "MFQ": 53,
+    "MFQ_per_layer": {
+      "fc0": 328,
+      "fc1": 311,
+      "head0": 34,
+      "head1": 62,
+      "head2": 53
+    },
+    "MFQ_note": "MFQ 是 HLS 的 s_axilite 寄存器（每层独立传入）；PS 按 fc0→…→head… 顺序写入",
+    "bias": "无偏置（与 HLS 一致）",
+    "overflow_rule": "HLS 内 acc*MFQ 为 ap_int<32>，已检查 max|acc|*MFQ < 2^31",
+    "activation": "HardTanh（clamp[-1,1]），量化后即 sat[-128,127]（等价 HLS fc 的 clamp）"
+  },
+  "weights_layout": {
+    "file": "weights.bin",
+    "dtype": "int8",
+    "align_bytes": 128,
+    "tail_pad_multiple": 64,
+    "total_bytes": 11264,
+    "order": [
+      "fc0",
+      "fc1",
+      "head0",
+      "head1",
+      "head2"
+    ],
+    "entries": [
+      {
+        "name": "fc0",
+        "offset": 0,
+        "bytes": 4736,
+        "shape": [
+          64,
+          74
+        ]
+      },
+      {
+        "name": "fc1",
+        "offset": 4736,
+        "bytes": 4096,
+        "shape": [
+          64,
+          64
+        ]
+      },
+      {
+        "name": "head0",
+        "offset": 8832,
+        "bytes": 1024,
+        "shape": [
+          16,
+          64
+        ]
+      },
+      {
+        "name": "head1",
+        "offset": 9856,
+        "bytes": 1024,
+        "shape": [
+          16,
+          64
+        ]
+      },
+      {
+        "name": "head2",
+        "offset": 10880,
+        "bytes": 320,
+        "shape": [
+          5,
+          64
+        ]
+      }
+    ],
+    "index_order": "fc: w[oc*IN + i]（行主序，与 HLS cnn_fc_q 一致）"
+  },
+  "reference": {
+    "n_samples": 32,
+    "input_format": "连续 int8 obs，每个 74 字节",
+    "output_format": "连续 int8 logits，每个 37 字节（各头按 factor 顺序拼接）",
+    "how_to_compare": "对第 k 个输入跑整数推理，把 37 字节输出与 reference_out.bin[k*37:(k+1)*37] 逐点比对，应 100% 相同",
+    "actions_argmax": [
+      [
+        8,
+        3,
+        3
+      ],
+      [
+        7,
+        9,
+        4
+      ],
+      [
+        8,
+        5,
+        4
+      ],
+      [
+        8,
+        8,
+        2
+      ],
+      [
+        7,
+        1,
+        2
+      ],
+      [
+        8,
+        6,
+        3
+      ],
+      [
+        7,
+        5,
+        4
+      ],
+      [
+        7,
+        5,
+        4
+      ],
+      [
+        8,
+        3,
+        4
+      ],
+      [
+        7,
+        6,
+        2
+      ],
+      [
+        7,
+        1,
+        2
+      ],
+      [
+        7,
+        9,
+        3
+      ],
+      [
+        7,
+        5,
+        2
+      ],
+      [
+        8,
+        1,
+        3
+      ],
+      [
+        8,
+        8,
+        4
+      ],
+      [
+        8,
+        4,
+        2
+      ],
+      [
+        8,
+        6,
+        3
+      ],
+      [
+        8,
+        4,
+        3
+      ],
+      [
+        7,
+        1,
+        3
+      ],
+      [
+        8,
+        1,
+        4
+      ],
+      [
+        7,
+        1,
+        2
+      ],
+      [
+        7,
+        9,
+        2
+      ],
+      [
+        8,
+        6,
+        2
+      ],
+      [
+        8,
+        5,
+        3
+      ],
+      [
+        7,
+        9,
+        3
+      ],
+      [
+        7,
+        6,
+        3
+      ],
+      [
+        7,
+        2,
+        3
+      ],
+      [
+        8,
+        1,
+        2
+      ],
+      [
+        7,
+        3,
+        2
+      ],
+      [
+        7,
+        9,
+        2
+      ],
+      [
+        7,
+        6,
+        3
+      ],
+      [
+        7,
+        4,
+        2
+      ]
+    ],
+    "decision_match_vs_float": "94/96"
+  },
+  "generated_by": "src/rl/quantize_policy.py"
+}

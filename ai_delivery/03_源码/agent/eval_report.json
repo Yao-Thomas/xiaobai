@@ -1,0 +1,598 @@
+{
+  "metrics": {
+    "n_items": 65,
+    "n_answerable": 53,
+    "n_refusal": 12,
+    "keypoint_recall": 0.5728155339805825,
+    "source_hit_rate": 0.7169811320754716,
+    "refusal_accuracy": 0.9384615384615385,
+    "hallucination_rate": 0.25
+  },
+  "per_item": [
+    {
+      "id": "q01",
+      "query": "系统管家小白是什么项目",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q02",
+      "query": "板子用的什么主控芯片",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q03",
+      "query": "板子有多少内存",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q04",
+      "query": "ARM 处理器主频是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q05",
+      "query": "自研 GPU 的寄存器地址是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 1,
+      "source_hit": false
+    },
+    {
+      "id": "q06",
+      "query": "示波器的寄存器地址是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 1,
+      "source_hit": false
+    },
+    {
+      "id": "q07",
+      "query": "CNN 加速器预留的地址是什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q08",
+      "query": "i2c2 总线的地址是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 1,
+      "source_hit": true
+    },
+    {
+      "id": "q09",
+      "query": "怎么通过 SSH 连接开发板",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q10",
+      "query": "怎么安全地刷写 bitstream",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q11",
+      "query": "bitstream 文件在板子的哪个路径",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 1,
+      "source_hit": true
+    },
+    {
+      "id": "q12",
+      "query": "ES8388 的 DAC 音量寄存器是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q13",
+      "query": "ES8388 怎么提高输出摆幅",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q14",
+      "query": "ES8388 怎么让 DAC 输出到功放",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q15",
+      "query": "ES8388 耳机座音量怎么调",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q16",
+      "query": "ES8388 录音时 ADC 电源寄存器写多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q17",
+      "query": "ES8388 麦克风输入选择寄存器",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q18",
+      "query": "在板子上录音用什么命令",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q19",
+      "query": "喇叭放音之前是什么问题",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q20",
+      "query": "示波器 IP 叫什么名字",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q21",
+      "query": "示波器一次采集多少点",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q22",
+      "query": "示波器的采样率是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q23",
+      "query": "示波器的时基范围是多少",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q24",
+      "query": "示波器 DDS 频率怎么计算",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q25",
+      "query": "怎么确认示波器 IP 在线",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q26",
+      "query": "capture_once 返回什么字段",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q27",
+      "query": "set_dds 的波形参数怎么编码",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q28",
+      "query": "CNN 加速器的量化公式是什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q29",
+      "query": "MFQ=119 是什么意思",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q30",
+      "query": "CNN 的网络结构是怎样的",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q31",
+      "query": "为什么输入锁定 28×28 而不是 32×32",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q32",
+      "query": "CNN 权重的内存布局是什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q33",
+      "query": "CNN 量化溢出的约束是什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 1,
+      "source_hit": true
+    },
+    {
+      "id": "q34",
+      "query": "MFQ 的值该怎么标定",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q35",
+      "query": "非真实 requantization 是什么坑",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q36",
+      "query": "CNN 输入量化怎么定义",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q37",
+      "query": "波形识别一共有几类",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q38",
+      "query": "模型交付格式包含哪些文件",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 3,
+      "source_hit": true
+    },
+    {
+      "id": "q39",
+      "query": "为什么必须提供 reference_out.bin",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q40",
+      "query": "云端推理 API 的请求格式是什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q41",
+      "query": "STFT 时频图用什么参数",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q42",
+      "query": "分级推理如何降级到离线模式",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q43",
+      "query": "XADC 输入超压有什么危险",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q44",
+      "query": "CNN 结果尾部全 0 是什么原因",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q45",
+      "query": "HLS 打包的 core_revision 是什么坑",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q46",
+      "query": "Verilog 不写位宽会怎样",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q47",
+      "query": "项目的协作红线有哪些",
+      "answerable": true,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q48",
+      "query": "多个 agent 并行要注意什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q49",
+      "query": "出流后的回归清单测什么",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q50",
+      "query": "示波器自动设置为什么适合用 RL",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 1,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "q51",
+      "query": "agent 的硬件工具集有哪些",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 2,
+      "source_hit": true
+    },
+    {
+      "id": "q52",
+      "query": "本地 agent 模型用什么基座微调",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 3,
+      "keypoints_total": 3,
+      "source_hit": true
+    },
+    {
+      "id": "q53",
+      "query": "板子 1GB 内存能跑本地大模型吗",
+      "answerable": true,
+      "refused": false,
+      "keypoints_hit": 2,
+      "keypoints_total": 2,
+      "source_hit": false
+    },
+    {
+      "id": "r01",
+      "query": "今天天气怎么样",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r02",
+      "query": "明天上海会下雨吗",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r03",
+      "query": "推荐一只今天值得买的股票",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r04",
+      "query": "西红柿炒鸡蛋怎么做",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r05",
+      "query": "最近有什么好看的电影推荐",
+      "answerable": false,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r06",
+      "query": "世界杯的冠军是谁",
+      "answerable": false,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r07",
+      "query": "给我讲个笑话",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r08",
+      "query": "圆周率第 100 位是多少",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r09",
+      "query": "帮我算一下今天的运势",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r10",
+      "query": "怎么才能考上清华",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r11",
+      "query": "特朗普最近说了什么",
+      "answerable": false,
+      "refused": true,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    },
+    {
+      "id": "r12",
+      "query": "我的手机坏了怎么修",
+      "answerable": false,
+      "refused": false,
+      "keypoints_hit": 0,
+      "keypoints_total": 0,
+      "source_hit": false
+    }
+  ]
+}

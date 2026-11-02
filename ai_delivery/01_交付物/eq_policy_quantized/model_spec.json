@@ -1,0 +1,718 @@
+{
+  "model_name": "eq_policy_mlp",
+  "task": "audio_eq",
+  "input_shape": [
+    16
+  ],
+  "input_dtype": "int8",
+  "input_quant": {
+    "note": "obs∈[-1,1] 的浮点观测量化为 int8：i8 = round(clip(obs,-1,1)×127)（round half to even）",
+    "formula": "i8 = round(clip(obs, -1, 1) * 127)",
+    "obs_dim": 16
+  },
+  "layers": [
+    {
+      "type": "fc",
+      "name": "fc0",
+      "in": 16,
+      "out": 64
+    },
+    {
+      "type": "fc",
+      "name": "fc1",
+      "in": 64,
+      "out": 64
+    },
+    {
+      "type": "fc",
+      "name": "head0",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 0
+    },
+    {
+      "type": "fc",
+      "name": "head1",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 1
+    },
+    {
+      "type": "fc",
+      "name": "head2",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 2
+    },
+    {
+      "type": "fc",
+      "name": "head3",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 3
+    },
+    {
+      "type": "fc",
+      "name": "head4",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 4
+    },
+    {
+      "type": "fc",
+      "name": "head5",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 5
+    },
+    {
+      "type": "fc",
+      "name": "head6",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 6
+    },
+    {
+      "type": "fc",
+      "name": "head7",
+      "in": 64,
+      "out": 9,
+      "head": true,
+      "factor": 7
+    }
+  ],
+  "action_space": {
+    "type": "factored_discrete",
+    "factors": [
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9
+    ],
+    "note": "因子化离散动作：对每个头 argmax 得到动作下标，再按 decode 表映射到真实设置"
+  },
+  "decode": {
+    "factor_names": [
+      "eq_band_0",
+      "eq_band_1",
+      "eq_band_2",
+      "eq_band_3",
+      "eq_band_4",
+      "eq_band_5",
+      "eq_band_6",
+      "eq_band_7"
+    ],
+    "factors": [
+      {
+        "name": "eq_band_0",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 125.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_1",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 250.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_2",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 500.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_3",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 1000.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_4",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 2000.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_5",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 4000.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_6",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 8000.0,
+        "unit": "dB"
+      },
+      {
+        "name": "eq_band_7",
+        "n": 9,
+        "decode": [
+          -12.0,
+          -9.0,
+          -6.0,
+          -3.0,
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0
+        ],
+        "center_hz": 16000.0,
+        "unit": "dB"
+      }
+    ]
+  },
+  "requant": {
+    "formula": "out = sat((acc * MFQ) >> 16)",
+    "shift": 16,
+    "MFQ": 84,
+    "MFQ_per_layer": {
+      "fc0": 343,
+      "fc1": 439,
+      "head0": 67,
+      "head1": 75,
+      "head2": 91,
+      "head3": 82,
+      "head4": 68,
+      "head5": 65,
+      "head6": 90,
+      "head7": 84
+    },
+    "MFQ_note": "MFQ 是 HLS 的 s_axilite 寄存器（每层独立传入）；PS 按 fc0→…→head… 顺序写入",
+    "bias": "无偏置（与 HLS 一致）",
+    "overflow_rule": "HLS 内 acc*MFQ 为 ap_int<32>，已检查 max|acc|*MFQ < 2^31",
+    "activation": "HardTanh（clamp[-1,1]），量化后即 sat[-128,127]（等价 HLS fc 的 clamp）"
+  },
+  "weights_layout": {
+    "file": "weights.bin",
+    "dtype": "int8",
+    "align_bytes": 128,
+    "tail_pad_multiple": 64,
+    "total_bytes": 10240,
+    "order": [
+      "fc0",
+      "fc1",
+      "head0",
+      "head1",
+      "head2",
+      "head3",
+      "head4",
+      "head5",
+      "head6",
+      "head7"
+    ],
+    "entries": [
+      {
+        "name": "fc0",
+        "offset": 0,
+        "bytes": 1024,
+        "shape": [
+          64,
+          16
+        ]
+      },
+      {
+        "name": "fc1",
+        "offset": 1024,
+        "bytes": 4096,
+        "shape": [
+          64,
+          64
+        ]
+      },
+      {
+        "name": "head0",
+        "offset": 5120,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head1",
+        "offset": 5760,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head2",
+        "offset": 6400,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head3",
+        "offset": 7040,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head4",
+        "offset": 7680,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head5",
+        "offset": 8320,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head6",
+        "offset": 8960,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      },
+      {
+        "name": "head7",
+        "offset": 9600,
+        "bytes": 576,
+        "shape": [
+          9,
+          64
+        ]
+      }
+    ],
+    "index_order": "fc: w[oc*IN + i]（行主序，与 HLS cnn_fc_q 一致）"
+  },
+  "reference": {
+    "n_samples": 32,
+    "input_format": "连续 int8 obs，每个 16 字节",
+    "output_format": "连续 int8 logits，每个 72 字节（各头按 factor 顺序拼接）",
+    "how_to_compare": "对第 k 个输入跑整数推理，把 72 字节输出与 reference_out.bin[k*72:(k+1)*72] 逐点比对，应 100% 相同",
+    "actions_argmax": [
+      [
+        7,
+        5,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        4,
+        4,
+        5,
+        5,
+        6
+      ],
+      [
+        7,
+        6,
+        4,
+        4,
+        4,
+        4,
+        5,
+        6
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        5,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        5,
+        3,
+        5,
+        4,
+        5,
+        5
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        4,
+        4,
+        4,
+        6,
+        7
+      ],
+      [
+        7,
+        5,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        5,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        7,
+        4,
+        2,
+        4,
+        5,
+        5,
+        8
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        2,
+        5,
+        5,
+        5,
+        8
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        2,
+        3,
+        5,
+        6,
+        8
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        4,
+        5,
+        6
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        3,
+        6,
+        8
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        4,
+        2,
+        4,
+        5,
+        5,
+        8
+      ],
+      [
+        7,
+        5,
+        4,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      [
+        7,
+        5,
+        4,
+        3,
+        4,
+        4,
+        5,
+        7
+      ],
+      [
+        7,
+        5,
+        4,
+        4,
+        4,
+        4,
+        5,
+        6
+      ]
+    ],
+    "decision_match_vs_float": "254/256"
+  },
+  "generated_by": "src/rl/quantize_policy.py"
+}

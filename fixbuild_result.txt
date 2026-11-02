@@ -1,0 +1,17 @@
+=== �?复��驱动后重新构建 ===
+ 当前时间: Sat Sep 19 21:10:13 +0800 2026
+ �? IP �?录已更新
+ �? BD 重新校验并保�?
+ 源文件数 = 676
+
+>>> 综合  Sat Sep 19 21:10:25 +0800 2026
+ synth_1: 100%  synth_design Complete!
+ �? 综合通过
+
+>>> 实现  Sat Sep 19 21:29:40 +0800 2026
+ impl_1: 25%  opt_design ERROR
+ RESULT=IMPL_FAIL
+   ERROR: [DRC MDRV-1] Multiple Driver Nets: Net system_i/gpu_0/inst/err_r has multiple drivers: system_i/gpu_0/inst/err_r_reg/Q, and system_i/gpu_0/inst/err_r_reg__1/Q.
+   ERROR: [Vivado_Tcl 4-78] Error(s) found during DRC. Opt_design not run.
+   ERROR: [Common 17-39] 'opt_design' failed due to earlier errors.
+=== 结束 ===

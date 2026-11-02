@@ -1,0 +1,73 @@
+import sys, time
+sys.path.insert(0, "/home/zynq/ui")
+from fbui import Screen, Touch
+import apps_scope_dual as A
+
+scr = Screen(); scr.flush = lambda box=None: None
+touch = Touch()
+app = A.App(scr); app.make_bg()
+for _ in range(40):
+    app.step(); time.sleep(0.004)
+
+def drain(sec=0.05):
+    t0 = time.perf_counter()
+    while time.perf_counter() - t0 < sec:
+        ev = touch.poll(move=True)
+        if ev: app.handle(ev[1], ev[2])
+        time.sleep(0.002)
+
+def tap(x, y, sec=0.05):
+    with open("/tmp/ui_tap", "w") as f: f.write("%d,%d" % (x, y))
+    drain(sec)
+
+def cc(r): return ((r[0]+r[2])//2, (r[1]+r[3])//2)
+
+print("=== 1. 通道弹层 ===")
+app.panel = None
+tap(*cc(app.b_ch))
+print("  弹层打开:", app.panel, " 项数:", len(app.panel_items()))
+print("  项:", [it[0] for it in app.panel_items()])
+app.chk = [True, False]
+tap(*cc(app.panel_rects[1][0]))          # CH2
+print("  勾 CH2 后 chk =", app.chk)
+tap(*cc(app.panel_rects[2][0]))          # 确定
+drain(0.1)
+print("  确定后 panel =", app.panel, " ch0.en=%s ch1.en=%s"
+      % (app.m.ch[0].enabled, app.m.ch[1].enabled))
+
+print()
+print("=== 2. 模式弹层：选 NORMAL 并确定 ===")
+app.panel = None
+print("  切换前 mode =", A.ACQ_NAMES[app.m.acq.mode])
+tap(*cc(app.b_mode))
+items = app.panel_items()
+print("  弹层项:", [it[0] for it in items])
+# 找 NORMAL 那一项的下标
+idx = [i for i, it in enumerate(items) if it[2] == "m1"]
+print("  NORMAL 项下标:", idx, " panel_rects 数量:", len(app.panel_rects))
+if idx:
+    tap(*cc(app.panel_rects[idx[0]][0]))
+    print("  选 NORMAL 后 pend_mode =", app.pend_mode)
+    tap(*cc(app.panel_rects[-1][0]))     # 确定
+    drain(0.1)
+    print("  确定后 mode =", A.ACQ_NAMES[app.m.acq.mode], " panel =", app.panel)
+
+print()
+print("=== 3. 高级触发页 ===")
+app.panel = None
+tap(*cc(app.b_mode))
+items = app.panel_items()
+ai = [i for i, it in enumerate(items) if it[2] == "adv"]
+if ai:
+    tap(*cc(app.panel_rects[ai[0]][0]))
+    print("  进入高级页:", app.panel, " 项:", [it[0] for it in app.panel_items()])
+
+print()
+print("=== 4. 五项调节按钮 ===")
+app.panel = None
+app.sel_field = 0
+tap(*cc(app.b_plus))
+print("  sel=0 点＋后 sel_field =", app.sel_field)
+tap(*cc(app.b_cur))
+print("  点当前项后 sel_field =", app.sel_field)
+print("PANEL_DONE")

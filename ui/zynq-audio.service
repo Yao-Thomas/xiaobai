@@ -1,0 +1,21 @@
+[Unit]
+Description=系统管家小白 板载音频服务 (ES8388 + PL, 独占)
+Documentation=file:/home/zynq/ui/audio_svc.py
+After=multi-user.target
+Before=zynq-agent.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/zynq/ui
+ExecStart=/usr/bin/python3 -u /home/zynq/ui/audio_svc.py
+Restart=always
+RestartSec=3
+# 音频要拿大块物理连续内存 + /dev/mem，所以用 root
+LimitMEMLOCK=infinity
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=zynq-audio
+
+[Install]
+WantedBy=multi-user.target

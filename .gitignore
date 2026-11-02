@@ -1,0 +1,157 @@
+# ===================================================================
+# .gitignore —— FPGA2026 项目版本控制
+# 策略：排除所有大目录/产物，源码和文档自动跟踪
+#       FPGA 工程的关键文件用 git add -f 单独添加
+# ===================================================================
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ---------- ★ FPGA 工程目录整体排除（用 git add -f 精确加关键文件）----------
+atk2026/
+scope_merge/
+atk2026_升级完成_备份/
+atk2018/
+atk_vivado_prj/
+tmp_try2018/
+histrial/
+
+# ---------- 备份目录 ----------
+_atk_gt9xx/
+_atk_gt9xx2/
+_atk_gt9xx3/
+_fpga_bk_*/
+_*_bk_*/
+*_backup_*/
+*_备份/
+
+# ---------- 构建产物 ----------
+*.runs/
+*.gen/
+*.cache/
+*.hw/
+*.sim/
+*.ip_user_files/
+.Xil/
+dist/
+build/
+build_chat2/
+build_scope_exe/
+build_xb/
+wave_model_smoke/
+wave_dataset_smoke/
+fpga_gpu/
+gpu_sim/
+scope_sim/
+
+# ---------- 二进制/大文件 ----------
+*.bin
+*.npy
+*.npz
+*.pt
+*.onnx
+*.h5
+*.exe
+*.dll
+*.so
+*.zip
+*.rar
+*.7z
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.raw
+*.wav
+*.mp3
+*.dcp
+*.bit
+*.hdf
+*.xsa
+*.ltx
+*.jou
+*.wdb
+*.pb
+*.str
+
+# ---------- 日志/临时 ----------
+*.log
+*.tmp
+*.bak
+*.swp
+Thumbs.db
+desktop.ini
+_*.sh
+_*.tcl
+_*.py
+*.py.disabled
+
+# ---------- 第三方大目录 ----------
+craft_dl/
+_qt/
+_books/
+_ksrc/
+_v37_audio/
+_step2/
+_ip_proj2/
+_ip_proj64/
+_scope_ip_proj/
+_hlsq/
+_ad_pdf_img/
+_testwav/
+_dts/
+
+# ---------- 补充排除 ----------
+handover/pc_client/
+handover/_src/*.tar.gz
+cnn_hls_2026/work/
+*/work/
+*/pkg/
+*.tar.gz
+*.tar
+
+# ---------- 大文件（绝对不能进 git）----------
+*.iso
+*.img
+*.ub
+*.zImage
+*.ogg
+*.mp4
+*.avi
+*.mkv
+*.ppm
+*.pgm
+*.bmp
+image.ub
+zImage
+BOOT.BIN
+*.jsonl
+ime_cn.json
+atk_petalinux/
+atk_boot/
+atk_driver_boot/
+atk_linux_lcd_sd/
+atk_res/
+atk_rf/
+_baseline/**/board_boot/
+
+# ---------- 虚拟机/磁盘镜像 ----------
+vm2/
+*.vdi
+*.vmdk
+*.qcow2
+*.vhd
+
+# ---------- 控制台日志 ----------
+*console*.txt
+*console*.log
+auto_vivado.txt
+
+# ---------- 手工备份后缀（本次追加）----------
+*.bak_*
+*.bak.*
+_ai_service.err*
+_ai_boot.log
+_code_pkg/

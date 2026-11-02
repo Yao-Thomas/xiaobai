@@ -1,0 +1,13 @@
+{
+ "id": "vivado_real_001",
+ "ts": "2026-10-02 01:35:00",
+ "kind": "check",
+ "desc": "真实 Vivado 测试：打开工程 + 报告 bitstream 信息",
+ "steps": [
+   {"desc": "跑 Vivado batch 打开工程",
+    "cmd": "cmd /c \"call D:\\Xilinx\\2026.1\\Vivado\\settings64.bat >nul 2>&1 && vivado -mode batch -source D:\\ubuntu_iso\\check_project.tcl -log D:\\ubuntu_iso\\fpga_jobs\\_vivado.log -journal D:\\ubuntu_iso\\fpga_jobs\\_vivado.jou\""}
+ ],
+ "artifacts": ["fpga_jobs/_vivado_report.txt"],
+ "timeout_sec": 900,
+ "who": "selftest"
+}

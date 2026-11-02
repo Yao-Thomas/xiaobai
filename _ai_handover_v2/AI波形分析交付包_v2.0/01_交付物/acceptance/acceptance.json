@@ -1,0 +1,145 @@
+{
+  "version": "2.0.0",
+  "engine": "multimodal_v1",
+  "mode": "in-process",
+  "started": "2026-10-21 16:17:58",
+  "checks": {
+    "contract": {
+      "passed": true,
+      "n": 300,
+      "n_failed": 0,
+      "samples": []
+    },
+    "accuracy": {
+      "acc": 0.9667,
+      "n": 300,
+      "errors": 0,
+      "bad_examples": [
+        {
+          "i": 19,
+          "true": "double_freq",
+          "pred": "hum",
+          "conf": 0.597444
+        },
+        {
+          "i": 38,
+          "true": "square",
+          "pred": "ringing",
+          "conf": 0.44193
+        },
+        {
+          "i": 44,
+          "true": "ringing",
+          "pred": "square",
+          "conf": 0.616207
+        },
+        {
+          "i": 55,
+          "true": "signal_loss",
+          "pred": "double_freq",
+          "conf": 0.46648
+        },
+        {
+          "i": 73,
+          "true": "glitch",
+          "pred": "square",
+          "conf": 0.718398
+        },
+        {
+          "i": 78,
+          "true": "noise",
+          "pred": "signal_loss",
+          "conf": 0.924557
+        },
+        {
+          "i": 122,
+          "true": "hum",
+          "pred": "triangle",
+          "conf": 0.941824
+        },
+        {
+          "i": 190,
+          "true": "triangle",
+          "pred": "sine",
+          "conf": 0.47988
+        }
+      ]
+    },
+    "latency_ms": {
+      "p50": 39.0,
+      "p95": 48.0,
+      "max": 52.0,
+      "budget": 800
+    },
+    "accuracy_no_local": {
+      "acc": 0.945,
+      "n": 200
+    },
+    "accuracy_first8": {
+      "acc": 0.966,
+      "n": 147
+    },
+    "accuracy_hard_domain": {
+      "acc": 0.8333,
+      "n": 300
+    },
+    "quality": {
+      "rise_measured_us": [
+        1.128,
+        0.816,
+        0.642
+      ],
+      "rise_error_us": "≤0.5（采样间隔 0.5 µs）",
+      "snr_by_noise_lsb": {
+        "1.0": 21.362,
+        "4.0": 20.953,
+        "12.0": 20.288,
+        "30.0": 16.879
+      },
+      "snr_corr": -0.989,
+      "snr_corr_expect": "负相关（噪声越大 SNR 越低）"
+    },
+    "anomaly": {
+      "clean_fp_rate": 0.04,
+      "n_clean": 200,
+      "ood_detect_rate": 0.28,
+      "n_ood": 200
+    },
+    "robustness": {
+      "passed": true,
+      "failed": []
+    }
+  },
+  "health": {
+    "ok": true,
+    "engine": "multimodal_v1",
+    "version": "2.0.0",
+    "n_classes": 16,
+    "classes": [
+      "sine",
+      "square",
+      "triangle",
+      "sawtooth",
+      "noise",
+      "clipping",
+      "signal_loss",
+      "duty_abnormal",
+      "pulse",
+      "step",
+      "am",
+      "fm",
+      "ringing",
+      "double_freq",
+      "hum",
+      "glitch"
+    ],
+    "metrics": {
+      "test_acc": 0.9596,
+      "acc8": 0.9544,
+      "hard_acc": 0.8772
+    },
+    "input": "samples"
+  },
+  "passed": true,
+  "finished": "2026-10-21 16:18:52"
+}

@@ -1,0 +1,19 @@
+[Unit]
+Description=系统管家小白 (Zynq onboard agent, DeepSeek-backed)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=zynq
+Group=zynq
+WorkingDirectory=/home/zynq
+EnvironmentFile=-/etc/zynq-agent.env
+ExecStart=/usr/bin/python3 -u -m agent.main --serve 8765
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/zynq-agent.log
+StandardError=append:/var/log/zynq-agent.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+=== STEP2: 综合 + 实现 + 出流 ===
+ 当前时间: Sat Sep 19 21:46:00 +0800 2026
+ top = system_wrapper  源文件数 = 615
+ 现有 run: synth_1 impl_1
+
+>>> reset + 综合  Sat Sep 19 21:46:08 +0800 2026
+ synth_1: 0%  synth_design ERROR  Sat Sep 19 22:01:53 +0800 2026
+ RESULT=SYNTH_FAIL
+   ERROR: [IMPL 213-28] Failed to generate IP.
+   ERROR: [IMPL 213-28] Failed to generate IP.
+   ERROR: [IMPL 213-28] Failed to generate IP.
+   	Parameter C_RESP_SLVERROR bound to: 2'b10 
+   	Parameter C_RESP_SLVERROR bound to: 2'b10 
+   ERROR: [Synth 8-439] module 'system_v_frmbuf_wr_0_0_v_frmbuf_wr' not found [d:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ip/system_v_frmbuf_wr_0_0/synth/system_v_frmbuf_wr_0_0.v:269]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system_v_frmbuf_wr_0_0' [d:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ip/system_v_frmbuf_wr_0_0/synth/system_v_frmbuf_wr_0_0.v:58]
+   ERROR: [Synth 8-6156] failed synthesizing module 'camera_in_imp_165SQB8' [D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/synth/system.v:661]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system' [D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/synth/system.v:8808]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system_wrapper' [D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
+   ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details

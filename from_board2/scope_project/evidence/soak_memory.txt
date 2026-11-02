@@ -1,0 +1,85 @@
+﻿[19:27:53] 长跑进程内存采样
+Thu Oct  8 22:08:16 CST 2026
+awk: cannot open /proc/40340/status (No such file or directory)
+Mem:           1004         108         807           0          87         874
+0
+time: 2026-10-08 22:08:23
+uptime:2605.22秒
+soak pid=1398
+  VmSize:	    6928 kB
+  VmRSS:	    2840 kB
+  Threads:	1
+  fds=0
+  cpu_ticks=2
+  desktop.py pid=312 RSS=38168kB
+--- 系统内存 (MB) ---
+Mem:           1004         108         807           0          88         874
+--- 负载 ---
+1.22 1.27 1.11 2/80 5526
+--- 采样的最后一行日志 ---
+   1282s      43     198   6144   506  517    32    0.50  ok
+MEM_SAMPLE_DONE
+time: 2026-10-08 22:08:31
+uptime:2612.70秒
+soak pid=1398
+  VmSize:	    6928 kB
+  VmRSS:	    2840 kB
+  Threads:	1
+  fds=0
+  cpu_ticks=2
+  desktop.py pid=312 RSS=38168kB
+--- 系统内存 (MB) ---
+Mem:           1004         108         807           0          88         874
+--- 负载 ---
+1.21 1.27 1.11 2/80 5595
+--- 采样的最后一行日志 ---
+   1282s      43     198   6144   506  517    32    0.50  ok
+MEM_SAMPLE_DONE
+time: 2026-10-08 22:08:42
+uptime:2623.65秒
+soak pid=1404
+  VmSize:	    8720 kB
+  VmRSS:	    6184 kB
+  Threads:	1
+  fds=0
+  cpu_ticks=108
+  desktop.py pid=312 RSS=38168kB
+--- 系统内存 (MB) ---
+Mem:           1004         108         807           0          88         873
+--- 负载 ---
+1.17 1.26 1.11 2/80 5671
+--- 采样的最后一行日志 ---
+   1282s      43     198   6144   506  517    32    0.50  ok
+MEM_SAMPLE_DONE
+time: 2026-10-08 22:08:54
+uptime:2635.72秒
+soak pid=1404
+  VmSize:	    8720 kB
+  VmRSS:	    6184 kB
+  Threads:	1
+  fds=0
+  cpu_ticks=109
+  desktop.py pid=312 RSS=38168kB
+--- 系统内存 (MB) ---
+Mem:           1004         108         807           0          88         874
+--- 负载 ---
+1.36 1.30 1.12 2/80 5732
+--- 采样的最后一行日志 ---
+   1282s      43     198   6144   506  517    32    0.50  ok
+MEM_SAMPLE_DONE
+time: 2026-10-08 22:09:34
+uptime:2676.22秒
+soak pid=1404
+  VmSize:	    8720 kB
+  VmRSS:	    6184 kB
+  Threads:	1
+  fds=0
+  cpu_ticks=112
+  desktop.py pid=312 RSS=38168kB
+--- 系统内存 (MB) ---
+Mem:           1004         108         807           0          88         874
+--- 负载 ---
+1.19 1.27 1.12 2/80 5847
+--- 采样的最后一行日志 ---
+   1282s      43     198   6144   506  517    32    0.50  ok
+MEM_SAMPLE_DONE

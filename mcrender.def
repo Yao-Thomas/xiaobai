@@ -1,0 +1,20 @@
+EXPORTS
+    mc_init
+    mc_setres
+    mc_set_focal
+    mc_set_hscale
+    mc_set_edge
+    mc_set_highlight
+    mc_set_water
+    mc_set_phase
+    mc_set_mat
+    mc_band_count
+    mc_shade_count
+    mc_set_skip
+    mc_render
+    mc_render_bgr
+    mc_pick
+    mc_hmap
+    mc_cell
+    mc_pal
+    mc_rebake

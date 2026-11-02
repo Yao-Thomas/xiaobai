@@ -1,0 +1,62 @@
+{
+  "ts": "20261016_130659",
+  "host": "192.168.10.20",
+  "expect_ui": {
+    "/home/zynq/ui/fbui.py": "13ff672a762a28f4f3444fa6df2bf61f",
+    "/home/zynq/ui/desktop.py": "7d25f5b0f2f3dcbf2b6d2f4786350027",
+    "/home/zynq/ui/apps_scope.py": "b2922c63664f150e8c3d2d85e3b738a3",
+    "/home/zynq/ui/scope.py": "dc27fd691cf058d2c11ad52b07fac86c",
+    "/home/zynq/ui/libscope.so": "c412125e35bf9e06d07bad262b13e84c"
+  },
+  "expect_boot": {
+    "/mnt/boot/system.bit": "924df8b9d9c9de17fcf06e163b723681",
+    "/mnt/boot/system.dtb": "68ed75440e1eac01f5fdbdf9c42c4672",
+    "/mnt/boot/zImage": "fe8403e36d6c8bfde1d395d1d2b0c1f8",
+    "/mnt/boot/BOOT.BIN": "949cc7c9c509133ff3e9541133220d58"
+  },
+  "our_marker": "0x43CC0000",
+  "items": [
+    {
+      "orig": "/home/zynq/ui/fbui.py",
+      "bak": "/home/zynq/ui/_b2_backup_20261016_130659/fbui.py",
+      "md5": "13ff672a762a28f4f3444fa6df2bf61f"
+    },
+    {
+      "orig": "/home/zynq/ui/desktop.py",
+      "bak": "/home/zynq/ui/_b2_backup_20261016_130659/desktop.py",
+      "md5": "7d25f5b0f2f3dcbf2b6d2f4786350027"
+    },
+    {
+      "orig": "/home/zynq/ui/apps_scope.py",
+      "bak": "/home/zynq/ui/_b2_backup_20261016_130659/apps_scope.py",
+      "md5": "b2922c63664f150e8c3d2d85e3b738a3"
+    },
+    {
+      "orig": "/home/zynq/ui/scope.py",
+      "bak": "/home/zynq/ui/_b2_backup_20261016_130659/scope.py",
+      "md5": "dc27fd691cf058d2c11ad52b07fac86c"
+    },
+    {
+      "orig": "/home/zynq/ui/libscope.so",
+      "bak": "/home/zynq/ui/_b2_backup_20261016_130659/libscope.so",
+      "md5": "c412125e35bf9e06d07bad262b13e84c"
+    },
+    {
+      "orig": "/home/zynq/.scope_addr",
+      "bak": "/home/zynq/ui/_b2_backup_20261016_130659/.scope_addr",
+      "md5": "474413072acd82cbcaa0de94a40af628"
+    }
+  ],
+  "new_files": [
+    "/home/zynq/ui/scope_dual.py",
+    "/home/zynq/ui/scope_processing.py",
+    "/home/zynq/ui/scope_model.py",
+    "/home/zynq/ui/apps_scope_dual.py",
+    "/home/zynq/ui/scope_dual.c",
+    "/home/zynq/ui/cal_scope.py",
+    "/home/zynq/ui/cal_diag.py",
+    "/home/zynq/ui/cal_from_pairs.py",
+    "/home/zynq/ui/libscopedual.so",
+    "/home/zynq/.scope_dual_addr"
+  ]
+}

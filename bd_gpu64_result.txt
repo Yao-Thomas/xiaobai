@@ -1,0 +1,45 @@
+======================================================
+ install 64-bit GPU IP into BD
+ time: Fri Sep 25 21:47:30 +0800 2026
+======================================================
+ project opened, Vivado 2026.1
+
+>>> update_ip_catalog -rebuild
+   found IP: dsh:user:gpu2d_axi:1.0
+ BD opened
+
+>>> remove old gpu_0 / hp3_merge
+   deleted hp3_merge
+   deleted gpu_0
+   removed net on HP3: /hp3_merge_M00_AXI
+
+>>> create gpu_0
+   gpu_0 created
+   gpu_0 intf pins:
+      /gpu_0/m_axi
+      /gpu_0/s_axi
+
+>>> create hp3_merge (2 SI / 1 MI) and wire
+   audio -> hp3_merge/S00, gpu_0/m_axi -> hp3_merge/S01, M00 -> PS HP3
+   ps7_0_axi_periph/M16 -> gpu_0/s_axi
+
+>>> connect clocks / resets
+   clocks/resets connected
+
+>>> assign addresses
+   slave /gpu_0/s_axi/reg0 -> 0x43CB0000 / 64K
+   master gpu_0/m_axi -> 0x00000000 / 1G (must NOT be 64K)
+
+>>> validate_bd_design
+ BD validated
+
+>>> generate_target all
+ generated
+
+=== addresses ===
+  /gpu_0/m_axi/SEG_processing_system7_0_HP3_DDR_LOWOCM = 0x00000000 / 0x40000000
+  /processing_system7_0/Data/SEG_gpu_0_reg0 = 0x43CB0000 / 0x00010000
+
+=== gpu_0 intf pins ===
+  /gpu_0/m_axi
+  /gpu_0/s_axi

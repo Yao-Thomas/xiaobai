@@ -1,0 +1,30 @@
+======================================================
+ 64-bit GPU build
+ start: 21:50:18
+======================================================
+ project opened, Vivado 2026.1
+ top: system_wrapper
+
+>>> generate_target all 21:50:32
+ OK
+
+=== existing runs ===
+  synth_1          Out-of-date  (100%)
+  impl_1           Out-of-date  (100%)
+
+>>> synthesis 21:50:32
+ run: synth_1
+ synth_1: 100%  synth_design Complete!
+ synthesis OK 21:57:34
+
+>>> implementation + write_bitstream 21:57:34
+ run: impl_1
+ impl_1: 100%  write_bitstream Complete!
+
+=== timing summary ===
+   (no timing_summary_routed.rpt)
+
+=== bitstream ===
+ BITSTREAM: D:/ubuntu_iso/atk2026/Navigator_7020/Navigator_7020.runs/impl_1/system_wrapper.bit  (4045769 bytes)
+ RESULT=OK
+=== end 22:07:03 ===

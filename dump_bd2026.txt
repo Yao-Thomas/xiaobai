@@ -1,0 +1,81 @@
+=== 1. 顶层单元�? ===
+  %audio                             
+  %axi_gpio_0                        xilinx.com:ip:axi_gpio:2.0
+  %camera_in                         
+  %clk_wiz_0                         xilinx.com:ip:clk_wiz:6.0
+  %gmii2rgmii_0                      xilinx.com:user:gmii2rgmii:1.0
+  %hdmi_out                          
+  %i2c2                              xilinx.com:ip:axi_iic:2.1
+  %lcd_out                           
+  %processing_system7_0              xilinx.com:ip:processing_system7:5.5
+  %ps7_0_axi_periph                  xilinx.com:ip:axi_interconnect:2.1
+  %rest_gpio                         xilinx.com:ip:axi_gpio:2.0
+  %rst_ps7_0_100M                    xilinx.com:ip:proc_sys_reset:5.0
+  %xlconcat_0                        xilinx.com:ip:xlconcat:2.1
+
+=== 2. PS7 的接�? (�?�? HP/GP 口�??占了) ===
+  %CAN_0                                         -> /processing_system7_0_CAN_0
+  %DDR                                           -> /processing_system7_0_DDR
+  %FIXED_IO                                      -> /processing_system7_0_FIXED_IO
+  %GMII_ETHERNET_1                               -> /processing_system7_0_GMII_ETHERNET_1
+  %GPIO_0                                        -> /processing_system7_0_GPIO_0
+  %IIC_0                                         -> /processing_system7_0_IIC_0
+  %IIC_1                                         -> /processing_system7_0_IIC_1
+  %MDIO_ETHERNET_1                               -> /processing_system7_0_MDIO_ETHERNET_1
+  %M_AXI_GP0                                     -> /processing_system7_0_M_AXI_GP0
+  %S_AXI_HP0                                     -> /lcd_out_M00_AXI
+  %S_AXI_HP0_FIFO_CTRL                           -> 
+  %S_AXI_HP1                                     -> /hdmi_out_M00_AXI
+  %S_AXI_HP1_FIFO_CTRL                           -> 
+  %S_AXI_HP2                                     -> /camera_in_M00_AXI
+  %S_AXI_HP2_FIFO_CTRL                           -> 
+  %S_AXI_HP3                                     -> /audio_M00_AXI
+  %S_AXI_HP3_FIFO_CTRL                           -> 
+  %UART_1                                        -> /processing_system7_0_UART_1
+  %USBIND_0                                      -> 
+
+=== 3. ps7_0_axi_periph �? NUM_MI / 连接 ===
+  CONFIG.NUM_MI = 16
+  CONFIG.NUM_SI = 1
+  %M00_AXI                                     -> /ps7_0_axi_periph_M00_AXI
+  %M01_AXI                                     -> /ps7_0_axi_periph_M01_AXI
+  %M02_AXI                                     -> /ps7_0_axi_periph_M02_AXI
+  %M03_AXI                                     -> /ps7_0_axi_periph_M03_AXI
+  %M04_AXI                                     -> /ps7_0_axi_periph_M04_AXI
+  %M05_AXI                                     -> /ps7_0_axi_periph_M05_AXI
+  %M06_AXI                                     -> /ps7_0_axi_periph_M06_AXI
+  %M07_AXI                                     -> /ps7_0_axi_periph_M07_AXI
+  %M08_AXI                                     -> /ps7_0_axi_periph_M08_AXI
+  %M09_AXI                                     -> /ps7_0_axi_periph_M09_AXI
+  %M10_AXI                                     -> /ps7_0_axi_periph_M10_AXI
+  %M11_AXI                                     -> /ps7_0_axi_periph_M11_AXI
+  %M12_AXI                                     -> /ps7_0_axi_periph_M12_AXI
+  %M13_AXI                                     -> /ps7_0_axi_periph_M13_AXI
+  %M14_AXI                                     -> /ps7_0_axi_periph_M14_AXI
+  %M15_AXI                                     -> /ps7_0_axi_periph_M15_AXI
+  %S00_AXI                                     -> /processing_system7_0_M_AXI_GP0
+
+=== 4. 时钟 / 复位网络 ===
+
+=== 5. 已有的从机地址映射 (�?认哪些地址�?�?) ===
+  %/camera_in/v_frmbuf_wr_0/Data_m_axi_mm_video/SEG_processing_system7_0_HP2_DDR_LOWOCM 0x00000000 / 0x40000000
+  %/hdmi_out/v_frmbuf_rd_0/Data_m_axi_mm_video/SEG_processing_system7_0_HP1_DDR_LOWOCM 0x00000000 / 0x40000000
+  %/lcd_out/v_frmbuf_rd_0/Data_m_axi_mm_video/SEG_processing_system7_0_HP0_DDR_LOWOCM 0x00000000 / 0x40000000
+  %/processing_system7_0/Data/SEG_audio_formatter_reg0         0x43C50000 / 0x00010000
+  %/processing_system7_0/Data/SEG_axi_gpio_0_Reg               0x41210000 / 0x00010000
+  %/processing_system7_0/Data/SEG_axi_gpio_1_Reg               0x41230000 / 0x00010000
+  %/processing_system7_0/Data/SEG_clk_wiz_0_Reg                0x43C30000 / 0x00010000
+  %/processing_system7_0/Data/SEG_clk_wiz_dyn_Reg              0x43C80000 / 0x00010000
+  %/processing_system7_0/Data/SEG_hdmi_vtc_Reg                 0x43C90000 / 0x00010000
+  %/processing_system7_0/Data/SEG_i2c2_Reg                     0x41600000 / 0x00010000
+  %/processing_system7_0/Data/SEG_i2s_receiver_Reg             0x43C60000 / 0x00010000
+  %/processing_system7_0/Data/SEG_i2s_transmitter_Reg          0x43C70000 / 0x00010000
+  %/processing_system7_0/Data/SEG_lcd_id_Reg                   0x41200000 / 0x00010000
+  %/processing_system7_0/Data/SEG_lcd_pl_pwm_PWM_AXI_reg       0x43C00000 / 0x00010000
+  %/processing_system7_0/Data/SEG_lcd_vtc_Reg                  0x43C10000 / 0x00010000
+  %/processing_system7_0/Data/SEG_rest_gpio_Reg                0x41220000 / 0x00010000
+  %/processing_system7_0/Data/SEG_v_frmbuf_rd_0_Reg            0x43C20000 / 0x00010000
+  %/processing_system7_0/Data/SEG_v_frmbuf_rd_0_Reg_1          0x43CA0000 / 0x00010000
+  %/processing_system7_0/Data/SEG_v_frmbuf_wr_0_Reg            0x43C40000 / 0x00010000
+
+DUMP-DONE

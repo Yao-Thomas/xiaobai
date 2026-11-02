@@ -1,0 +1,30 @@
+======================================================
+ 去掉摄像头子系统 + �? bitstream  Sat Sep 19 15:22:11 +0800 2026
+======================================================
+ 删除 camera_in ...
+ �? 已删陡�
+ 删除残留: system_v_frmbuf_wr_0_0
+ 删除残留: system_v_frmbuf_wr_0_0_7
+ 删除残留: system_ov5640_capture_data_0_0
+ 删除残留: system_ov5640_capture_data_0_0_7
+ 删除残留: system_v_vid_in_axi4s_0_0
+ 删除残留: system_v_vid_in_axi4s_0_0_8
+
+>>> 重新生成 IP  Sat Sep 19 15:22:19 +0800 2026
+ �? 生成完成  Sat Sep 19 15:23:13 +0800 2026
+ �? BD 校验通过并保�?
+ top = system_wrapper   源文件数 = 515
+
+>>> 综合 synth_1  Sat Sep 19 15:23:15 +0800 2026
+ synth_1: 0%  synth_design ERROR  Sat Sep 19 15:37:15 +0800 2026
+ �? 综合失败:
+   ERROR: [IMPL 213-28] Failed to generate IP.
+   ERROR: [IMPL 213-28] Failed to generate IP.
+   	Parameter C_RESP_SLVERROR bound to: 2'b10 
+   	Parameter C_RESP_SLVERROR bound to: 2'b10 
+   ERROR: [Synth 8-439] module 'system_v_frmbuf_rd_0_0_v_frmbuf_rd' not found [d:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ip/system_v_frmbuf_rd_0_0/synth/system_v_frmbuf_rd_0_0.v:269]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system_v_frmbuf_rd_0_0' [d:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ip/system_v_frmbuf_rd_0_0/synth/system_v_frmbuf_rd_0_0.v:58]
+   ERROR: [Synth 8-6156] failed synthesizing module 'hdmi_out_imp_1AV7IV0' [D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/synth/system.v:661]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system' [D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/synth/system.v:7598]
+   ERROR: [Synth 8-6156] failed synthesizing module 'system_wrapper' [D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
+   ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details

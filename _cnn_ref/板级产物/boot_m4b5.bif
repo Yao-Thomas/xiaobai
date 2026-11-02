@@ -1,0 +1,6 @@
+the_ROM_image:
+{
+    [bootloader] D:/FPGA2026_PRJ/zynq_ai_accel/board/sdk_ws_m4b5/fsbl/Debug/fsbl.elf
+    D:/FPGA2026_PRJ/zynq_ai_accel/board/chain_m4b5.bit
+    D:/FPGA2026_PRJ/zynq_ai_accel/board/sdk_ws_m4b5/chain_app/Debug/chain_app.elf
+}

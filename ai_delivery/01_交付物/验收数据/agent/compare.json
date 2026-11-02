@@ -1,0 +1,29 @@
+{
+  "rag": {
+    "n_items": 65,
+    "n_answerable": 53,
+    "n_refusal": 12,
+    "keypoint_recall": 0.5728155339805825,
+    "source_hit_rate": 0.7169811320754716,
+    "refusal_accuracy": 0.9384615384615385,
+    "hallucination_rate": 0.25
+  },
+  "lora": {
+    "n_items": 65,
+    "n_answerable": 53,
+    "n_refusal": 12,
+    "keypoint_recall": 0.05825242718446602,
+    "source_hit_rate": 0.0,
+    "refusal_accuracy": 0.8153846153846154,
+    "hallucination_rate": 1.0
+  },
+  "rag_plus_lora": {
+    "n_items": 65,
+    "n_answerable": 53,
+    "n_refusal": 12,
+    "keypoint_recall": 0.3300970873786408,
+    "source_hit_rate": 0.05660377358490566,
+    "refusal_accuracy": 0.7384615384615385,
+    "hallucination_rate": 0.5
+  }
+}

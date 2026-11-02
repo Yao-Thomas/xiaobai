@@ -1,0 +1,1493 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""xb_chat.py —— 系统管家小白 · 桌面客户端（聊天界面）
+
+════════════════════════════════════════════════════════════════════
+这一版重做了什么（用户要求）
+════════════════════════════════════════════════════════════════════
+上一版是个「六个页签的工具箱」（设备信息/文件传输/硬件/变更历史/对话/工具），
+用户说不对 —— 要像聊天应用那样：
+
+    ┌──────────────────────────────────────────────────────────┐
+    │ 系统管家小白  192.168.110.144 ●   76°C        ⚙ 设置     │
+    ├────────────┬─────────────────────────────────────────────┤
+    │ 对话记录栏  │  消息区（气泡）                              │
+    │            │                                             │
+    │ + 新对话    │   ┌──────────────┐                          │
+    │            │   │ 现在多少度     │                          │
+    │ 今天        │   └──────────────┘                          │
+    │  温度怎么样  │        ┌──────────────────┐                 │
+    │  改个FPGA   │        │ 现在 76 度，还行。 │                 │
+    │            │        └──────────────────┘                 │
+    ├────────────┴─────────────────────────────────────────────┤
+    │ ┌────────────────────────────────────────┐ ┌───────────┐ │
+    │ │ 说点什么…                          🎤  │ │  发送      │ │
+    │ └────────────────────────────────────────┘ └───────────┘ │
+    │              [deepseek-v4-pro ▾]  [自动 ▾]  🔊 自动朗读   │
+    └──────────────────────────────────────────────────────────┘
+
+★ 几个关键点：
+  · 对话记录栏在【左边】，从板子的 /chat/sessions 拉，也能本地新建
+  · ★ 模型切换在【输入框右下角】—— 用户明确要求的位置
+  · ★ 模式切换（云端/本地/自动）也在右下角旁边
+  · 语音：🎤 点一下开始录，再点一下停 → 上传 /asr → 自动发送
+  · 设置页：板子地址 / token / DeepSeek key / 模型 / 语音开关
+
+★ 上一版还有个问题：语音【根本没做】（只调了 /voice 纯文字）。
+  这一版把 /asr 和 /tts 都接上了。
+
+用法:
+    python xb_chat.py
+    python xb_chat.py --host 192.168.110.144 --token xxxx
+    python xb_chat.py --selftest        # 不带界面，跑逻辑自测
+"""
+import argparse
+import json
+import os
+import queue
+import sys
+import threading
+import time
+import tkinter as tk
+from tkinter import ttk, messagebox, scrolledtext
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+# ★ 复用已经测过的 API 层（Board / discover / 配置读写）
+import xb_client as X            # noqa: E402
+import xb_audio as A             # noqa: E402
+
+APP_TITLE = "系统管家小白"
+CONF = os.path.join(os.path.expanduser("~"), ".xiaobai_chat.json")
+SESS_DIR = os.path.join(os.path.expanduser("~"), ".xiaobai_chat_sessions")
+
+# 配色（浅色，接近现代聊天应用）
+C = {
+    "bg":        "#f6f7f9",
+    "panel":     "#ffffff",
+    "side":      "#f0f1f4",
+    "line":      "#e3e5e9",
+    "text":      "#1f2329",
+    "dim":       "#8a9099",
+    "user_bg":   "#d6e8ff",     # 用户气泡
+    "user_fg":   "#0b2545",
+    "ai_bg":     "#ffffff",     # AI 气泡
+    "ai_fg":     "#1f2329",
+    "sys_bg":    "#fff7e6",     # 系统提示
+    "sys_fg":    "#8a6100",
+    "accent":    "#2563eb",
+    "rec":       "#dc2626",
+    "ok":        "#16a34a",
+}
+
+
+# ══════════════════════════════════════════════════════════════════
+#  配置
+# ══════════════════════════════════════════════════════════════════
+def load_conf():
+    d = {"host": "", "token": "", "model": "", "mode": "",
+         "voice_reply": True, "voice_auto_send": True, "last_ip": ""}
+    try:
+        with open(CONF, encoding="utf-8") as f:
+            d.update(json.load(f) or {})
+    except Exception:
+        pass
+    return d
+
+
+def save_conf(d):
+    try:
+        with open(CONF, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+# ══════════════════════════════════════════════════════════════════
+#  本地会话存储（服务端会话 + 本地兜底）
+# ══════════════════════════════════════════════════════════════════
+class Session(object):
+    """一个会话：id / 标题 / 消息列表"""
+
+    def __init__(self, sid="", title=""):
+        self.id = sid or time.strftime("local_%Y%m%d_%H%M%S")
+        self.title = title or "新对话"
+        self.msgs = []          # [{"who": "user"/"ai"/"sys", "text":..., "ts":...}]
+        self.touched = time.time()
+
+    def add(self, who, text):
+        m = {"who": who, "text": text, "ts": time.time()}
+        self.msgs.append(m)
+        # ★ 用第一条用户消息当标题（像聊天应用那样）
+        if who == "user" and self.title in ("新对话", ""):
+            self.title = text.strip().replace("\n", " ")[:18] or "新对话"
+        self.touched = time.time()
+        return m
+
+    def to_dict(self):
+        return {"id": self.id, "title": self.title,
+                "touched": self.touched, "msgs": self.msgs}
+
+    @staticmethod
+    def from_dict(d):
+        s = Session(d.get("id", ""), d.get("title", ""))
+        s.msgs = d.get("msgs", [])
+        s.touched = d.get("touched", time.time())
+        return s
+
+
+class SessionStore(object):
+    def __init__(self, path=SESS_DIR):
+        self.path = path
+        self.sessions = []
+        self.cur = None
+        os.makedirs(path, exist_ok=True)
+        self._load()
+
+    def _f(self, sid):
+        return os.path.join(self.path, sid + ".json")
+
+    def _load(self):
+        try:
+            for fn in os.listdir(self.path):
+                if fn.endswith(".json"):
+                    try:
+                        with open(os.path.join(self.path, fn),
+                                  encoding="utf-8") as f:
+                            self.sessions.append(Session.from_dict(json.load(f)))
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+        self.sessions.sort(key=lambda s: -s.touched)
+        if not self.sessions:
+            self.sessions = [Session()]
+        self.cur = self.sessions[0]
+
+    def save(self, s=None):
+        s = s or self.cur
+        try:
+            with open(self._f(s.id), "w", encoding="utf-8") as f:
+                json.dump(s.to_dict(), f, ensure_ascii=False)
+        except Exception:
+            pass
+
+    def new(self):
+        s = Session()
+        self.sessions.insert(0, s)
+        self.cur = s
+        self.save(s)
+        return s
+
+    def delete(self, s):
+        try:
+            os.remove(self._f(s.id))
+        except Exception:
+            pass
+        if s in self.sessions:
+            self.sessions.remove(s)
+        if not self.sessions:
+            self.sessions = [Session()]
+        self.cur = self.sessions[0]
+        return self.cur
+
+    def group(self):
+        """按今天/昨天/更早分组，返回 [(组名, [会话...]), ...]"""
+        now = time.time()
+        g = [("今天", []), ("昨天", []), ("更早", [])]
+        for s in sorted(self.sessions, key=lambda x: -x.touched):
+            age = now - s.touched
+            if age < 86400:
+                g[0][1].append(s)
+            elif age < 172800:
+                g[1][1].append(s)
+            else:
+                g[2][1].append(s)
+        return [(n, v) for n, v in g if v]
+
+
+# ══════════════════════════════════════════════════════════════════
+#  消息气泡
+# ══════════════════════════════════════════════════════════════════
+class Bubble(tk.Frame):
+    """一条消息气泡
+
+    ★ 为什么用 Frame+Label 而不是 Text+tag：
+      Text 的 tag background 是【整行】的，气泡会横贯整屏，
+      看起来不像聊天。Frame 包 Label 才能让背景只包住文字。
+    """
+
+    def __init__(self, parent, who, text, ts=None, **kw):
+        bg = C["bg"]
+        super().__init__(parent, bg=bg, **kw)
+        self.who = who
+        is_user = (who == "user")
+        is_sys = (who == "sys")
+
+        bbg = C["user_bg"] if is_user else (C["sys_bg"] if is_sys else C["ai_bg"])
+        fg = C["user_fg"] if is_user else (C["sys_fg"] if is_sys else C["ai_fg"])
+        # ★ 注意：tkinter 的 anchor 只认 n/ne/e/se/s/sw/w/nw/center，
+        #   不认 "left"/"right" —— 传 right 会直接抛 TclError。
+        #   （踩过：一开始用 anchor="right"，界面根本起不来。）
+        anchor = "e" if is_user else "w"
+        padx = (60, 8) if is_user else (8, 60)
+
+        # 头像/名字
+        head = tk.Frame(self, bg=bg)
+        head.pack(side="top", anchor=anchor, padx=padx)
+        name = {"user": "我", "ai": "小白", "sys": "系统"}[who]
+        tk.Label(head, text=name, bg=bg,
+                 fg=C["accent"] if is_user else C["dim"],
+                 font=("Microsoft YaHei", 9, "bold")).pack(side="left")
+        tk.Label(head, text=time.strftime("%H:%M", time.localtime(ts or time.time())),
+                 bg=bg, fg=C["dim"],
+                 font=("Microsoft YaHei", 8)).pack(side="left", padx=(6, 0))
+
+        # 气泡本体 —— ★ 宽度要跟着窗口走，所以用 wraplength 动态设
+        self.lbl = tk.Label(self, text=text, bg=bbg, fg=fg,
+                            justify="left", anchor="w",
+                            font=("Microsoft YaHei", 10),
+                            padx=12, pady=9, wraplength=560,
+                            bd=0, relief="flat")
+        self.lbl.pack(side="top", anchor=anchor, padx=padx, pady=(2, 12))
+        self._bind_copy()
+
+    def _bind_copy(self):
+        """右键复制（聊天应用该有的）"""
+        m = tk.Menu(self, tearoff=0)
+        m.add_command(label="复制", command=self._copy)
+        m.add_command(label="重新朗读", command=lambda: self._speak())
+        lbl = self.lbl
+
+        def popup(e):
+            try:
+                m.tk_popup(e.x_root, e.y_root)
+            finally:
+                m.grab_release()
+        lbl.bind("<Button-3>", popup)
+        self._menu = m
+
+    def set_wrap(self, px):
+        self.lbl.configure(wraplength=max(200, px - 140))
+
+    def _copy(self):
+        try:
+            self.clipboard_clear()
+            self.clipboard_append(self.lbl.cget("text"))
+        except Exception:
+            pass
+
+    def _speak(self):
+        cb = getattr(self.master, "on_speak_text", None)
+        if cb:
+            cb(self.lbl.cget("text"))
+
+
+# ══════════════════════════════════════════════════════════════════
+#  消息区（可滚动）
+# ══════════════════════════════════════════════════════════════════
+class MessageArea(tk.Frame):
+    def __init__(self, parent, **kw):
+        super().__init__(parent, bg=C["bg"], **kw)
+        self.canvas = tk.Canvas(self, bg=C["bg"], highlightthickness=0, bd=0)
+        self.vsb = ttk.Scrollbar(self, orient="vertical",
+                                 command=self.canvas.yview)
+        self.canvas.configure(yscrollcommand=self.vsb.set)
+        self.vsb.pack(side="right", fill="y")
+        self.canvas.pack(side="left", fill="both", expand=True)
+
+        self.inner = tk.Frame(self.canvas, bg=C["bg"])
+        self._win = self.canvas.create_window((0, 0), window=self.inner,
+                                              anchor="nw")
+        self.inner.bind("<Configure>", self._on_inner)
+        self.canvas.bind("<Configure>", self._on_canvas)
+        # 滚轮
+        self.canvas.bind_all("<MouseWheel>", self._wheel)
+        self.bubbles = []
+
+    def _on_inner(self, e):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+    def _on_canvas(self, e):
+        self.canvas.itemconfigure(self._win, width=e.width)
+        for b in self.bubbles:
+            b.set_wrap(e.width)
+
+    def _wheel(self, e):
+        try:
+            self.canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
+        except Exception:
+            pass
+
+    def clear(self):
+        for b in self.bubbles:
+            b.destroy()
+        self.bubbles = []
+
+    def add(self, who, text, ts=None):
+        b = Bubble(self.inner, who, text, ts)
+        b.pack(fill="x", padx=10, pady=1)
+        b.set_wrap(self.canvas.winfo_width() or 700)
+        self.bubbles.append(b)
+        self.after(30, self.scroll_bottom)
+        return b
+
+    def scroll_bottom(self):
+        try:
+            self.canvas.update_idletasks()
+            self.canvas.yview_moveto(1.0)
+        except Exception:
+            pass
+
+
+# ══════════════════════════════════════════════════════════════════
+#  对话记录栏（左侧）
+# ══════════════════════════════════════════════════════════════════
+class Sidebar(tk.Frame):
+    def __init__(self, parent, on_pick, on_new, on_del, **kw):
+        super().__init__(parent, bg=C["side"], width=230, **kw)
+        self.pack_propagate(False)
+        self.on_pick = on_pick
+
+        top = tk.Frame(self, bg=C["side"])
+        top.pack(fill="x", padx=10, pady=(12, 6))
+        tk.Label(top, text="对话记录", bg=C["side"], fg=C["text"],
+                 font=("Microsoft YaHei", 11, "bold")).pack(side="left")
+        tk.Button(top, text="＋", command=on_new, bd=0, bg=C["side"],
+                  fg=C["accent"], activebackground=C["side"],
+                  font=("Microsoft YaHei", 13, "bold"),
+                  cursor="hand2").pack(side="right")
+
+        # 会话列表（用 Canvas 手搓，才能分组 + 高亮）
+        self.canvas = tk.Canvas(self, bg=C["side"], highlightthickness=0, bd=0)
+        vsb = ttk.Scrollbar(self, orient="vertical",
+                            command=self.canvas.yview)
+        self.canvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side="right", fill="y")
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self.holder = tk.Frame(self.canvas, bg=C["side"])
+        self._win = self.canvas.create_window((0, 0), window=self.holder,
+                                              anchor="nw")
+        self.holder.bind("<Configure>", lambda e: self.canvas.configure(
+            scrollregion=self.canvas.bbox("all")))
+        self.canvas.bind("<Configure>", lambda e: self.canvas.itemconfigure(
+            self._win, width=e.width))
+        self.rows = {}
+        self.cur_id = None
+        self._on_del = on_del
+
+    def render(self, groups, cur_id):
+        for w in self.holder.winfo_children():
+            w.destroy()
+        self.rows = {}
+        self.cur_id = cur_id
+        for gname, sessions in groups:
+            tk.Label(self.holder, text=gname, bg=C["side"], fg=C["dim"],
+                     font=("Microsoft YaHei", 8),
+                     anchor="w").pack(fill="x", padx=12, pady=(10, 2))
+            for s in sessions:
+                self._row(s)
+
+    def _row(self, s):
+        cur = (s.id == self.cur_id)
+        f = tk.Frame(self.holder, bg=C["panel"] if cur else C["side"],
+                     cursor="hand2")
+        f.pack(fill="x", padx=6, pady=1)
+        lbl = tk.Label(f, text=s.title[:16] or "新对话",
+                       bg=C["panel"] if cur else C["side"],
+                       fg=C["accent"] if cur else C["text"],
+                       font=("Microsoft YaHei", 9),
+                       anchor="w", justify="left")
+        lbl.pack(side="left", fill="x", expand=True, padx=(8, 2), pady=6)
+
+        def pick(e, ss=s):
+            self.on_pick(ss)
+        for w in (f, lbl):
+            w.bind("<Button-1>", pick)
+        lbl.bind("<Button-3>", lambda e, ss=s: self._menu(e, ss))
+        self.rows[s.id] = f
+
+    def _menu(self, e, s):
+        m = tk.Menu(self, tearoff=0)
+        m.add_command(label="删除这个对话",
+                      command=lambda: self._on_del(s))
+        try:
+            m.tk_popup(e.x_root, e.y_root)
+        finally:
+            m.grab_release()
+
+
+# ══════════════════════════════════════════════════════════════════
+#  设置窗口
+# ══════════════════════════════════════════════════════════════════
+class SettingsDialog(tk.Toplevel):
+    def __init__(self, app):
+        super().__init__(app.root)
+        self.app = app
+        self.title("设置")
+        self.configure(bg=C["panel"])
+        self.resizable(False, False)
+        self.transient(app.root)
+        self.grab_set()
+
+        pad = {"padx": 14, "pady": 5}
+        row = 0
+        tk.Label(self, text="连接", bg=C["panel"], fg=C["text"],
+                 font=("Microsoft YaHei", 11, "bold")).grid(
+            row=row, column=0, columnspan=2, sticky="w", padx=14, pady=(14, 4))
+        row += 1
+        self.v_host = tk.StringVar(value=app.conf.get("host", ""))
+        self.v_tok = tk.StringVar(value=app.conf.get("token", ""))
+        for lab, var, show in (("板子地址", self.v_host, False),
+                               ("Token", self.v_tok, True)):
+            tk.Label(self, text=lab, bg=C["panel"], fg=C["dim"],
+                     font=("Microsoft YaHei", 9)).grid(row=row, column=0,
+                                                       sticky="w", **pad)
+            e = tk.Entry(self, textvariable=var, width=34, show="*" if show else "",
+                         font=("Consolas", 10))
+            e.grid(row=row, column=1, sticky="w", **pad)
+            row += 1
+        bf = tk.Frame(self, bg=C["panel"])
+        bf.grid(row=row, column=1, sticky="w", padx=14)
+        tk.Button(bf, text="扫描局域网", command=self.do_scan, bd=0,
+                  bg=C["line"], fg=C["text"], padx=10, pady=3,
+                  cursor="hand2").pack(side="left")
+        tk.Button(bf, text="测试连接", command=self.do_test, bd=0,
+                  bg=C["line"], fg=C["text"], padx=10, pady=3,
+                  cursor="hand2").pack(side="left", padx=6)
+        row += 1
+
+        tk.Label(self, text="模型（DeepSeek）", bg=C["panel"], fg=C["text"],
+                 font=("Microsoft YaHei", 11, "bold")).grid(
+            row=row, column=0, columnspan=2, sticky="w", padx=14,
+            pady=(14, 4))
+        row += 1
+        self.v_key = tk.StringVar(value="")     # ★ key 不回显，只显示"已配置"
+        tk.Label(self, text="API Key", bg=C["panel"], fg=C["dim"],
+                 font=("Microsoft YaHei", 9)).grid(row=row, column=0,
+                                                   sticky="w", **pad)
+        self.e_key = tk.Entry(self, textvariable=self.v_key, width=34,
+                              show="*", font=("Consolas", 10))
+        self.e_key.grid(row=row, column=1, sticky="w", **pad)
+        self.lbl_key = tk.Label(self, text="（留空表示不改）", bg=C["panel"],
+                                fg=C["dim"], font=("Microsoft YaHei", 8))
+        self.lbl_key.grid(row=row, column=1, sticky="w", padx=14)
+        row += 1
+
+        tk.Label(self, text="默认模型", bg=C["panel"], fg=C["dim"],
+                 font=("Microsoft YaHei", 9)).grid(row=row, column=0,
+                                                   sticky="w", **pad)
+        self.v_model = tk.StringVar(value=app.conf.get("model", ""))
+        self.cb_model = ttk.Combobox(self, textvariable=self.v_model, width=32,
+                                     font=("Consolas", 10))
+        self.cb_model.grid(row=row, column=1, sticky="w", **pad)
+        row += 1
+        tk.Button(self, text="从板子拉模型列表", command=self.do_models,
+                  bd=0, bg=C["line"], fg=C["text"], padx=10, pady=3,
+                  cursor="hand2").grid(row=row, column=1, sticky="w", padx=14)
+        row += 1
+
+        tk.Label(self, text="语音", bg=C["panel"], fg=C["text"],
+                 font=("Microsoft YaHei", 11, "bold")).grid(
+            row=row, column=0, columnspan=2, sticky="w", padx=14,
+            pady=(14, 4))
+        row += 1
+        self.v_reply = tk.BooleanVar(value=app.conf.get("voice_reply", True))
+        self.v_auto = tk.BooleanVar(value=app.conf.get("voice_auto_send", True))
+        tk.Checkbutton(self, text="收到回复后自动朗读", variable=self.v_reply,
+                       bg=C["panel"], fg=C["text"], selectcolor=C["panel"],
+                       activebackground=C["panel"],
+                       font=("Microsoft YaHei", 9)).grid(
+            row=row, column=1, sticky="w", padx=14)
+        row += 1
+        tk.Checkbutton(self, text="语音识别完成后自动发送", variable=self.v_auto,
+                       bg=C["panel"], fg=C["text"], selectcolor=C["panel"],
+                       activebackground=C["panel"],
+                       font=("Microsoft YaHei", 9)).grid(
+            row=row, column=1, sticky="w", padx=14)
+        row += 1
+
+        # 录音后端提示
+        backend = "sounddevice（16kHz/16bit，音质好）" if A.HAS_SD else \
+                  "MCI（只有 11025Hz/8bit，音质差 —— 建议 pip install sounddevice）"
+        tk.Label(self, text="录音后端：" + backend, bg=C["panel"],
+                 fg=C["dim"] if A.HAS_SD else C["rec"],
+                 font=("Microsoft YaHei", 8), wraplength=360,
+                 justify="left").grid(row=row, column=0, columnspan=2,
+                                      sticky="w", padx=14, pady=(6, 0))
+        row += 1
+
+        bf2 = tk.Frame(self, bg=C["panel"])
+        bf2.grid(row=row, column=0, columnspan=2, pady=14)
+        tk.Button(bf2, text="保存", command=self.do_save, bd=0,
+                  bg=C["accent"], fg="white", padx=22, pady=5,
+                  font=("Microsoft YaHei", 10), cursor="hand2").pack(
+            side="left", padx=6)
+        tk.Button(bf2, text="取消", command=self.destroy, bd=0,
+                  bg=C["line"], fg=C["text"], padx=18, pady=5,
+                  font=("Microsoft YaHei", 10), cursor="hand2").pack(
+            side="left", padx=6)
+
+        self.m_status = tk.Label(self, text="", bg=C["panel"], fg=C["dim"],
+                                 font=("Microsoft YaHei", 9), wraplength=380,
+                                 justify="left")
+        self.m_status.grid(row=row + 1, column=0, columnspan=2, sticky="w",
+                           padx=14, pady=(0, 14))
+        self.center()
+
+    def center(self):
+        self.update_idletasks()
+        w, h = self.winfo_width(), self.winfo_height()
+        x = self.app.root.winfo_rootx() + (self.app.root.winfo_width() - w) // 2
+        y = self.app.root.winfo_rooty() + 60
+        self.geometry("+%d+%d" % (max(0, x), max(0, y)))
+
+    # ---- 动作 ----
+    def do_scan(self):
+        self.m_status.configure(text="扫描中…", fg=C["dim"])
+        self.update_idletasks()
+
+        def work():
+            hits = X.discover(2.5, extra_ips=[self.v_host.get().strip()]
+                              if self.v_host.get().strip() else ())
+            def done():
+                if hits:
+                    self.v_host.set(hits[0].get("ip", ""))
+                    self.m_status.configure(
+                        text="找到：%s（%s，%.1f°C）"
+                             % (hits[0].get("ip"), hits[0].get("hostname"),
+                                hits[0].get("temperature_c") or 0),
+                        fg=C["ok"])
+                else:
+                    self.m_status.configure(
+                        text="没扫到。★ 常见原因：路由器不透传广播。"
+                             "可以直接手填板子 IP。", fg=C["rec"])
+            self.after(0, done)
+        threading.Thread(target=work, daemon=True).start()
+
+    def do_test(self):
+        host = self.v_host.get().strip()
+        tok = self.v_tok.get().strip()
+        self.m_status.configure(text="测试中…", fg=C["dim"])
+        self.update_idletasks()
+
+        def work():
+            try:
+                b = X.Board(host, tok)
+                d = b.call("/info", timeout=8)
+                def done():
+                    if d.get("ok"):
+                        self.m_status.configure(
+                            text="✓ 连上了：%s / %s / %.1f°C"
+                                 % (d.get("hostname"), d.get("model"),
+                                    d.get("temperature_c") or 0),
+                            fg=C["ok"])
+                    else:
+                        self.m_status.configure(
+                            text="✗ %s" % d.get("error"), fg=C["rec"])
+                self.after(0, done)
+            except Exception as e:
+                self.after(0, lambda: self.m_status.configure(
+                    text="✗ %s" % e, fg=C["rec"]))
+        threading.Thread(target=work, daemon=True).start()
+
+    def do_models(self):
+        self.m_status.configure(text="拉取模型列表…", fg=C["dim"])
+        self.update_idletasks()
+
+        def work():
+            try:
+                b = X.Board(self.v_host.get().strip(),
+                            self.v_tok.get().strip())
+                ms = b.call("/tools", timeout=10)      # 保活
+                d = b.call("/llm/models", timeout=25)
+                def done():
+                    if d.get("ok") and d.get("models"):
+                        self.cb_model["values"] = d["models"]
+                        if not self.v_model.get():
+                            self.v_model.set(d.get("current") or d["models"][0])
+                        self.m_status.configure(
+                            text="✓ 拿到 %d 个模型：%s"
+                                 % (len(d["models"]), ", ".join(d["models"])),
+                            fg=C["ok"])
+                    else:
+                        self.m_status.configure(
+                            text="✗ %s" % (d.get("error") or "拉不到"),
+                            fg=C["rec"])
+                self.after(0, done)
+            except Exception as e:
+                self.after(0, lambda: self.m_status.configure(
+                    text="✗ %s" % e, fg=C["rec"]))
+        threading.Thread(target=work, daemon=True).start()
+
+    def do_save(self):
+        c = self.app.conf
+        c["host"] = self.v_host.get().strip()
+        c["token"] = self.v_tok.get().strip()
+        c["voice_reply"] = bool(self.v_reply.get())
+        c["voice_auto_send"] = bool(self.v_auto.get())
+        if self.v_model.get().strip():
+            c["model"] = self.v_model.get().strip()
+        save_conf(c)
+        self.app.reload_conf()
+        # ★ key 要送到板子上（写进运行时覆盖文件，立刻生效）
+        key = self.v_key.get().strip()
+        if key:
+            def work():
+                try:
+                    b = X.Board(c["host"], c["token"])
+                    r = b.call("/llm/settings", "POST",
+                               {"api_key": key}, timeout=20)
+                    self.after(0, lambda: self.m_status.configure(
+                        text="✓ key 已写入" if r.get("ok")
+                             else "✗ %s" % r.get("error"),
+                        fg=C["ok"] if r.get("ok") else C["rec"]))
+                except Exception as e:
+                    self.after(0, lambda: self.m_status.configure(
+                        text="✗ %s" % e, fg=C["rec"]))
+            threading.Thread(target=work, daemon=True).start()
+        if self.v_model.get().strip():
+            self.app.set_model(self.v_model.get().strip(), quiet=True)
+        self.app.set_status("设置已保存")
+        self.after(400, self.destroy)
+
+
+# ══════════════════════════════════════════════════════════════════
+#  主窗口
+# ══════════════════════════════════════════════════════════════════
+class ChatApp(object):
+    def __init__(self, root, host="", token=""):
+        self.root = root
+        self.conf = load_conf()
+        if host:
+            self.conf["host"] = host
+        if token:
+            self.conf["token"] = token
+        self.store = SessionStore()
+        self.brd = X.Board(self.conf.get("host", ""), self.conf.get("token", ""))
+        self.rec = A.Recorder()
+        self.busy = False
+        self.recording = False
+        self.models = []
+        self.modes = ("auto", "cloud", "local")
+        self.mode_names = {"auto": "自动", "cloud": "云端", "local": "本地"}
+        self.q = queue.Queue()
+
+        root.title(APP_TITLE)
+        root.geometry("1000x680")
+        root.minsize(780, 520)
+        root.configure(bg=C["bg"])
+        self._fonts()
+        self._build()
+        self._pump()
+        self.render_session()
+        root.protocol("WM_DELETE_WINDOW", self.on_close)
+        root.after(300, self.bootstrap)
+
+    def _fonts(self):
+        for n in ("Microsoft YaHei UI", "Microsoft YaHei", "SimHei"):
+            try:
+                tkfont = __import__("tkinter.font", fromlist=["families"])
+                if n in tkfont.families():
+                    self.font = n
+                    return
+            except Exception:
+                pass
+        self.font = "TkDefaultFont"
+
+    # ---------- 布局 ----------
+    def _build(self):
+        # 顶栏
+        top = tk.Frame(self.root, bg=C["panel"], height=52)
+        top.pack(fill="x", side="top")
+        top.pack_propagate(False)
+        tk.Label(top, text="系统管家小白", bg=C["panel"], fg=C["text"],
+                 font=(self.font, 13, "bold")).pack(side="left", padx=(16, 10))
+        self.lbl_conn = tk.Label(top, text="未连接", bg=C["panel"],
+                                 fg=C["dim"], font=(self.font, 9))
+        self.lbl_conn.pack(side="left")
+        tk.Button(top, text="⚙ 设置", command=self.open_settings, bd=0,
+                  bg=C["panel"], fg=C["text"], font=(self.font, 10),
+                  activebackground=C["panel"], cursor="hand2").pack(
+            side="right", padx=14)
+        self.lbl_temp = tk.Label(top, text="", bg=C["panel"], fg=C["dim"],
+                                 font=(self.font, 9))
+        self.lbl_temp.pack(side="right", padx=10)
+
+        # ★★★ 页签：聊天 / 推理（2026-10-03）
+        #   用按钮切换主体内容，不新开窗口 —— 布局改动最小。
+        self._tab = "chat"
+        self.btn_tab_chat = tk.Button(
+            top, text="\U0001f4ac 聊天", command=lambda: self.show_tab("chat"),
+            bd=0, bg=C["panel"], fg=C["accent"], font=(self.font, 10, "bold"),
+            activebackground=C["panel"], cursor="hand2")
+        self.btn_tab_chat.pack(side="left", padx=(18, 4))
+        self.btn_tab_infer = tk.Button(
+            top, text="\U0001f4ca 推理", command=lambda: self.show_tab("infer"),
+            bd=0, bg=C["panel"], fg=C["dim"], font=(self.font, 10),
+            activebackground=C["panel"], cursor="hand2")
+        self.btn_tab_infer.pack(side="left", padx=4)
+
+        tk.Frame(self.root, bg=C["line"], height=1).pack(fill="x")
+
+        # 主体
+        body = tk.Frame(self.root, bg=C["bg"])
+        body.pack(fill="both", expand=True)
+        self.side = Sidebar(body, on_pick=self.pick_session,
+                            on_new=self.new_session, on_del=self.del_session)
+        self.side.pack(side="left", fill="y")
+        tk.Frame(body, bg=C["line"], width=1).pack(side="left", fill="y")
+
+        right = tk.Frame(body, bg=C["bg"])
+        right.pack(side="left", fill="both", expand=True)
+        self.right = right
+
+        # ★★★ 两个页面叠在同一个位置，用 pack/pack_forget 切换
+        #   （tk 没有真正的 tab 控件，这是最省事又不破坏布局的做法）
+        self.page_chat = tk.Frame(right, bg=C["bg"])
+        self.page_infer = tk.Frame(right, bg=C["bg"])
+
+        self.msg = MessageArea(self.page_chat)
+        self.msg.on_speak_text = self.speak
+        self.msg.pack(fill="both", expand=True)
+
+        # ★ 输入区（含右下角的模型/模式切换）
+        self._build_input(self.page_chat)
+
+        # ★ 推理页
+        self._build_infer(self.page_infer)
+
+        self.page_chat.pack(fill="both", expand=True)
+
+        tk.Frame(self.root, bg=C["line"], height=1).pack(fill="x")
+        self.status = tk.StringVar(value="就绪")
+        tk.Label(self.root, textvariable=self.status, bg=C["panel"],
+                 fg=C["dim"], font=(self.font, 8), anchor="w").pack(
+            fill="x", side="bottom", padx=10, pady=3)
+
+    # ══════════════════════════════════════════════════════════════
+    #  ★★★ 推理页（2026-10-03 加）
+    # ══════════════════════════════════════════════════════════════
+    # 板子的 /infer 早就通了（PL 加速器上的 CNN：cnn_conv_pool + cnn_fc），
+    # 但 PC 客户端一直没有界面用它。这一页就是给它做的：
+    #   选波形 → 生成 4096 点 → 发给板子 → 显示类别/置信度/耗时/引擎。
+    # 8 个类别（板子 /infer/health 里报的）：
+    #   sine / square / triangle / sawtooth / noise
+    #   clipping / signal_loss / duty_abnormal
+    # ══════════════════════════════════════════════════════════════
+    WAVE_KINDS = [
+        ("sine", "正弦"), ("square", "方波"), ("triangle", "三角"),
+        ("sawtooth", "锯齿"), ("noise", "噪声"),
+        ("clipping", "削顶"), ("signal_loss", "信号丢失"),
+        ("duty_abnormal", "占空比异常"),
+    ]
+    WAVE_CN = dict(WAVE_KINDS)
+
+    def show_tab(self, which):
+        """切换 聊天 / 推理 页"""
+        if which == self._tab:
+            return
+        self._tab = which
+        if which == "chat":
+            self.page_infer.pack_forget()
+            self.page_chat.pack(fill="both", expand=True)
+            self.btn_tab_chat.configure(fg=C["accent"],
+                                        font=(self.font, 10, "bold"))
+            self.btn_tab_infer.configure(fg=C["dim"],
+                                         font=(self.font, 10))
+        else:
+            self.page_chat.pack_forget()
+            self.page_infer.pack(fill="both", expand=True)
+            self.btn_tab_infer.configure(fg=C["accent"],
+                                         font=(self.font, 10, "bold"))
+            self.btn_tab_chat.configure(fg=C["dim"],
+                                        font=(self.font, 10))
+            self.set_status("推理页：选波形 → 生成并推理")
+
+    def _build_infer(self, parent):
+        """推理页布局"""
+        # ── 参数行 ──
+        bar = tk.Frame(parent, bg=C["panel"])
+        bar.pack(fill="x", padx=12, pady=(12, 6))
+
+        tk.Label(bar, text="波形", bg=C["panel"], fg=C["text"],
+                 font=(self.font, 10)).pack(side="left", padx=(12, 4))
+        self.v_wave = tk.StringVar(value="sine")
+        cb = ttk.Combobox(bar, textvariable=self.v_wave, width=10,
+                          state="readonly",
+                          values=[k for k, _ in self.WAVE_KINDS])
+        cb.pack(side="left")
+        cb.bind("<<ComboboxSelected>>", lambda e: self.infer_preview())
+
+        tk.Label(bar, text="频率", bg=C["panel"], fg=C["text"],
+                 font=(self.font, 10)).pack(side="left", padx=(16, 4))
+        self.v_freq = tk.IntVar(value=40)
+        tk.Spinbox(bar, from_=1, to=400, textvariable=self.v_freq, width=6,
+                   command=self.infer_preview).pack(side="left")
+
+        tk.Label(bar, text="幅度", bg=C["panel"], fg=C["text"],
+                 font=(self.font, 10)).pack(side="left", padx=(16, 4))
+        self.v_amp = tk.IntVar(value=120)
+        tk.Spinbox(bar, from_=1, to=127, textvariable=self.v_amp, width=6,
+                   command=self.infer_preview).pack(side="left")
+
+        tk.Button(bar, text="★ 生成并推理", command=self.do_infer,
+                  bd=0, bg=C["accent"], fg="#ffffff",
+                  font=(self.font, 10, "bold"), cursor="hand2",
+                  padx=14, pady=4).pack(side="left", padx=(20, 6))
+        tk.Button(bar, text="随机换一个", command=self.infer_random,
+                  bd=0, bg=C["side"], fg=C["text"],
+                  font=(self.font, 10), cursor="hand2",
+                  padx=10, pady=4).pack(side="left")
+
+        # ── 波形预览 ──
+        pv = tk.Frame(parent, bg=C["panel"],
+                      highlightbackground=C["line"], highlightthickness=1)
+        pv.pack(fill="x", padx=12, pady=6)
+        self.cv_wave = tk.Canvas(pv, height=150, bg="#fbfcfe",
+                                 highlightthickness=0)
+        self.cv_wave.pack(fill="x", padx=8, pady=8)
+        self.cv_wave.bind("<Configure>", lambda e: self.infer_preview())
+
+        # ── 结果 ──
+        res = tk.Frame(parent, bg=C["panel"],
+                       highlightbackground=C["line"], highlightthickness=1)
+        res.pack(fill="x", padx=12, pady=6)
+        self.lbl_infer = tk.Label(res, text="还没推理过 —— 点上面「生成并推理」",
+                                  bg=C["panel"], fg=C["dim"],
+                                  font=(self.font, 12), anchor="w",
+                                  justify="left")
+        self.lbl_infer.pack(fill="x", padx=14, pady=12)
+
+        # ── 历史 ──
+        hp = tk.Frame(parent, bg=C["bg"])
+        hp.pack(fill="both", expand=True, padx=12, pady=(0, 10))
+        tk.Label(hp, text="历史（最近 10 次）", bg=C["bg"], fg=C["dim"],
+                 font=(self.font, 9)).pack(anchor="w")
+        self.lst_hist = tk.Listbox(hp, bd=0, bg=C["panel"], fg=C["text"],
+                                   font=("Consolas", 10), highlightthickness=1,
+                                   highlightbackground=C["line"])
+        self.lst_hist.pack(fill="both", expand=True, pady=(4, 0))
+        self.infer_hist = []
+        self.infer_preview()
+
+    # ---------- 波形生成 ----------
+    def gen_wave(self):
+        """按当前参数生成 4096 点波形（和板子 /infer 的契约一致）"""
+        import math as _m
+        import random as _r
+        kind = self.v_wave.get()
+        f = max(1, int(self.v_freq.get() or 40))
+        amp = max(1, min(127, int(self.v_amp.get() or 120)))
+        N = 4096
+        d = []
+        for i in range(N):
+            ph = (i * f / float(N)) % 1.0
+            if kind == "sine":
+                v = _m.sin(2 * _m.pi * ph)
+            elif kind == "square":
+                v = 1.0 if ph < 0.5 else -1.0
+            elif kind == "triangle":
+                v = 4 * abs(ph - 0.5) - 1
+            elif kind == "sawtooth":
+                v = 2 * ph - 1
+            elif kind == "noise":
+                v = _r.uniform(-1, 1)
+            elif kind == "clipping":
+                v = _m.sin(2 * _m.pi * ph) * 2.2      # 超幅 -> 削顶
+                v = max(-1.0, min(1.0, v))
+            elif kind == "signal_loss":
+                v = 0.0 if i > N // 4 else _m.sin(2 * _m.pi * ph)
+            elif kind == "duty_abnormal":
+                v = 1.0 if ph < 0.82 else -1.0        # 占空比 82%
+            else:
+                v = _m.sin(2 * _m.pi * ph)
+            d.append(int(127 + amp * v))
+        return kind, [max(0, min(255, x)) for x in d]
+
+    def infer_preview(self):
+        """把当前波形画到预览 Canvas（不发网络请求）"""
+        try:
+            kind, d = self.gen_wave()
+        except Exception:
+            return
+        cv = self.cv_wave
+        cv.delete("all")
+        w = max(200, cv.winfo_width())
+        h = max(60, cv.winfo_height())
+        mid = h // 2
+        # 中线
+        cv.create_line(0, mid, w, mid, fill="#e6e8ec")
+        # 波形（4096 点太多，抽稀到宽度）
+        step = max(1, len(d) // max(1, w))
+        pts = []
+        for x in range(0, w):
+            i = min(len(d) - 1, x * step)
+            y = mid - int((d[i] - 127) / 127.0 * (mid - 8))
+            pts += [x, y]
+        if len(pts) >= 4:
+            cv.create_line(*pts, fill=C["accent"], width=2)
+        cv.create_text(8, 12, anchor="w", fill=C["dim"],
+                       font=(self.font, 9),
+                       text="%s  %d Hz  幅度 %d（4096 点）"
+                            % (self.WAVE_CN.get(kind, kind),
+                               self.v_freq.get(), self.v_amp.get()))
+
+    def infer_random(self):
+        """随机换一个波形类型 + 参数"""
+        import random as _r
+        k = _r.choice([k for k, _ in self.WAVE_KINDS])
+        self.v_wave.set(k)
+        self.v_freq.set(_r.choice([10, 25, 40, 60, 100, 180]))
+        self.v_amp.set(_r.choice([60, 90, 120, 127]))
+        self.infer_preview()
+
+    def do_infer(self):
+        """生成波形 -> POST /infer -> 显示结果"""
+        if self.busy:
+            self.set_status("上一件事还没做完")
+            return
+        if not self.brd.host:
+            self.set_status("还没填板子地址 —— 点右上角「设置」")
+            return
+        try:
+            kind, d = self.gen_wave()
+        except Exception as e:
+            self.set_status("生成波形失败：%s" % e)
+            return
+        self.busy = True
+        self.set_status("正在发给板子推理…")
+        self.lbl_infer.configure(text="推理中…", fg=C["dim"],
+                                 font=(self.font, 12))
+
+        def work():
+            import time as _t
+            t0 = _t.time()
+            try:
+                r = self.brd.call("/infer", "POST",
+                                  {"type": "waveform", "data": d,
+                                   "hint": "raw", "api_key": self.brd.token},
+                                  timeout=60)
+                ms = int((_t.time() - t0) * 1000)
+                self.q.put(("infer", {"kind": kind, "res": r, "ms": ms,
+                                      "n": len(d)}))
+            except Exception as e:
+                self.q.put(("infer", {"kind": kind,
+                                      "res": {"ok": False, "error": str(e)},
+                                      "ms": 0, "n": len(d)}))
+        import threading
+        threading.Thread(target=work, daemon=True).start()
+
+    def _show_infer(self, p):
+        """主线程显示推理结果"""
+        self.busy = False
+        r = p.get("res") or {}
+        if not r.get("ok"):
+            self.lbl_infer.configure(
+                text="✗ 推理失败：%s" % (r.get("error") or "未知错误"),
+                fg=C["rec"], font=(self.font, 11))
+            self.set_status("推理失败")
+            return
+        lab = r.get("label") or "?"
+        conf = r.get("confidence")
+        el = r.get("elapsed_ms")
+        eng = (r.get("detail") or {}).get("engine") or "?"
+        txt = ("★ 类别：%s（%s）\n"
+               "   置信度：%s\n"
+               "   板上耗时：%s ms   （网络往返 %d ms）\n"
+               "   引擎：%s\n"
+               "   送入点数：%d"
+               % (lab, self.WAVE_CN.get(lab, "?"),
+                  ("%.1f%%" % (conf * 100)) if isinstance(conf, (int, float))
+                  else str(conf),
+                  el if el is not None else "?", p.get("ms", 0),
+                  eng, p.get("n", 0)))
+        # 判对没有？（我们自己知道发的是什么）
+        exp = p.get("kind")
+        hit = (lab == exp)
+        self.lbl_infer.configure(
+            text=txt + ("\n\n" + ("✓ 和生成时选的类别一致" if hit
+                                  else "⚠ 生成的是 %s，板子判成 %s"
+                                       % (self.WAVE_CN.get(exp, exp), lab))),
+            fg=C["ok"] if hit else C["sys_fg"],
+            font=(self.font, 11))
+        import datetime as _dt
+        line = ("%s  %-14s %-6s %5sms"
+                % (_dt.datetime.now().strftime("%H:%M:%S"),
+                   lab, ("%.0f%%" % (conf * 100))
+                   if isinstance(conf, (int, float)) else "?",
+                   el if el is not None else "?"))
+        self.infer_hist.insert(0, line)
+        self.lst_hist.insert(0, line)
+        while self.lst_hist.size() > 10:
+            self.lst_hist.delete("end")
+        self.set_status("推理完成：%s" % lab)
+
+    def _build_input(self, parent):
+        wrap = tk.Frame(parent, bg=C["bg"])
+        wrap.pack(fill="x", side="bottom", padx=12, pady=(4, 10))
+
+        box = tk.Frame(wrap, bg=C["panel"],
+                       highlightbackground=C["line"], highlightthickness=1)
+        box.pack(fill="x")
+
+        # 输入框
+        self.txt = tk.Text(box, height=3, wrap="word", bd=0,
+                           bg=C["panel"], fg=C["text"],
+                           font=(self.font, 10), padx=10, pady=8,
+                           insertbackground=C["accent"])
+        self.txt.pack(fill="x")
+        self.txt.bind("<Return>", self._on_return)
+        self.txt.bind("<Shift-Return>", lambda e: None)
+        self.txt.bind("<KeyRelease>", self._on_key)
+
+        # 下面一排按钮
+        bar = tk.Frame(box, bg=C["panel"])
+        bar.pack(fill="x", padx=6, pady=(0, 6))
+
+        # 左：录音 + 提示
+        # ★ 图标的问题：emoji（🎤）在不同 Windows 上渲染差异很大，
+        #   有些字体会回退成一个奇怪的符号（看起来像支笔）。
+        #   所以按钮上用【文字】而不是 emoji，稳妥。
+        self.btn_mic = tk.Button(bar, text="● 按住说话", command=self.toggle_rec,
+                                 bd=0, bg=C["panel"], fg=C["text"],
+                                 font=(self.font, 10), cursor="hand2",
+                                 activebackground=C["panel"],
+                                 padx=6, pady=2)
+        self.btn_mic.pack(side="left", padx=2)
+        self.lbl_rec = tk.Label(bar, text="", bg=C["panel"], fg=C["rec"],
+                                font=(self.font, 9))
+        self.lbl_rec.pack(side="left", padx=6)
+        tk.Label(bar, text="Enter 发送 / Shift+Enter 换行", bg=C["panel"],
+                 fg=C["dim"], font=(self.font, 8)).pack(side="left", padx=8)
+
+        # 右：★ 模式 + 模型 + 朗读 + 发送
+        self.btn_send = tk.Button(bar, text="发送", command=self.send, bd=0,
+                                  bg=C["accent"], fg="white", padx=18, pady=3,
+                                  font=(self.font, 10), cursor="hand2",
+                                  activebackground="#1d4ed8")
+        self.btn_send.pack(side="right", padx=(6, 2))
+
+        self.btn_spk = tk.Button(bar, text="朗读", command=self._toggle_speak,
+                                 bd=0, bg=C["panel"], fg=C["text"],
+                                 font=(self.font, 9), cursor="hand2", padx=6,
+                                 activebackground=C["panel"])
+        self.btn_spk.pack(side="right", padx=2)
+
+        self.v_model = tk.StringVar(value=self.conf.get("model", "") or "模型")
+        self.cb_model = ttk.Combobox(bar, textvariable=self.v_model, width=18,
+                                     state="readonly", font=("Consolas", 9))
+        self.cb_model.pack(side="right", padx=3)
+        self.cb_model.bind("<<ComboboxSelected>>",
+                           lambda e: self.set_model(self.v_model.get()))
+
+        self.v_mode = tk.StringVar(value="自动")
+        self.cb_mode = ttk.Combobox(bar, textvariable=self.v_mode, width=6,
+                                    state="readonly", font=(self.font, 9),
+                                    values=("自动", "云端", "本地"))
+        self.cb_mode.pack(side="right", padx=3)
+        self.cb_mode.bind("<<ComboboxSelected>>", self._on_mode)
+
+        tk.Label(bar, text="模式", bg=C["panel"], fg=C["dim"],
+                 font=(self.font, 8)).pack(side="right")
+        tk.Label(bar, text="模型", bg=C["panel"], fg=C["dim"],
+                 font=(self.font, 8)).pack(side="right", padx=(6, 2))
+
+    # ---------- 事件 ----------
+    def _on_return(self, e):
+        if e.state & 0x0001:        # Shift
+            return None
+        self.send()
+        return "break"
+
+    def _on_key(self, e):
+        pass
+
+    def _on_mode(self, e=None):
+        name = self.v_mode.get()
+        inv = {v: k for k, v in self.mode_names.items()}
+        m = inv.get(name, "auto")
+        self.conf["mode"] = m
+        save_conf(self.conf)
+        self.set_status("切模式 → %s …" % name)
+
+        def work():
+            try:
+                r = self.brd.call("/llm/config", "POST", {"mode": m}, timeout=15)
+                self.q.put(("status", "模式已切到【%s】%s"
+                            % (name, "" if r.get("ok") else
+                               "  ✗ " + str(r.get("error")))))
+            except Exception as ex:
+                self.q.put(("status", "切模式失败: %s" % ex))
+        threading.Thread(target=work, daemon=True).start()
+
+    def _toggle_speak(self):
+        self.conf["voice_reply"] = not self.conf.get("voice_reply", True)
+        save_conf(self.conf)
+        self._sync_spk()
+        self.set_status("自动朗读：" + ("开" if self.conf["voice_reply"] else "关"))
+
+    def _sync_spk(self):
+        on = self.conf.get("voice_reply", True)
+        self.btn_spk.configure(fg=C["accent"] if on else C["dim"])
+
+    # ---------- 会话 ----------
+    def render_session(self):
+        self.msg.clear()
+        for m in self.store.cur.msgs:
+            self.msg.add(m.get("who", "ai"), m.get("text", ""), m.get("ts"))
+        self.side.render(self.store.group(), self.store.cur.id)
+
+    def pick_session(self, s):
+        self.store.cur = s
+        self.render_session()
+
+    def new_session(self):
+        self.store.new()
+        self.render_session()
+        self.set_status("新对话")
+
+    def del_session(self, s):
+        if not messagebox.askyesno("删除", "删掉「%s」？" % s.title):
+            return
+        self.store.delete(s)
+        self.render_session()
+
+    # ---------- 网络 ----------
+    def set_status(self, s):
+        self.status.set(s)
+
+    def bootstrap(self):
+        """启动时：拉设备信息 + 模型列表 + 模式"""
+        def work():
+            try:
+                d = self.brd.call("/info", timeout=8)
+                if d.get("ok"):
+                    self.q.put(("info", d))
+                else:
+                    self.q.put(("conn", "未连接  " + str(d.get("error", ""))[:40]))
+            except Exception as e:
+                self.q.put(("conn", "未连接"))
+            try:
+                m = self.brd.call("/llm/models", timeout=20)
+                if m.get("ok"):
+                    self.q.put(("models", m))
+            except Exception:
+                pass
+            try:
+                c = self.brd.call("/llm/config", timeout=10)
+                if c.get("ok"):
+                    self.q.put(("mode", c.get("mode")))
+            except Exception:
+                pass
+        threading.Thread(target=work, daemon=True).start()
+
+    def _pump(self):
+        """主线程消费后台线程的结果"""
+        try:
+            while True:
+                kind, payload = self.q.get_nowait()
+                if kind == "info":
+                    d = payload
+                    self.lbl_conn.configure(
+                        text="● %s" % d.get("ip", ""), fg=C["ok"])
+                    self.lbl_temp.configure(
+                        text="%.1f°C" % (d.get("temperature_c") or 0))
+                    # ★★★ 2026-10-03 修：原来只存 last_ip，
+                    #   而启动时 ChatApp 读的是 conf["host"]
+                    #   ⇒ 存了 A、读的是 B，"记住上次 IP" 形同虚设。
+                    #   现在两个都写，并且只在本机没填过地址时才覆盖，
+                    #   免得用户在设置里手填的地址被扫描结果冲掉。
+                    _ip = d.get("ip", "")
+                    if _ip:
+                        self.conf["last_ip"] = _ip
+                        if not self.conf.get("host"):
+                            self.conf["host"] = _ip
+                        save_conf(self.conf)
+                elif kind == "infer":
+                    self._show_infer(payload)
+                elif kind == "conn":
+                    self.lbl_conn.configure(text="● " + payload, fg=C["rec"])
+                elif kind == "models":
+                    ms = payload.get("models") or []
+                    if ms:
+                        self.models = ms
+                        self.cb_model["values"] = ms
+                        cur = payload.get("current") or ms[0]
+                        self.v_model.set(cur)
+                        self.conf["model"] = cur
+                        save_conf(self.conf)
+                elif kind == "mode":
+                    m = payload or "auto"
+                    self.v_mode.set(self.mode_names.get(m, "自动"))
+                elif kind == "status":
+                    self.set_status(payload)
+                elif kind == "msg":
+                    who, text = payload
+                    self.store.cur.add(who, text)
+                    self.store.save()
+                    self.msg.add(who, text)
+                    self.side.render(self.store.group(), self.store.cur.id)
+                elif kind == "busy":
+                    self.busy = payload
+                    self.btn_send.configure(
+                        state="normal" if not payload else "disabled",
+                        text="发送" if not payload else "…")
+                elif kind == "say":
+                    if self.conf.get("voice_reply", True):
+                        self.speak(payload)
+                elif kind == "sendtext":
+                    # 语音识别完，自动发出去
+                    self.lbl_rec.configure(text="")
+                    self._send_text(payload)
+                elif kind == "filltext":
+                    # 语音识别完，只填进输入框（让用户确认再发）
+                    self.lbl_rec.configure(text="")
+                    self.txt.delete("1.0", "end")
+                    self.txt.insert("1.0", payload)
+                    self.txt.focus_set()
+                elif kind == "rec_done":
+                    self.lbl_rec.configure(text="")
+                elif kind == "refresh_info":
+                    def _r():
+                        try:
+                            d = self.brd.call("/info", timeout=8)
+                            if d.get("ok"):
+                                self.q.put(("info", d))
+                        except Exception:
+                            pass
+                    threading.Thread(target=_r, daemon=True).start()
+        except queue.Empty:
+            pass
+        self.root.after(120, self._pump)
+
+    # ---------- 发送 ----------
+    def send(self):
+        text = self.txt.get("1.0", "end").strip()
+        if not text or self.busy:
+            return
+        self.txt.delete("1.0", "end")
+        self._send_text(text)
+
+    def _send_text(self, text):
+        self.store.cur.add("user", text)
+        self.store.save()
+        self.msg.add("user", text)
+        self.side.render(self.store.group(), self.store.cur.id)
+        self.q.put(("busy", True))
+        self.set_status("思考中…")
+
+        def work():
+            try:
+                r = self.brd.call("/voice", "POST", {"text": text}, timeout=180)
+                reply = r.get("reply") or r.get("error") or "（没有回复）"
+                self.q.put(("msg", ("ai", reply)))
+                self.q.put(("say", reply))
+                self.q.put(("status", "就绪   %.1fs" % (r.get("elapsed") or 0)))
+            except Exception as e:
+                self.q.put(("msg", ("sys", "请求失败：%s" % e)))
+                self.q.put(("status", "请求失败"))
+            finally:
+                self.q.put(("busy", False))
+                self.q.put(("refresh_info", True))
+        threading.Thread(target=work, daemon=True).start()
+
+    # ---------- 模型 ----------
+    def set_model(self, m, quiet=False):
+        if not m:
+            return
+        self.conf["model"] = m
+        save_conf(self.conf)
+        if quiet:
+            return
+        self.set_status("切模型 → %s …" % m)
+
+        def work():
+            try:
+                r = self.brd.call("/llm/model", "POST", {"model": m}, timeout=20)
+                self.q.put(("status", "模型已切到 %s%s"
+                            % (m, "" if r.get("ok") else
+                               "  ✗ " + str(r.get("error")))))
+            except Exception as e:
+                self.q.put(("status", "切模型失败: %s" % e))
+        threading.Thread(target=work, daemon=True).start()
+
+    def reload_conf(self):
+        self.conf = load_conf()
+        self.brd.set(self.conf.get("host", ""), self.conf.get("token", ""))
+        self._sync_spk()
+
+    # ---------- 语音 ----------
+    def toggle_rec(self):
+        if self.recording:
+            self.stop_rec()
+        else:
+            self.start_rec()
+
+    def start_rec(self):
+        try:
+            self.rec.start()
+        except Exception as e:
+            messagebox.showerror("录音失败", str(e))
+            return
+        self.recording = True
+        self.btn_mic.configure(fg=C["rec"], text="■ 停止录音")
+        self._tick_rec()
+
+    def _tick_rec(self):
+        if not self.recording:
+            return
+        s = self.rec.elapsed()
+        lv = self.rec.level()
+        bar = "▮" * int(lv * 10)
+        self.lbl_rec.configure(text="录音中 %.1fs  %s" % (s, bar))
+        # ★ 60 秒自动停（免得忘了）
+        if s >= 60:
+            self.stop_rec()
+            return
+        self.root.after(120, self._tick_rec)
+
+    def stop_rec(self):
+        self.recording = False
+        self.btn_mic.configure(fg=C["text"], text="● 按住说话")
+        self.lbl_rec.configure(text="")
+        try:
+            path, secs = self.rec.stop()
+        except Exception as e:
+            messagebox.showerror("录音失败", str(e))
+            return
+        if not path or secs < 0.4:
+            self.set_status("录得太短，重来")
+            return
+        self.set_status("识别中…（%.1fs 录音）" % secs)
+        self.lbl_rec.configure(text="识别中…")
+
+        def work():
+            try:
+                b64 = A.wav_to_b64(path)
+                r = self.brd.call("/asr", "POST",
+                                  {"audio": b64, "rate": A.TARGET_RATE},
+                                  timeout=120)
+                if r.get("ok") and r.get("text"):
+                    txt = r["text"].strip()
+                    self.q.put(("status", "听到：%s" % txt))
+                    if self.conf.get("voice_auto_send", True):
+                        self.q.put(("sendtext", txt))
+                    else:
+                        self.q.put(("filltext", txt))
+                else:
+                    self.q.put(("status", "没听清（%s）"
+                                % (r.get("error") or "空结果")))
+            except Exception as e:
+                self.q.put(("status", "识别失败：%s" % e))
+            finally:
+                self.q.put(("rec_done", True))
+        threading.Thread(target=work, daemon=True).start()
+
+    def speak(self, text):
+        """让【板子的喇叭】说（演示时更有说服力）"""
+        if not text:
+            return
+
+        def work():
+            try:
+                self.brd.call("/say", "POST", {"text": text[:400]}, timeout=90)
+            except Exception:
+                pass
+        threading.Thread(target=work, daemon=True).start()
+
+    # ---------- 设置 ----------
+    def open_settings(self):
+        SettingsDialog(self)
+
+    def on_close(self):
+        try:
+            if self.recording:
+                self.rec.cancel()
+        except Exception:
+            pass
+        self.root.destroy()
+
+
+# ══════════════════════════════════════════════════════════════════
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--host", default="")
+    ap.add_argument("--token", default="")
+    ap.add_argument("--selftest", action="store_true")
+    a = ap.parse_args()
+
+    if a.selftest:
+        return selftest()
+
+    root = tk.Tk()
+    app = ChatApp(root, a.host, a.token)
+    app._sync_spk()
+    root.mainloop()
+    return 0
+
+
+def selftest():
+    """不带界面，跑一遍逻辑"""
+    print("=" * 70)
+    print(" 聊天客户端 · 逻辑自测")
+    print("=" * 70)
+    ok = True
+
+    def chk(c, m, d=""):
+        nonlocal ok
+        print("   %s %s%s" % ("✓" if c else "✗", m, ("   " + d) if d else ""))
+        ok = ok and c
+
+    print()
+    print("【1】依赖")
+    chk(A.HAS_SD, "录音后端 sounddevice 可用",
+        "" if A.HAS_SD else A.SD_WHY)
+    try:
+        import winsound  # noqa: F401
+        chk(True, "放音 winsound 可用")
+    except Exception as e:
+        chk(False, "winsound", str(e))
+
+    print()
+    print("【2】会话存储")
+    import tempfile
+    d = tempfile.mkdtemp(prefix="xbchat_")
+    st = SessionStore(d)
+    chk(len(st.sessions) == 1, "初始有一个空会话")
+    st.cur.add("user", "现在多少度")
+    chk(st.cur.title == "现在多少度", "标题自动取第一条用户消息",
+        st.cur.title)
+    st.new()
+    chk(len(st.sessions) == 2, "能新建会话")
+    chk(len(st.group()) >= 1, "能分组")
+    st.delete(st.cur)
+    chk(len(st.sessions) == 1, "能删除会话")
+
+    print()
+    print("【3】配置读写")
+    c = load_conf()
+    chk(isinstance(c, dict), "load_conf 返回 dict")
+    chk("voice_reply" in c, "含语音开关")
+
+    print()
+    print("【4】录音器接口")
+    r = A.Recorder()
+    chk(not r.active, "初始未录音")
+    chk(hasattr(r, "level"), "有 level()（画音量条用）")
+
+    print()
+    print("=" * 70)
+    print(" 总体: %s" % ("★ 全部通过" if ok else "★ 有问题"))
+    print("=" * 70)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main() or 0)

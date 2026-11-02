@@ -1,0 +1,23 @@
+[Unit]
+Description=Zynq 板载温度守护（过热自动降载 / 停机）
+# ★ 不依赖别的服务 —— 它要在别的服务出问题时也能跑
+DefaultDependencies=no
+After=sysinit.target
+Wants=sysinit.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/zynq
+ExecStart=/usr/bin/python3 -u /home/zynq/thermal_guard.py
+Restart=always
+RestartSec=10
+# ★ 用 root：要 systemctl stop 别的服务、要读 /sys/bus/iio
+User=root
+StandardOutput=append:/var/log/thermal_guard.log
+StandardError=append:/var/log/thermal_guard.log
+
+# 关停时给足时间把服务恢复回来
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

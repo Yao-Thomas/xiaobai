@@ -1,0 +1,39 @@
+======================================================
+ 生成 bitstream (Vivado 2018.3)
+ 开�?: Sat Sep 19 14:44:44 +0800 2026
+======================================================
+ wrapper 已存圡�: D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/hdl/system_wrapper.v
+ wrapper: D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/hdl/system_wrapper.v (18997 字节)
+ �? wrapper 已加入工�?
+ top = system_wrapper
+
+>>> 开始综�? synth_1  (Sat Sep 19 14:44:54 +0800 2026)
+ synth_1: 0%  synth_design ERROR  (Sat Sep 19 15:00:40 +0800 2026)
+ �? 综合失败! 详��? runme.log
+ --- runme.log �?�? ---
+  INFO: [Synth 8-3491] module 'proc_sys_reset' declared at 'd:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1264' bound to instance 'U0' of component 'proc_sys_reset' [d:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/ip/system_rst_ps7_0_153M_0_8/synth/system_rst_ps7_0_153M_0.vhd:129]
+  INFO: [Synth 8-256] done synthesizing module 'system_rst_ps7_0_153M_0' (176#1) [d:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/ip/system_rst_ps7_0_153M_0_8/synth/system_rst_ps7_0_153M_0.vhd:74]
+  WARNING: [Synth 8-350] instance 'rst_ps7_0_153M' of module 'system_rst_ps7_0_153M_0' requires 10 connections, but only 6 given [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth/system.v:1151]
+  	Parameter C_OPERATION bound to: not - type: string 
+  	Parameter C_SIZE bound to: 1 - type: integer 
+  ERROR: [Synth 8-439] module 'system_v_frmbuf_wr_0_0_v_frmbuf_wr' not found [d:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/ip/system_v_frmbuf_wr_0_0_7/synth/system_v_frmbuf_wr_0_0.v:269]
+  	Parameter C_S_AXI_CTRL_ADDR_WIDTH bound to: 32'sb00000000000000000000000000000111 
+  	Parameter C_S_AXI_CTRL_DATA_WIDTH bound to: 32'sb00000000000000000000000000100000 
+  	Parameter C_M_AXI_MM_VIDEO_ADDR_WIDTH bound to: 32'sb00000000000000000000000000100000 
+  	Parameter C_M_AXI_MM_VIDEO_DATA_WIDTH bound to: 32'sb00000000000000000000000001000000 
+  	Parameter C_M_AXI_MM_VIDEO_PROT_VALUE bound to: 32'b00000000000000000000000000000000 
+  	Parameter C_M_AXI_MM_VIDEO_CACHE_VALUE bound to: 32'b00000000000000000000000000000011 
+  ERROR: [Synth 8-6156] failed synthesizing module 'system_v_frmbuf_wr_0_0' [d:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/ip/system_v_frmbuf_wr_0_0_7/synth/system_v_frmbuf_wr_0_0.v:58]
+  ERROR: [Synth 8-6156] failed synthesizing module 'camera_in_imp_165SQB8' [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth/system.v:661]
+  ERROR: [Synth 8-6156] failed synthesizing module 'system' [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/synth/system.v:8808]
+  ERROR: [Synth 8-6156] failed synthesizing module 'system_wrapper' [D:/ubuntu_iso/tmp_try2018/Navigator_7020/Navigator_7020.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
+  ---------------------------------------------------------------------------------
+  Finished RTL Elaboration : Time (s): cpu = 00:12:30 ; elapsed = 00:13:13 . Memory (MB): peak = 973.887 ; gain = 600.805
+  ---------------------------------------------------------------------------------
+  RTL Elaboration failed
+  INFO: [Common 17-83] Releasing license: Synthesis
+  473 Infos, 192 Warnings, 0 Critical Warnings and 6 Errors encountered.
+  synth_design failed
+  ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+  INFO: [Common 17-206] Exiting Vivado at Sat Sep 19 15:00:36 2026...
+  

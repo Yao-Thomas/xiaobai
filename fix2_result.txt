@@ -1,0 +1,22 @@
+=== 更新工程�? GPU RTL + 重跑 ===
+ 当前时间: Sat Sep 19 21:30:52 +0800 2026
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/2df3/src/gpu2d.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/2df3/src/gpu2d_axi.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/31a1/src/gpu2d.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/31a1/src/gpu2d_axi.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/b5b0/src/gpu2d.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/b5b0/src/gpu2d_axi.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/f810/src/gpu2d.v
+ 覆盖: D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/f810/src/gpu2d_axi.v
+ 共�?�盖 8 �?文件
+ 检�? D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/2df3/src : mst_err_pulse 出现 6 �?
+ 检�? D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/31a1/src : mst_err_pulse 出现 6 �?
+ 检�? D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/b5b0/src : mst_err_pulse 出现 6 �?
+ 检�? D:/ubuntu_iso/atk2018/atk2018.srcs/sources_1/bd/system/ipshared/f810/src : mst_err_pulse 出现 6 �?
+ 删除生成缓存: system_gpu_0_0
+ 删除生成缓存: system_gpu_0_0_1
+ �? BD 校验+保存
+
+>>> 综合  Sat Sep 19 21:31:02 +0800 2026
+ synth_1: 0%  synth_design ERROR
+ RESULT=SYNTH_FAIL

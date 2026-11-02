@@ -1,0 +1,41 @@
+=========== 所有地址空间 ===========
+  /audio/audio_formatter/m_axi_mm2s
+  /audio/audio_formatter/m_axi_s2mm
+  /audio/audio_formatter/s_axi_lite
+  /audio/i2s_receiver/s_axi_ctrl
+  /audio/i2s_transmitter/s_axi_ctrl
+  /axi_gpio_0/S_AXI
+  /camera_in/axi_gpio_0/S_AXI
+  /camera_in/v_frmbuf_wr_0/Data_m_axi_mm_video
+  /camera_in/v_frmbuf_wr_0/s_axi_CTRL
+  /clk_wiz_0/s_axi_lite
+  /cnn_conv_pool_0/Data_m_axi_gmem_img
+  /cnn_conv_pool_0/Data_m_axi_gmem_out
+  /cnn_conv_pool_0/Data_m_axi_gmem_w
+  /cnn_conv_pool_0/s_axi_control
+  /cnn_fc_0/Data_m_axi_gmem_out
+  /cnn_fc_0/Data_m_axi_gmem_w
+  /cnn_fc_0/Data_m_axi_gmem_x
+  /cnn_fc_0/s_axi_control
+  /gpu_0/m_axi
+  /gpu_0/s_axi
+  /hdmi_out/clk_wiz_dyn/s_axi_lite
+  /hdmi_out/hdmi_vtc/ctrl
+  /hdmi_out/v_frmbuf_rd_0/Data_m_axi_mm_video
+  /hdmi_out/v_frmbuf_rd_0/s_axi_CTRL
+  /i2c2/S_AXI
+  /lcd_out/lcd_id/S_AXI
+  /lcd_out/lcd_pl_pwm/PWM_AXI
+  /lcd_out/lcd_vtc/ctrl
+  /lcd_out/v_frmbuf_rd_0/Data_m_axi_mm_video
+  /lcd_out/v_frmbuf_rd_0/s_axi_CTRL
+  /processing_system7_0/Data
+  /processing_system7_0/S_AXI_HP0
+  /processing_system7_0/S_AXI_HP1
+  /processing_system7_0/S_AXI_HP2
+  /processing_system7_0/S_AXI_HP3
+  /rest_gpio/S_AXI
+  /scope_0/s_axi
+
+=========== CNN 那两�? cell 的所有接口引�? ===========
+  --- cnn_conv_pool_0 ---

@@ -1,0 +1,66 @@
+=== �? GPU 加进 2026.1 工程 ===
+ 时间: Thu Sep 24 22:57:32 +0800 2026
+
+>>> �? IP 仓库 D:/ubuntu_iso/gpu_ip
+  原有: D:/ubuntu_iso/atk2026/Navigator_7020/ip_repo D:/ubuntu_iso/gpu_ip
+ �? �?录已更新
+  查找 gpu2d_axi:
+     dsh:user:gpu2d_axi:1.0
+
+>>> 打开 system.bd 并加 gpu_0
+ �? gpu_0 已创�?
+
+=== gpu_0 的接口引�? (intf) ===
+  %/gpu_0/m_axi                  mode=Master
+  %/gpu_0/s_axi                  mode=Slave
+
+=== gpu_0 的普通引�? (pin) ===
+  %/gpu_0/aclk                   I
+  %/gpu_0/aresetn                I
+  %/gpu_0/m_axi_awaddr           O
+  %/gpu_0/m_axi_awburst          O
+  %/gpu_0/m_axi_awlen            O
+  %/gpu_0/m_axi_awready          I
+  %/gpu_0/m_axi_awsize           O
+  %/gpu_0/m_axi_awvalid          O
+  %/gpu_0/m_axi_bready           O
+  %/gpu_0/m_axi_bresp            I
+  %/gpu_0/m_axi_bvalid           I
+  %/gpu_0/m_axi_wdata            O
+  %/gpu_0/m_axi_wlast            O
+  %/gpu_0/m_axi_wready           I
+  %/gpu_0/m_axi_wstrb            O
+  %/gpu_0/m_axi_wvalid           O
+  %/gpu_0/s_axi_araddr           I
+  %/gpu_0/s_axi_arprot           I
+  %/gpu_0/s_axi_arready          O
+  %/gpu_0/s_axi_arvalid          I
+  %/gpu_0/s_axi_awaddr           I
+  %/gpu_0/s_axi_awprot           I
+  %/gpu_0/s_axi_awready          O
+  %/gpu_0/s_axi_awvalid          I
+  %/gpu_0/s_axi_bready           I
+  %/gpu_0/s_axi_bresp            O
+  %/gpu_0/s_axi_bvalid           O
+  %/gpu_0/s_axi_rdata            O
+  %/gpu_0/s_axi_rready           I
+  %/gpu_0/s_axi_rresp            O
+  %/gpu_0/s_axi_rvalid           O
+  %/gpu_0/s_axi_wdata            I
+  %/gpu_0/s_axi_wready           O
+  %/gpu_0/s_axi_wstrb            I
+  %/gpu_0/s_axi_wvalid           I
+
+=== 顺便列出 hp3_merge �?否已存在 / audio 的主�? ===
+  hp3_merge: 
+  audio 主口: /audio/M00_AXI
+
+=== 参�?: 现有互联的时�?/复位引脚�? ===
+  %ps7_0_axi_periph/M00_ACLK                           -> /ps7_0_axi_periph/M00_ACLK
+  %ps7_0_axi_periph/M00_ARESETN                        -> /ps7_0_axi_periph/M00_ARESETN
+  %processing_system7_0/FCLK_CLK0                      -> /processing_system7_0/FCLK_CLK0
+  %rst_ps7_0_100M/peripheral_aresetn                   -> /rst_ps7_0_100M/peripheral_aresetn
+
+>>> 保存
+ �? 已保�?
+=== 结束 ===

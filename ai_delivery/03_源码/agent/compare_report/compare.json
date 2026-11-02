@@ -1,0 +1,11 @@
+{
+  "rag": {
+    "n_items": 65,
+    "n_answerable": 53,
+    "n_refusal": 12,
+    "keypoint_recall": 0.5728155339805825,
+    "source_hit_rate": 0.7169811320754716,
+    "refusal_accuracy": 0.9384615384615385,
+    "hallucination_rate": 0.25
+  }
+}

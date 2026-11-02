@@ -1,0 +1,36 @@
+{
+ "count": 200,
+ "per_class": 20,
+ "image_size": 28,
+ "image_bytes": 784,
+ "classes": [
+  "sine",
+  "square",
+  "triangle",
+  "sawtooth",
+  "pulse",
+  "am",
+  "fm",
+  "noise",
+  "flat",
+  "hum"
+ ],
+ "class_names_cn": [
+  "正弦波",
+  "方波",
+  "三角波",
+  "锯齿波",
+  "脉冲串",
+  "调幅波",
+  "调频波",
+  "白噪声",
+  "直流/静默",
+  "工频干扰"
+ ],
+ "quant": "log10 compress -> bilinear resize -> normalize to 0..127 (uint8)",
+ "fs": 20000000,
+ "stft_win": 256,
+ "stft_hop": 128,
+ "window": "hann",
+ "note": "★ 训练必须用同一套预处理；推理时调 waveform_to_image() 即可"
+}
